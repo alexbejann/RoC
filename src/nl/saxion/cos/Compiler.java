@@ -122,17 +122,18 @@ public class Compiler {
 	private JasminBytecode generateCode( ParseTree parseTree, String className ) {
 		JasminBytecode jasminBytecode = new JasminBytecode( className );
 
-		// TODO: You will have to create a visitor that visits the parse tree and generates
-		//       code for the nodes in that tree.
-		//       In your case, you will probably want to supply that visitor with the PrintWriter
-		//       created above and emit lines of Jasmin code for the nodes in the parse tree.
-		//       For now, I'll just create a simple template that prints 'Hello world!'
-
-		jasminBytecode.add(".class public HelloWorld");
+		jasminBytecode.add(".bytecode 49.0");
+		jasminBytecode.add(".class public " + className);
 		jasminBytecode.add(".super java/lang/Object");
 		jasminBytecode.add("");
 
 		// Main method
+		// TODO: You will have to create a visitor that visits the parse tree and generates
+		//       code for the nodes in that tree.
+		//       In your case, you will probably want to supply that visitor with the JasminCode
+		//       created above and emit lines of Jasmin code for the nodes in the parse tree.
+		//       For now, I'll just create a simple template that prints 'Hello world!'
+
 		jasminBytecode.add(".method public static main([Ljava/lang/String;)V");
 		jasminBytecode.add(".limit stack 2");
 		jasminBytecode.add(".limit locals 1");  // NOTE: The args-parameter is a local too
