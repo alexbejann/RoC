@@ -19,7 +19,7 @@ class CompilerTest {
 		List<String> output = s.getOutput();
 
 		assertArrayEquals(new String[] {
-				"Hello World!"
+				"Hello from ExampleLang!"
 		}, output.toArray());
 	}
 
@@ -34,7 +34,7 @@ class CompilerTest {
 		List<String> output = s.getOutput();
 
 		assertArrayEquals(new String[] {
-				"Hello World!"
+				"Hello from ExampleLang!"
 		}, output.toArray());
 	}
 
