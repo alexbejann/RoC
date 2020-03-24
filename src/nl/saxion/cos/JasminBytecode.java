@@ -33,12 +33,26 @@ public class JasminBytecode {
     }
 
     /**
+     * Add an empty line to this byte code.
+     */
+    public JasminBytecode add() {
+        return add("");
+    }
+
+    /**
      * Add a line of Jasmin code.
      *
      * @param line  A single line of Jasmin code.
+     * @return      A reference to this object, so that you can chain calls to add like this:
+     *              <pre>
+     *              jasminCode.add( "ldc 3" )
+     *                        .add( "ldc 5" )
+     *                        .add( "iadd" );
+     *              </pre>
      */
-    public void add( String line ) {
+    public JasminBytecode add( String line ) {
         jasminCode.add(line);
+        return this;
     }
 
     /**
