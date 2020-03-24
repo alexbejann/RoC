@@ -138,10 +138,10 @@ public class Compiler {
 		jasminBytecode.add(".limit stack 2");
 		jasminBytecode.add(".limit locals 1");  // NOTE: The args-parameter is a local too
 		jasminBytecode.add("");
-		jasminBytecode.add("  getstatic java/lang/System/out Ljava/io/PrintStream;");            // Push System.out
-		jasminBytecode.add("  ldc \"Hello from ExampleLang!\"");                                 // Push message
-		jasminBytecode.add("  invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V");  // Call println()
-		jasminBytecode.add("  return");
+		jasminBytecode.add("getstatic java/lang/System/out Ljava/io/PrintStream;");            // Push System.out
+		jasminBytecode.add("ldc \"Hello from ExampleLang!\"");                                 // Push message
+		jasminBytecode.add("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V");  // Call println()
+		jasminBytecode.add("return");
 		jasminBytecode.add(".end method");
 
 		return jasminBytecode;
