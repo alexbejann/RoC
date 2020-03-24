@@ -122,10 +122,10 @@ public class Compiler {
 	private JasminBytecode generateCode( ParseTree parseTree, String className ) {
 		JasminBytecode jasminBytecode = new JasminBytecode( className );
 
-		jasminBytecode.add(".bytecode 49.0");
-		jasminBytecode.add(".class public " + className);
-		jasminBytecode.add(".super java/lang/Object");
-		jasminBytecode.add("");
+		jasminBytecode.add(".bytecode 49.0")
+				.add(".class public " + className)
+				.add(".super java/lang/Object")
+				.add();
 
 		// Main method
 		// TODO: You will have to create a visitor that visits the parse tree and generates
@@ -134,15 +134,15 @@ public class Compiler {
 		//       created above and emit lines of Jasmin code for the nodes in the parse tree.
 		//       For now, I'll just create a simple template that prints 'Hello world!'
 
-		jasminBytecode.add(".method public static main([Ljava/lang/String;)V");
-		jasminBytecode.add(".limit stack 2");
-		jasminBytecode.add(".limit locals 1");  // NOTE: The args-parameter is a local too
-		jasminBytecode.add("");
-		jasminBytecode.add("getstatic java/lang/System/out Ljava/io/PrintStream;");            // Push System.out
-		jasminBytecode.add("ldc \"Hello from ExampleLang!\"");                                 // Push message
-		jasminBytecode.add("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V");  // Call println()
-		jasminBytecode.add("return");
-		jasminBytecode.add(".end method");
+		jasminBytecode.add(".method public static main([Ljava/lang/String;)V")
+				.add(".limit stack 2")
+				.add(".limit locals 1")  // NOTE: The args-parameter is a local too
+				.add()
+				.add("getstatic java/lang/System/out Ljava/io/PrintStream;")            // Push System.out
+				.add("ldc \"Hello from ExampleLang!\"")                                 // Push message
+				.add("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V")  // Call println()
+				.add("return")
+				.add(".end method");
 
 		return jasminBytecode;
 	}
