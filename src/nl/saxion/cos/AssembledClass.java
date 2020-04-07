@@ -23,11 +23,10 @@ public class AssembledClass {
 	/**
 	 * Assembles Jasmin code into a (hopefully valid) JVM-compatible class file.
 	 *
-	 * @throws IOException if file could not be written
 	 * @throws AssembleException if Jasmin code was not valid
 	 */
 	public static AssembledClass assemble( JasminBytecode jasminBytecode )
-			throws IOException, AssembleException {
+			throws AssembleException {
 		try {
 			ClassFile classFile = new ClassFile();
 
@@ -48,8 +47,6 @@ public class AssembledClass {
 			classFile.write(classOut);
 			byte[] classBytes = classOut.toByteArray();
 			return new AssembledClass(classBytes, jasminBytecode.getClassName());
-		} catch( IOException ioe ) {
-			throw ioe;
 		} catch ( Exception e ) {
 			// Jasmin just uses Exception in the exception specification, which is quite ugly
 			// Let's wrap it in a more specific Exception.
