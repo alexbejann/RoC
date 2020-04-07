@@ -27,9 +27,9 @@ public class JasminBytecode {
      * @param className   The name of the class that was compiled.
      * @param jasminCode  A list of Jasmin instructions.
      */
-    public JasminBytecode(String className, ArrayList<String> jasminCode ) {
+    public JasminBytecode(String className, List<String> jasminCode ) {
         this.className = className;
-        this.jasminCode = jasminCode;
+        this.jasminCode = new ArrayList<>(jasminCode);
     }
 
     /**
@@ -52,6 +52,22 @@ public class JasminBytecode {
      */
     public JasminBytecode add( String line ) {
         jasminCode.add(line);
+        return this;
+    }
+
+    /**
+     * Add a whole number of lines to this JasminBytecode.
+     * Pro-tip: you can also use this to combine two JasminBytecode instances:
+     * <pre>
+     *     jasminCode1.addAll( jasminCode2.getLines() );
+     * </pre>
+     *
+     * @param lines  The lines to add.
+     * @return       A reference to this object, so you can chain calls.
+     * @see          #add(String)
+     */
+    public JasminBytecode addAll( List<String> lines ) {
+        jasminCode.addAll(lines);
         return this;
     }
 
