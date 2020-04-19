@@ -197,13 +197,19 @@ public class Compiler {
 				return;
 			}
 
+			// Determine which directory to write files to
+			Path targetDirectory = sourceCodePath.getParent();
+			if( targetDirectory == null ) {
+				targetDirectory = Paths.get(".");
+			}
+
 			// Write Jasmin-code to a file
-			String jasminFilename = sourceCodePath.getParent().resolve(className+".j").toString();
+			String jasminFilename = targetDirectory.resolve(className+".j").toString();
 			jasminBytecode.writeJasminToFile(jasminFilename);
 
 			// Try to assemble the Jasmin byte code and write that to a file
 			AssembledClass assembledClass = AssembledClass.assemble(jasminBytecode);
-			String classFilename = sourceCodePath.getParent().resolve(className+".class").toString();
+			String classFilename = targetDirectory.resolve(className+".class").toString();
 			assembledClass.writeClassToFile(classFilename);
 		}
 		catch( IOException | AssembleException e ) {
