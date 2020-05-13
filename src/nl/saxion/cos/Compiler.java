@@ -52,11 +52,8 @@ public class Compiler {
 	 * @param className    Name of the class to create.
 	 */
 	private JasminBytecode compile( CharStream input, String className ) {
-		// Phase 1: Run the lexer
-		CommonTokenStream tokens = runLexer(input);
-
-		// Phase 2: Run the parser
-		ParseTree parseTree = runParser(tokens);
+		// Phase 1/2: Run the lexer and parser
+		ParseTree parseTree = runLexerAndParser(input);
 
 		// ANTLR tries to do its best in creating a parse tree, even if the source code contains
 		// errors. So, check if that is the case and bail out if so.
@@ -72,23 +69,17 @@ public class Compiler {
 	}
 
 	/**
-	 * Take the charater input and turn it into tokens according to the grammar.
-	 * @param input  The input.
-	 * @return       A steam of tokens.
-	 */
-	private CommonTokenStream runLexer( CharStream input ) {
-		ExampleLangLexer lexer = new ExampleLangLexer(input);  // TODO: Replace lexer with the one for your own language
-		lexer.addErrorListener(getErrorListener());
-		return new CommonTokenStream(lexer);
-	}
-
-	/**
-	 * Tries to form a parse tree from the given tokens. In case of errors, the error listener is
+	 * Takes the character input and turn it into tokens according to the grammar.
+	 * Then, tries to form a parse tree from the given tokens. In case of errors, the error listener is
 	 * called, but the parser still tries to create a parse tree.
-	 * @param tokens  The tokens returned from the lexer.
-	 * @return        A Parse Tree.
+	 * @param input   The input
+	 * @return        A parse tree
 	 */
-	private ParseTree runParser( CommonTokenStream tokens ) {
+	private ParseTree runLexerAndParser( CharStream input ) {
+		ExampleLangLexer lexer = new ExampleLangLexer(input);      // TODO: Replace lexer with the one for your own language
+		lexer.addErrorListener(getErrorListener());
+		CommonTokenStream tokens = new CommonTokenStream(lexer);
+
 		ExampleLangParser parser = new ExampleLangParser(tokens);  // TODO: Replace parser with the one for your own language
 		parser.addErrorListener(getErrorListener());
 		return parser.program();                                   // TODO: Replace .program() with your own start symbol
