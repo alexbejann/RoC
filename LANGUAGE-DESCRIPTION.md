@@ -1,4 +1,4 @@
-# TODO: Decide language name!!!
+# TODO: Decide language name and description to every item from the file!!!
 
 # 1. Variables:
 
