@@ -10,7 +10,7 @@ method_declaration: 'functia ' IDENTIFIER PAREN_OPEN (argument IDENTIFIER (',' a
 statement: 'daca' PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE
             ('altfel daca' PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE )*
                 ('daca nu' CURLY_OPEN statement_body CURLY_CLOSE)?
-         | 'printeaza' PAREN_OPEN argument PAREN_CLOSE; #printStatement
+         | 'printeaza' PAREN_OPEN argument PAREN_CLOSE;
 
 conditions: expression;
 
