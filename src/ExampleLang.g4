@@ -5,7 +5,7 @@ program: method_declaration* statement* EOF;
 method_declaration: 'functia ' IDENTIFIER PAREN_OPEN (argument IDENTIFIER (',' argument IDENTIFIER)*)? PAREN_CLOSE
                         CURLY_OPEN statement_body CURLY_CLOSE #methodReturnVoid
                    | 'functia ' IDENTIFIER PAREN_OPEN (argument IDENTIFIER (',' argument IDENTIFIER)*)? PAREN_CLOSE
-                        'returneaza' argument CURLY_OPEN statement_body* CURLY_CLOSE; #methodReturn
+                        'returneaza' argument CURLY_OPEN statement_body* CURLY_CLOSE #methodReturn;
 
 statement: 'daca' PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE
             ('altfel daca' PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE )*
@@ -25,9 +25,9 @@ expression: PAREN_OPEN expression PAREN_CLOSE                       #parenExpres
            | NUMBER                                       #decimalExpression
            ;
 
-variable_declaration: BOOLEAN_TYPE IDENTIFIER (EQUALS_TO BOOLEAN)? #declareBoolean//BUG HERE
-                    | STRING_TYPE IDENTIFIER (EQUALS_TO STRING)? #declareString
-                    | NUMBER_TYPE IDENTIFIER (EQUALS_TO NUMBER)? #declareNumber
+variable_declaration: BOOLEAN_TYPE IDENTIFIER (EQUALS_TO BOOLEAN) SEMICOLON? #declareBoolean
+                    | STRING_TYPE IDENTIFIER (EQUALS_TO STRING) SEMICOLON? #declareString
+                    | NUMBER_TYPE IDENTIFIER (EQUALS_TO NUMBER) SEMICOLON? #declareNumber
                     ;
 
 comparator: GT | GE | LT | LE | EQ;
@@ -46,7 +46,6 @@ PAREN_CLOSE: ')';
 CURLY_OPEN: '{';
 CURLY_CLOSE: '}';
 
-IDENTIFIER: [a-zA-Z_][a-zA-Z_0-9]*;
 //Assign
 EQUALS_TO: '<-';
 
@@ -71,5 +70,7 @@ EQ : '=' ;
 NOT: '!';
 
 COMMENT_LINE: '//' ~[\r\n]* -> skip;
+
+IDENTIFIER: [a-zA-Z_][a-zA-Z_0-9]*;
 
 WS: [\r\n\t ]+ -> skip;
