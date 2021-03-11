@@ -1,4 +1,4 @@
-hello;
-hi;
-hi;
-hello;
+functia helloWorld() returneaza nimic{
+    sdc stringHello<-HelloWorld
+    printeaza(stringHello)
+}
