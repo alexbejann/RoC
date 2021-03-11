@@ -55,7 +55,7 @@ STRING_TYPE: 'sdc ';
 BOOLEAN_TYPE: 'bool ';
 
 // Types values
-BOOLEAN: 'TRUE' | 'FALSE';
+BOOLEAN: 'ADEVARAT' | 'FALS';
 STRING: '"' ~('\r'|'\n'|'"')* '"';
 NUMBER: '-'? [0-9]+ ( ('.')? [0-9]+ )?;
 
