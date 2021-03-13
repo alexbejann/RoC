@@ -1,184 +1,168 @@
-# Compilers and Operating systems
+# Todo
 
-This is the base project for the assignment of *Compilers and Operating Systems*.
+- ~~Add fourth variable type~~ 
+- Decide whether to allow separate initialization or declaration
+- ~~Add operators and describe how are they gonna work~~ 
+- Do we want this a=b=c -> a=(b=c)? In RoC would be a<-b<-c -> a<-(b<-c). If not, make an assignment a statement and not an expression 
+- ~~Specify block statements~~
+- Specify global and local scope 
+- ~~Should we keep `functia` keyword in our language?~~ `Yes, we will keep the keyword`
 
-The project has support for reading your files, assembling Jasmin bytecode into classes and even 
-running them automatically in JUnit-tests. The actual code generation is of course missing still 
-(since that is the whole point of the assignment) and you should replace the grammar (and associated
-lexer and parser) with one of your own.
+# TODO grammar:
 
-You can change this code in any way you see fit.
+-	~~Probably just a typo, but a very dangerous one: 'functia ' contains a space! this means the space is part of the token.~~
+-	~~The rule method declaration can be written more concise by making ' 'returneaza' argument' optional, i.e. '('returneaza' argument)?'. What you have written is not wrong, but duplicate code is not good programming practice.~~
+-	The 'statement' rule is clearly work in progress, but well on its way. You have elaborated the if-else statement and the print statement. You have a good idea what the statements should look like given the description, sothe ext step is to make ANTLR rules for them. So the assignment, loops, function calls etc.
+-	I'm a bit uncertain about the role of 'expression' in the rule 'statement_body'. Does an expression without assignment make a valid line in your grammar, and what are its semantics? Like I said, C-like languages are expression-oriented meaning that an expression can be a statement. You may or may not want to do this. Depends on whether you make an assignment an expression or a statement. The rule 'statement_body' definitely needs rework, depending on what an expression means in your language.
+-	~~In rule 'variable_declaration' can be written simpler by collapsing the three types in one symbol. Then you have only one rule. You even have a symbol for it: 'argument' (which should be called type). I think I know why you expanded it in three rules, so that you can assign a label to each rule. Understandable, because you haven't had type checking yet. But just use one symbol, and do the type checking in Java code.~~
+-	In the 'expression' rule, a type is not an expression. Rather, it is part of a variable and function declaration.
+- Implement the `auto` keyword with the tuples in the grammar
+- Fix the expression for Relational operators 
+- Fix print statement
 
-## Compiler phases
 
-During the course, you will build your own compiler. The compiler we discuss in the lectures
-consists of a few phases:
+# RoC - A Romanian C based language
 
-![Diagram showing compiler has lexer, parser, checker and generation phase](doc/readme/compiler-phases.png)
+# Description
+RoC is a C/C++/Java based programming language that has the goal to help out romanians people to:
+  - code more effiecient, that's due to its romanian translated syntax
+  - simplified syntax compared to C/C++, but is following the same concepts
 
-* ***Lexer***\
-  The lexer takes the source file of your user and groups the characters in the file
-  into meaningful *tokens*. So a string of characters like
+The RoC can be immediatelly spotted by the file extension `<file name>.rc`, as a convention the filenames should have to same name as the class within the file i.e `MyClass.rc` would contain `MyClass` within the file. Unlike, Java RoC supports only one line comments represented by a hashtag and the language name `#RoC`.
+## Keywords dictionary 
+This table contains all the translations of the keywords used in RoC from Romanian to English.
 
-   `i` `n` `t` `<space>` `m` `a` `i` `n` `(` `)` `{` `<CRLF>` `i` `n` `t` `<space>` `a` `=` `3` `4` `;`
-   `<CRLF>` `}`
-   
-   is grouped into:
-   
-   `int` `main` `(` `)` `{` `int` `a` `=` `34` `;` `}`
+| Romanian | English |
+| -- | -- |
+| cat timp | while |
+| pentru | for |
+| executa | execute |
+| functia | function/method |
+| numar | number/integer |
+| daca | if |
+| altfel daca | else if |
+| daca nu | else |
+| printeaza | print |
+| returneaza | return |
+| adevarat | true |
+| fals | false |
 
-* ***Parser***\
-  The parser then takes those tokens and tries to build a tree structure from them, 
-  called a *parse tree*, like: 
-  
-  ![Example parse tree](doc/readme/parsetree.png)
-  
-* ***Checker***\
-  The checker then walks through that parse tree and checks if the code the user gave
-  to the compiler is actually correct. For example, it will check if the user uses the right type
-  of arguments when calling a function.
+## Operators
+- Arithmetic Operators
+Assume that a is 10 and b is 1
 
-* ***Code generator***\
-  After making sure the user's code is correct, the code generator will walk
-  the parse tree and generate Jasmin byte code. The end result will look something like:
-  
-  ```
-  .class public Example
-  .super java/lang/Object
-  .method public static main([Ljava/lang/String;)V
-  ldc 34
-  istore 1
-  return
-  .end method
-  ```
+| Operator | Description | Example |
+| -- | -- | -- |
+| `-` (Subtraction) | 	returns the difference of the values |	`a - b` is 9 |
+| `*` (Multiplication) |	returns the product of the values  |	`a * b` is 10 |
+| `/` (Division) |	performs division operation and returns the quotient  | 	`a / b` is 10 |
+| `%` (Modulus)  |	performs division operation and returns the remainder | 	`a % b` is 0 |
+| `++` (Increment) |	Increments the value of the variable by one | 	`a++` is 11 |
+| `--` (Decrement) |	Decrements the value of the variable by one |	`a--` is 9 |
 
-If this seems daunting, do not worry: for the first two phases we will use a tool call ANTLR. When
-we supply that tool with a description of our programming language, it will generate the *lexer* and
-*parser* for us.
+- Relational Operators
+Define the kind of relationship between two entities and returns a bool value in case of RoC
+In this example let's assume that a is 12 and b is 50. 
 
-## Planning
+| Operator | Description | Example |
+| -- | -- | -- |
+| `>`  | 	greater than |	`a > b` is false |
+| `<`  |	less than   |	`a < b` is true |
+| `>=` |	greater than or equal to  | 	`a >= b` is true |
+| `<=` |	less than or equal to | `a <= b` is true |
+| `==` |	equal to | 	`a == b` is false |
+| `!=` |	not equal |	`a != b` is true |
 
-During the course, we will design our own programming language and create a compiler for it. In the
-first weeks, you will build your knowledge and can expand your project week-by-week.
+### Scope 
+The scope in RoC is described by the curly brackets `{  }`.
+- `{` represents the start of a new scope
+- `}` represents the end of a scope 
+Let's say take a scenario where we would like to have a new scope
 
-* ***Week 1***\
-  You will design you own language and make example programs in your language. These
-  examples can then also be used as input for your unit tests.
-* ***Week 2***\
-  Your compiler will generate [Jasmin](http://jasmin.sourceforge.net)-compatible byte
-  code. We will learn to create programs in byte code and then translate our example programs to
-  byte code. This will be the expected output of your unit tests.
-* ***Week 3***\
-  ANTLR needs a grammar that describes the rules of your language. We will create that
-  grammar during this week. You can now use the ANTLR plugin to show parse trees of your example
-  programs.
-* ***Week 4***\
-  This week we will do our first code generation. After this week, you can expand your
-  compiler so that it can compile code in your language with hardcoded values.
-* ***Week 5***\
-  We will now add support for variables to our compiler. Most code in your language
-  can now compile. Also, we will make sure that if a user makes errors, they are found by the
-  compiler.
-* ***Week 6-8***\
-  You can use this time to make sure all the features in your language have been
-  implemented and tested.
+# 1. Variables:
 
-## Running the compiler
+| Types | Value | Description |
+| -- | -- | -- |
+| numar | 10, -1, 0.25 | This type can be an integer, float, double or even a long if we compare RoC to other C based languages |
+| sdc | "string" | Contains only strings |
+| automat |  "string", 1, -12, 0.21, FALS/ADEVARAT, [10, "tuple"] | This type can decide what is the best type, and has a feature to hold tuples |
+| bool | ADEVARAT/FALS | `ADEVARAT` is true and `FALS` is false but it's translated in Romanian | 
 
-### How to run
+When assigning a value in RoC we do `numbar b <- 10;`, to break down `numar` keyword represents the variable type, `b` is the identifier of the variable and `<-` is the operator which says to assign value `10` to `b`. Therefore the mold for this would look like this `<variable type> <identifier> <- <value to assign>`
 
-If you run the compiler framework just after you cloned it from GitLab, it will probably give you
-an error message like:
+# 2 Loops
 
-> ``Usage: java Compiler <name of Source>``
- 
-This is because the compiler expects the path to the input program as a program argument. To supply
-this program argument, expand the combo box next to the Build- and Play-buttons.
+- While loop:
+```
+cat timp <condition> executa { 
 
-![Screenshots showing run configuration combobox](doc/readme/runconfig1.png)
+    <do stuff>
 
-This will open the *Run/Debug Configurations* screen. You can supply the program argument (i.e. the
-file you want to compile) in the third input field. This path is relative to the *working directory*
-that you can find in the text field below.
+} 
+```
 
-![Screenshots showing run configuration combobox](doc/readme/runconfig2.png)
+- Do while loop:
+```
+executa { 
 
-### So what will it do?
+    <do stuff>
 
-When you run the compiler, it will take your input file and try to compile it into byte code and
-assemble that into a Java VM-compatible class.
+} cat timp <condition>  
+```
+- For loop:
+```
+numar num <- 0;
 
-It will output 2 files:
+pentru numar I<-0 : <condition> : i++ executa { 
 
-* The Jasmin byte code. Whatever the compiler generated will be stored in a file with the
-  `.j`-extension.
-* A `.class` file that is created by running Jasmin over the byte code from the previous step.
+numar num<-0; 
 
-If your code is correct, you should be able to run the class file by starting the Java virtual
-machine and giving it the name of the class you want to run (without the `.class` extension):
+num++; 
 
-> `java MyProgram`
+} 
+```
+# 3 Conditional Expressions
 
-## Testing
+- If, else if and else statement:
+```
+daca (<condition>) { 
 
-Of course, you can test your compiler manually as shown above. However, it is probably more practical
-to use the unit tests. Check the `CompilerTest` for some examples how to do this. You could consider
-tests like:
+  I <- I++; 
 
-* Taking the example programs you created in week 1, compiling them and comparing them to the
-  byte code equivalents you wrote in week 2.
-* Making smaller programs (testing just a single feature) and comparing the generated byte code.
-* Running the compiled programs and comparing the output.
-* Checking that certain errors will be found by the checker.
+} altfel daca (<condition>) { 
 
-## Getting started
+  I <- 2;	 
 
-So, how do you get started?
+} daca nu { 
 
-* Design your programming language and create the grammar for it. Also generate the classes for the
-  lexer, parser and base visitor using ANTLR.
-* In `Compiler.runLexer()` and `Compiler.runParser()` refer to your own lexer and parser, instead of
-  the example language.
-* Create a visitor to generate code and generate Jasmin code for programs in your language. Hook
-  that up to the compiler by calling `visit(parseTree)` on your code generator in
-  `Compiler.generateCode()`.\
-  *Start small!* Make sure you can compile the equivalent of `print("Hello World!");` and then
-  expand from there. Use automated tests to track your success.
-* Expand your project with a checker and code generator for all features needed.
+I <- 3; 
 
-## Classes
+} 
+```
 
-A quick explanation of some of the classes we gave you: 
+# 4 Methods 
+The methods are following the C-like languages concepts. In RoC will be declared using the `functia` keyword followed by an identifier of the method optional will have parameters and the return type of the method. The scope of the method is provided by the curly brackets.  
+```
+functia foo (<params>) returneaza <type> { 
 
-### Compiler
+ <do stuff>
 
-The compiler reads in the source file and the runs the four phases described above:
-* `runLexer()`\
-  Runs the lexer generated by ANTLR. By default, it will run `ExampleLangLexer`. Replace it with
-  your own. 
-* `runParser()`\
-  Runs the parser generated by ANTLR. By default, it will run `ExampleLangParser`. Replace it with
-  your own.
-* `runChecker()` \
-  Does nothing by default. This will be the method where you check if the user's source code is
-  correct. If you return false here, compilation stops.
-* `generateCode()`\
-  Generates a `JasminBytecode` instance from a given `ParseTree`. The byte code is then written to a
-  file and given to Jasmin to assemble into a runnable `.class` file.\
-  By default, this function just generates the byte code for printing *Hello, world*.
+returneaza <return variable if wanted>; 
 
-### JasminBytecode
+} 
+```
 
-Basically a wrapper around `ArrayList<String>`. You can add lines of bytecode to this object just as
-you would to an `ArrayList`. The class also contains functionality to write all lines to a file, 
-which is used by the `Compiler` class.
+- Example:
+```
+functia f(numar number) returneaza numar { 
 
-### AssembledClass
+returneaza number + 2 * 4; 
 
-After successfully generating the `JasminCode` it is passed to `AssembledClass.assemble()` to run
-Jasmin and create a JVM-compatible class.
+} 
+```
+# 5 Print statement
+RoC has a special method that can be called to print statements in the console
+```
+printeaza(<stuff to print>)
+```
 
-### SandBox
-
-The testing framework uses `SandBox` to run the assembled class in a safe environment.
-You can check the output after execution finished.
