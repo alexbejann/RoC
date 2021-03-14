@@ -41,7 +41,7 @@ decisionStatement: If SPACE? PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statem
                  (Else CURLY_OPEN statement_body CURLY_CLOSE)?
                  ;
 
-printStatement: Print PAREN_OPEN (IDENTIFIER | type) PAREN_CLOSE ;
+printStatement: Print PAREN_OPEN (IDENTIFIER | type_value) PAREN_CLOSE ;
 
 iterationStatement
                   : while
@@ -64,6 +64,8 @@ comparator: GT | GE | LT | LE | EQ;
 binary: AND | OR;
 
 type: STRING_TYPE | BOOLEAN_TYPE | NUMBER_TYPE;
+
+type_value: BOOLEAN | STRING | NUMBER ;
 
 // Single character
 PAREN_OPEN :'(';
