@@ -18,7 +18,7 @@
 -	In the 'expression' rule, a type is not an expression. Rather, it is part of a variable and function declaration.
 - Implement the `auto` keyword with the tuples in the grammar
 - Fix the expression for Relational operators 
-- Fix print statement
+- ~~Fix print statement~~
 
 
 # RoC - A Romanian C based language
