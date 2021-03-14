@@ -2,74 +2,126 @@ grammar ExampleLang;
 
 program: method_declaration* statement* EOF;
 
-method_declaration: 'functia ' IDENTIFIER PAREN_OPEN (argument IDENTIFIER (',' argument IDENTIFIER)*)? PAREN_CLOSE
-                        CURLY_OPEN statement_body CURLY_CLOSE #methodReturnVoid
-                   | 'functia ' IDENTIFIER PAREN_OPEN (argument IDENTIFIER (',' argument IDENTIFIER)*)? PAREN_CLOSE
-                        'returneaza' argument CURLY_OPEN statement_body* CURLY_CLOSE #methodReturn;
+method_declaration
+                  : Method SPACE IDENTIFIER PAREN_OPEN (type IDENTIFIER (COMMA type IDENTIFIER)*)? PAREN_CLOSE (Return type)?
+                        CURLY_OPEN statement_body* ( Return type)? CURLY_CLOSE
+                  ;
 
-statement: 'daca' PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE
-            ('altfel daca' PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE )*
-                ('daca nu' CURLY_OPEN statement_body CURLY_CLOSE)?
-         | 'printeaza' PAREN_OPEN argument PAREN_CLOSE;
+statement
+         : decisionStatement
+         | iterationStatement
+         | printStatement;
 
-conditions: expression;
+conditions: expr ( SPACE? binary expr)*;
 
-statement_body: (expression | statement | variable_declaration)+;
+statement_body: (statement | variable_declaration)+;
 
-expression: PAREN_OPEN expression PAREN_CLOSE                       #parenExpression
-           | NOT expression                                 #notExpression
-           | left=expression op=comparator right=expression #comparatorExpression
-           | left=expression op=binary right=expression     #binaryExpression
-           | BOOLEAN                                          #boolExpression
-           | IDENTIFIER                                     #identifierExpression
-           | NUMBER                                       #decimalExpression
-           ;
+//expression
+//           : PAREN_OPEN expression PAREN_CLOSE              #parenExpression
+//           | left=expression op=comparator right=expression #comparatorExpression
+//           | left=expression op=binary right=expression     #binaryExpression
+//           | NUMBER                                         #decimalExpression
+//           ;
 
-variable_declaration: BOOLEAN_TYPE IDENTIFIER (EQUALS_TO BOOLEAN) SEMICOLON? #declareBoolean
-                    | STRING_TYPE IDENTIFIER (EQUALS_TO STRING) SEMICOLON? #declareString
-                    | NUMBER_TYPE IDENTIFIER (EQUALS_TO NUMBER) SEMICOLON? #declareNumber
-                    ;
+expr
+    : MINUS expr                  # UMINUS
+    | expr mulop expr             # MULOPGRP
+    | expr addop expr             # ADDOPGRP
+    | PAREN_OPEN expr PAREN_CLOSE # PARENGRP
+    | NUMBER                      # DOUBLE
+    | BOOLEAN                     # BOOLEAN
+    ;
+
+addop : PLUS | MINUS ;
+
+mulop : MULTIPLY | DIVIDE | MODULO ;
+
+decisionStatement: If SPACE? PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE
+                 (Else_If PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE )*
+                 (Else CURLY_OPEN statement_body CURLY_CLOSE)?
+                 ;
+
+printStatement: Print PAREN_OPEN (IDENTIFIER | type) PAREN_CLOSE ;
+
+iterationStatement
+                  : while
+                  | for
+                  | do_while
+                  ;
+
+while: While conditions Execute CURLY_OPEN statement_body CURLY_CLOSE ;
+
+do_while: Execute CURLY_OPEN statement_body CURLY_CLOSE While conditions ;
+
+for: For (NUMBER_TYPE IDENTIFIER EQUALS_TO (left_num=NUMBER | left_id=IDENTIFIER)) COLON conditions  COLON  Execute CURLY_OPEN statement_body CURLY_CLOSE ;
+
+variable_declaration: type IDENTIFIER EQUALS_TO ( BOOLEAN
+                                                | STRING
+                                                | NUMBER ) SEMICOLON?;
 
 comparator: GT | GE | LT | LE | EQ;
 
 binary: AND | OR;
 
-argument: STRING_TYPE | BOOLEAN_TYPE | NUMBER_TYPE;
+type: STRING_TYPE | BOOLEAN_TYPE | NUMBER_TYPE;
 
-HELLO: 'hello';
-HI:    'hi';
-SEMICOLON: ';';
+// Single character
+PAREN_OPEN :'(';
+PAREN_CLOSE:')';
+CURLY_OPEN :'{';
+CURLY_CLOSE:'}';
+STR_OPEN   :'[';
+STR_CLOSE  :']';
+SEMICOLON  :';';
+COLON      :':';
+DOT        :'.';
+COMMA      :',';
+SPACE      :' ';
+QUOTES     :'"';
 
-PAREN_OPEN: '(';
-PAREN_CLOSE: ')';
+// Arithmetic operators
+PLUS    :'+';
+MINUS   :'-';
+MULTIPLY:'*';
+DIVIDE  :'/';
+MODULO  :'%';
 
-CURLY_OPEN: '{';
-CURLY_CLOSE: '}';
+//Types
+NUMBER_TYPE : 'numar' ;
+STRING_TYPE : 'sdc'   ;
+BOOLEAN_TYPE: 'bool'  ;
+AUTO_TYPE   :'automat';
+
+While  : 'cat timp'  ;
+If     : 'daca'      ;
+Else   :'altfel daca';
+Else_If: 'daca nu'   ;
+Execute: 'executa'   ;
+For    : 'pentru'    ;
+Print  : 'printeaza' ;
+Return :'returneaza' ;
+Method :'functia'    ;
+
+
+// Types values
+BOOLEAN: 'ADEVARAT' | 'FALS';
+STRING : '"' ~('\r'|'\n'|'"')* '"';
+NUMBER : '-'? [0-9]+ ( ('.')? [0-9]+ )?;
+
+// Relational Operators
+AND:'&&' ;
+OR : '||';
+GT : '>' ;
+GE : '>=';
+LT : '<' ;
+LE : '<=';
+EQ : '=' ;
+NOT: '!' ;
 
 //Assign
 EQUALS_TO: '<-';
 
-//Types
-NUMBER_TYPE: 'numar ';
-STRING_TYPE: 'sdc ';
-BOOLEAN_TYPE: 'bool ';
-
-// Types values
-BOOLEAN: 'ADEVARAT' | 'FALS';
-STRING: '"' ~('\r'|'\n'|'"')* '"';
-NUMBER: '-'? [0-9]+ ( ('.')? [0-9]+ )?;
-
-// Operators
-AND:'&&';
-OR: '||';
-GT : '>' ;
-GE : '>=' ;
-LT : '<' ;
-LE : '<=' ;
-EQ : '=' ;
-NOT: '!';
-
-COMMENT_LINE: '//' ~[\r\n]* -> skip;
+COMMENT_LINE: '#RoC' ~[\r\n]* -> skip;
 
 IDENTIFIER: [a-zA-Z_][a-zA-Z_0-9]*;
 
