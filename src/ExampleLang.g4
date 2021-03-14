@@ -10,7 +10,8 @@ method_declaration
 statement
          : decisionStatement
          | iterationStatement
-         | printStatement;
+         | printStatement
+         ;
 
 conditions: expr ( SPACE? binary expr)*;
 
@@ -32,9 +33,16 @@ expr
     | BOOLEAN                     # BOOLEAN
     ;
 
-addop : PLUS | MINUS ;
+addop
+    : PLUS
+    | MINUS
+    ;
 
-mulop : MULTIPLY | DIVIDE | MODULO ;
+mulop
+    : MULTIPLY
+    | DIVIDE
+    | MODULO
+    ;
 
 decisionStatement: If SPACE? PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE
                  (Else_If PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE )*
@@ -53,19 +61,37 @@ while: While conditions Execute CURLY_OPEN statement_body CURLY_CLOSE ;
 
 do_while: Execute CURLY_OPEN statement_body CURLY_CLOSE While conditions ;
 
-for: For (NUMBER_TYPE IDENTIFIER EQUALS_TO (left_num=NUMBER | left_id=IDENTIFIER)) COLON conditions  COLON  Execute CURLY_OPEN statement_body CURLY_CLOSE ;
+for: For SPACE (NUMBER_TYPE SPACE IDENTIFIER EQUALS_TO (left_num=NUMBER | left_id=IDENTIFIER)) COLON conditions COLON loop_incr SPACE Execute CURLY_OPEN statement_body CURLY_CLOSE ;
+
+loop_incr
+  : (IDENTIFIER EQUALS_TO )? expr
+  ;
 
 variable_declaration: type IDENTIFIER EQUALS_TO ( BOOLEAN
                                                 | STRING
                                                 | NUMBER ) SEMICOLON?;
 
-comparator: GT | GE | LT | LE | EQ;
+comparator
+        : GT
+        | GE
+        | LT
+        | LE
+        | EQ
+        ;
 
 binary: AND | OR;
 
-type: STRING_TYPE | BOOLEAN_TYPE | NUMBER_TYPE;
+type
+    : STRING_TYPE
+    | BOOLEAN_TYPE
+    | NUMBER_TYPE
+    ;
 
-type_value: BOOLEAN | STRING | NUMBER ;
+type_value
+        : BOOLEAN
+        | STRING
+        | NUMBER
+        ;
 
 // Single character
 PAREN_OPEN :'(';
