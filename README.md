@@ -111,13 +111,13 @@ executa {
 ```
 - For loop:
 ```
-numar num <- 0;
+numar num <- 0
 
 pentru numar I<-0 : <condition> : i++ executa { 
 
-numar num<-0; 
+numar num<-0
 
-num++; 
+num++
 
 } 
 ```
@@ -127,15 +127,15 @@ num++;
 ```
 daca (<condition>) { 
 
-  I <- I++; 
+  I <- I++
 
 } altfel daca (<condition>) { 
 
-  I <- 2;	 
+  I <- 2
 
 } daca nu { 
 
-I <- 3; 
+I <- 3
 
 } 
 ```
@@ -147,7 +147,7 @@ functia foo (<params>) returneaza <type> {
 
  <do stuff>
 
-returneaza <return variable if wanted>; 
+returneaza <return variable if wanted>
 
 } 
 ```
@@ -156,7 +156,7 @@ returneaza <return variable if wanted>;
 ```
 functia f(numar number) returneaza numar { 
 
-returneaza number + 2 * 4; 
+returneaza number + 2 * 4
 
 } 
 ```
@@ -164,5 +164,47 @@ returneaza number + 2 * 4;
 RoC has a special method that can be called to print statements in the console
 ```
 printeaza(<stuff to print>)
+```
+
+# Program examples 
+
+## 1
+```
+functia main()
+{
+    numar a<-12
+    cat timp(ADEVARAT) executa
+    {
+        printeaza(getNumberMultiplied(a))
+        printeaza(12)
+    }
+
+    functia getNumber() returneaza numar
+    {
+      returneaza a<-a*2
+    }
+
+    $RoC This is a random comment
+    $RoC I think it's cool 
+
+    functia getNumberMultiplied(numar mult) returneaza numar
+    {
+      returneaza mult<-mult*2
+    }
+}
+```
+
+## 2 
+
+```
+functia main()
+{
+  bool myBooleanValue<-FALS
+
+  for numar i<-1:myBooleanValue==FALS && i<:i<-i+1 executa
+  {
+    printeaza(i)
+  }
+}
 ```
 
