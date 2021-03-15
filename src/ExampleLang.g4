@@ -84,7 +84,8 @@ do_while: Execute CURLY_OPEN statement_body CURLY_CLOSE While conditions ;
 for: For SPACE (NUMBER_TYPE SPACE IDENTIFIER EQUALS_TO (left_num=NUMBER | left_id=IDENTIFIER)) COLON conditions COLON loop_incr SPACE Execute CURLY_OPEN statement_body CURLY_CLOSE ;
 
 loop_incr
-  : (IDENTIFIER EQUALS_TO )?
+  : ()
+  | IDENTIFIER EQUALS_TO arithmetic_expr
   ;
 
 variable_declaration: type IDENTIFIER EQUALS_TO ( BOOLEAN
