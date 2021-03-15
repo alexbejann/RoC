@@ -13,7 +13,27 @@ statement
          | printStatement
          ;
 
-conditions: expr ( SPACE? binary expr)*;
+conditions
+          : logical_expr
+          ;
+
+logical_expr
+            : logical_expr AND logical_expr        # LogicalExpressionAnd
+            | logical_expr OR logical_expr         # LogicalExpressionOr
+            | comparison_expr                      # ComparisonExpression
+            | PAREN_OPEN logical_expr PAREN_CLOSE  # LogicalExpressionInParen
+            | BOOLEAN                              # BOOLEAN
+            | IDENTIFIER                           # LocalVariable
+            ;
+
+comparison_expr
+                : comparison_operand comparator comparison_operand  # ComparisonExpressionWithOperator
+                | PAREN_OPEN comparison_expr PAREN_CLOSE            # ComparisonExpressionParens
+                ;
+
+comparison_operand
+                   : arithmetic_expr
+                   ;
 
 statement_body: (statement | variable_declaration)+;
 
@@ -24,13 +44,13 @@ statement_body: (statement | variable_declaration)+;
 //           | NUMBER                                         #decimalExpression
 //           ;
 
-expr
-    : MINUS expr                  # UMINUS
-    | expr mulop expr             # MULOPGRP
-    | expr addop expr             # ADDOPGRP
-    | PAREN_OPEN expr PAREN_CLOSE # PARENGRP
-    | NUMBER                      # DOUBLE
-    | BOOLEAN                     # BOOLEAN
+arithmetic_expr
+    : MINUS arithmetic_expr                  # UMINUS
+    | arithmetic_expr mulop arithmetic_expr  # MULOPGRP
+    | arithmetic_expr addop arithmetic_expr  # ADDOPGRP
+    | PAREN_OPEN arithmetic_expr PAREN_CLOSE # PARENGRP
+    | NUMBER                                 # NUMBER
+    | IDENTIFIER                             # IDENTIFIER
     ;
 
 addop
@@ -44,7 +64,7 @@ mulop
     | MODULO
     ;
 
-decisionStatement: If SPACE? PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE
+decisionStatement: If PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE
                  (Else_If PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE )*
                  (Else CURLY_OPEN statement_body CURLY_CLOSE)?
                  ;
@@ -64,7 +84,7 @@ do_while: Execute CURLY_OPEN statement_body CURLY_CLOSE While conditions ;
 for: For SPACE (NUMBER_TYPE SPACE IDENTIFIER EQUALS_TO (left_num=NUMBER | left_id=IDENTIFIER)) COLON conditions COLON loop_incr SPACE Execute CURLY_OPEN statement_body CURLY_CLOSE ;
 
 loop_incr
-  : (IDENTIFIER EQUALS_TO )? expr
+  : (IDENTIFIER EQUALS_TO )?
   ;
 
 variable_declaration: type IDENTIFIER EQUALS_TO ( BOOLEAN
