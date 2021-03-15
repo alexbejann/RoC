@@ -37,13 +37,6 @@ comparison_operand
 
 statement_body: (statement | variable_declaration)+;
 
-//expression
-//           : PAREN_OPEN expression PAREN_CLOSE              #parenExpression
-//           | left=expression op=comparator right=expression #comparatorExpression
-//           | left=expression op=binary right=expression     #binaryExpression
-//           | NUMBER                                         #decimalExpression
-//           ;
-
 arithmetic_expr
     : MINUS arithmetic_expr                  # UMINUS
     | arithmetic_expr mulop arithmetic_expr  # MULOPGRP
@@ -84,9 +77,9 @@ do_while: Execute CURLY_OPEN statement_body CURLY_CLOSE While conditions ;
 for: For SPACE (NUMBER_TYPE SPACE IDENTIFIER EQUALS_TO (left_num=NUMBER | left_id=IDENTIFIER)) COLON conditions COLON loop_incr SPACE Execute CURLY_OPEN statement_body CURLY_CLOSE ;
 
 loop_incr
-  : ()
-  | IDENTIFIER EQUALS_TO arithmetic_expr
-  ;
+        : ()
+        | IDENTIFIER EQUALS_TO arithmetic_expr
+        ;
 
 variable_declaration: type IDENTIFIER EQUALS_TO ( BOOLEAN
                                                 | STRING
@@ -99,8 +92,6 @@ comparator
         | LE
         | EQ
         ;
-
-binary: AND | OR;
 
 type
     : STRING_TYPE
