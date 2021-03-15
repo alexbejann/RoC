@@ -14,12 +14,17 @@ statement
          ;
 
 conditions
-          : logical_expr
+          : equality_expr
           ;
 
+equality_expr
+            : logical_expr                      # LogicalExpression
+            | equality_expr EQUALS logical_expr # EqualityEquals
+            | equality_expr NOT_EQ logical_expr # EqualityNotEquals
+            ;
+
 logical_expr
-            : logical_expr AND logical_expr        # LogicalExpressionAnd
-            | logical_expr OR logical_expr         # LogicalExpressionOr
+            : logical_expr binary logical_expr     # LogicalExpressionAndOr
             | comparison_expr                      # ComparisonExpression
             | PAREN_OPEN logical_expr PAREN_CLOSE  # LogicalExpressionInParen
             | BOOLEAN                              # BOOLEAN
@@ -38,13 +43,13 @@ comparison_operand
 statement_body: (statement | variable_declaration)+;
 
 arithmetic_expr
-    : MINUS arithmetic_expr                  # UMINUS
-    | arithmetic_expr mulop arithmetic_expr  # MULOPGRP
-    | arithmetic_expr addop arithmetic_expr  # ADDOPGRP
-    | PAREN_OPEN arithmetic_expr PAREN_CLOSE # PARENGRP
-    | NUMBER                                 # NUMBER
-    | IDENTIFIER                             # IDENTIFIER
-    ;
+              : MINUS arithmetic_expr                  # UMINUS
+              | arithmetic_expr mulop arithmetic_expr  # MULOPGRP
+              | arithmetic_expr addop arithmetic_expr  # ADDOPGRP
+              | PAREN_OPEN arithmetic_expr PAREN_CLOSE # PARENGRP
+              | NUMBER                                 # NUMBER
+              | IDENTIFIER                             # IDENTIFIER
+              ;
 
 addop
     : PLUS
@@ -56,6 +61,11 @@ mulop
     | DIVIDE
     | MODULO
     ;
+
+binary
+     : AND
+     | OR
+     ;
 
 decisionStatement: If PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE
                  (Else_If PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE )*
@@ -70,7 +80,7 @@ iterationStatement
                   | do_while
                   ;
 
-while: While conditions Execute CURLY_OPEN statement_body CURLY_CLOSE ;
+while: While conditions SPACE Execute CURLY_OPEN statement_body CURLY_CLOSE ;
 
 do_while: Execute CURLY_OPEN statement_body CURLY_CLOSE While conditions ;
 
@@ -149,15 +159,16 @@ STRING : '"' ~('\r'|'\n'|'"')* '"';
 NUMBER : '-'? [0-9]+ ( ('.')? [0-9]+ )?;
 
 // Relational Operators
-AND:'&&' ;
-OR : '||';
-GT : '>' ;
-GE : '>=';
-LT : '<' ;
-LE : '<=';
-EQ : '=' ;
-NOT: '!' ;
-NOT_EQ: '!=' ;
+AND   : '&&';
+OR    : '||';
+GT    : '>' ;
+GE    : '>=';
+LT    : '<' ;
+LE    : '<=';
+EQ    : '=' ;
+NOT   : '!' ;
+NOT_EQ: '!=';
+EQUALS: '==';
 
 //Assign
 EQUALS_TO: '<-';
