@@ -145,6 +145,7 @@ LT : '<' ;
 LE : '<=';
 EQ : '=' ;
 NOT: '!' ;
+NOT_EQ: '!=' ;
 
 //Assign
 EQUALS_TO: '<-';
