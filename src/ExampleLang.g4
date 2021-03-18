@@ -1,10 +1,10 @@
 grammar ExampleLang;
 
-program: method_declaration* statement* EOF;
+program: variable_declaration* method_declaration* statement* EOF;
 
 method_declaration
-                  : Method SPACE IDENTIFIER PAREN_OPEN (type IDENTIFIER (COMMA type IDENTIFIER)*)? PAREN_CLOSE (Return type)?
-                        CURLY_OPEN statement_body* ( Return type)? CURLY_CLOSE
+                  : Method SPACE IDENTIFIER PAREN_OPEN (type SPACE IDENTIFIER (COMMA type SPACE IDENTIFIER)*)? PAREN_CLOSE SPACE+ (Return SPACE type)?
+                        CURLY_OPEN statement_body+ ( Return SPACE+  IDENTIFIER)? CURLY_CLOSE
                   ;
 
 statement
@@ -40,7 +40,7 @@ comparison_operand
                    : arithmetic_expr
                    ;
 
-statement_body: (statement | variable_declaration)+;
+statement_body: ((statement | variable_declaration) SEMICOLON?)+ ;
 
 arithmetic_expr
               : MINUS arithmetic_expr                  # UMINUS
@@ -91,9 +91,9 @@ loop_incr
         | IDENTIFIER EQUALS_TO arithmetic_expr
         ;
 
-variable_declaration: type IDENTIFIER EQUALS_TO ( BOOLEAN
+variable_declaration: type SPACE IDENTIFIER SPACE* EQUALS_TO SPACE* ( BOOLEAN
                                                 | STRING
-                                                | NUMBER ) SEMICOLON?;
+                                                | NUMBER );
 
 comparator
         : GT
