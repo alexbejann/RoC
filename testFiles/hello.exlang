@@ -1,4 +1,5 @@
-functia helloWorld() returneaza nimic{
-    sdc stringHello<-HelloWorld
+functia helloWorld()
+{
+    sdc stringHello<-"Hello World"
     printeaza(stringHello)
 }
