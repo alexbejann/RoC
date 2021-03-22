@@ -43,6 +43,14 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="antlr-runtime-4.8" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/antlr4-runtime-4.9.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

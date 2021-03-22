@@ -24,25 +24,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * Not shown is a test where the file contains no syntax errors, but the checker should find some
  * error. You can of course add that yourself.
  */
-class CompilerTest {
+class CompilerTest extends TestBase {
 
-	/**
-	 * Helper method that takes some compiled Jasmin byte code, assembles it and
-	 * runs the class. It returns the output of the execution, which you can use
-	 * to check in an assert.
-	 */
-	private List<String> runCode( JasminBytecode code ) throws AssembleException {
-		// Turn the Jasmin code into a (hopefully) working class file
-		if( code == null ) {
-			throw new AssembleException("No valid Jasmin code to assemble");
-		}
-		AssembledClass aClass = AssembledClass.assemble(code);
-
-		// Run the class and return the output
-		SandBox s = new SandBox();
-		s.runClass(aClass);
-		return s.getOutput();
-	}
 
 	@Test
 	void checkByteCode() throws Exception {
