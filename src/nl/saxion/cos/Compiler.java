@@ -76,13 +76,13 @@ public class Compiler {
 	 * @return        A parse tree
 	 */
 	private ParseTree runLexerAndParser( CharStream input ) {
-		ExampleLangLexer lexer = new ExampleLangLexer(input);      // TODO: Replace lexer with the one for your own language
+		RoCLexer lexer = new RoCLexer(input);
 		lexer.addErrorListener(getErrorListener());
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-		ExampleLangParser parser = new ExampleLangParser(tokens);  // TODO: Replace parser with the one for your own language
+		RoCParser parser = new RoCParser(tokens);
 		parser.addErrorListener(getErrorListener());
-		return parser.program();                                   // TODO: Replace .program() with your own start symbol
+		return parser.program();
 	}
 
 	/**
@@ -100,6 +100,8 @@ public class Compiler {
 		//         - The user is trying to assign a value to a variable with a different type
 		//         - An if-statement has a condition that is not a boolean
 		//         - An expression mixes values of incompatible data types
+		TypeChecker typeChecker = new TypeChecker();
+		typeChecker.visit(parseTree);
 		return true;
 	}
 

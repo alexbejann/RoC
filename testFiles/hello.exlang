@@ -1,5 +1,5 @@
 functia helloWorld()
 {
-    sdc stringHello<-"Hello World"
+    sdc stringHello<-"Hello World!"
     printeaza(stringHello)
 }

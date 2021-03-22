@@ -1,4 +1,4 @@
-grammar ExampleLang;
+grammar RoC;
 
 program: variable_declaration* method_declaration* statement* EOF;
 
@@ -51,22 +51,6 @@ arithmetic_expr
               | IDENTIFIER                             # IDENTIFIER
               ;
 
-addop
-    : PLUS
-    | MINUS
-    ;
-
-mulop
-    : MULTIPLY
-    | DIVIDE
-    | MODULO
-    ;
-
-binary
-     : AND
-     | OR
-     ;
-
 decisionStatement: If PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE
                  (Else_If PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE )*
                  (Else CURLY_OPEN statement_body CURLY_CLOSE)?
@@ -75,25 +59,16 @@ decisionStatement: If PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_bod
 printStatement: Print PAREN_OPEN (IDENTIFIER | type_value) PAREN_CLOSE ;
 
 iterationStatement
-                  : while
-                  | for
-                  | do_while
+                  : While conditions Execute CURLY_OPEN statement_body CURLY_CLOSE
+                  | For (NUMBER_TYPE IDENTIFIER EQUALS_TO (left_num=NUMBER | left_id=IDENTIFIER)) COLON conditions COLON (IDENTIFIER EQUALS_TO arithmetic_expr) Execute CURLY_OPEN statement_body CURLY_CLOSE
+                  | Execute CURLY_OPEN statement_body CURLY_CLOSE While conditions
                   ;
-
-while: While conditions Execute CURLY_OPEN statement_body CURLY_CLOSE ;
-
-do_while: Execute CURLY_OPEN statement_body CURLY_CLOSE While conditions ;
-
-for: For (NUMBER_TYPE IDENTIFIER EQUALS_TO (left_num=NUMBER | left_id=IDENTIFIER)) COLON conditions COLON loop_incr Execute CURLY_OPEN statement_body CURLY_CLOSE ;
-
-loop_incr
-        : ()
-        | IDENTIFIER EQUALS_TO arithmetic_expr
-        ;
 
 variable_declaration: type IDENTIFIER EQUALS_TO ( BOOLEAN
                                                 | STRING
-                                                | NUMBER );
+                                                | NUMBER
+                                                | IDENTIFIER
+                                                | arithmetic_expr);
 
 comparator
         : GT
@@ -115,6 +90,22 @@ type_value
         | STRING
         | NUMBER
         ;
+
+addop
+    : PLUS
+    | MINUS
+    ;
+
+mulop
+    : MULTIPLY
+    | DIVIDE
+    | MODULO
+    ;
+
+binary
+     : AND
+     | OR
+     ;
 
 // Single character
 PAREN_OPEN :'(';
