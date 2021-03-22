@@ -107,6 +107,7 @@ type
     : STRING_TYPE
     | BOOLEAN_TYPE
     | NUMBER_TYPE
+    | AUTO_TYPE
     ;
 
 type_value
