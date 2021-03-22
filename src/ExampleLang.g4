@@ -3,8 +3,8 @@ grammar ExampleLang;
 program: variable_declaration* method_declaration* statement* EOF;
 
 method_declaration
-                  : Method SPACE IDENTIFIER PAREN_OPEN (type SPACE IDENTIFIER (COMMA type SPACE IDENTIFIER)*)? PAREN_CLOSE SPACE+ (Return SPACE type)?
-                        CURLY_OPEN statement_body+ ( Return SPACE+  IDENTIFIER)? CURLY_CLOSE
+                  : Method IDENTIFIER PAREN_OPEN (type IDENTIFIER (COMMA type  IDENTIFIER)*)? PAREN_CLOSE (Return type)?
+                        CURLY_OPEN statement_body+ ( Return IDENTIFIER)? CURLY_CLOSE
                   ;
 
 statement
@@ -80,18 +80,18 @@ iterationStatement
                   | do_while
                   ;
 
-while: While conditions SPACE Execute CURLY_OPEN statement_body CURLY_CLOSE ;
+while: While conditions Execute CURLY_OPEN statement_body CURLY_CLOSE ;
 
 do_while: Execute CURLY_OPEN statement_body CURLY_CLOSE While conditions ;
 
-for: For SPACE (NUMBER_TYPE SPACE IDENTIFIER EQUALS_TO (left_num=NUMBER | left_id=IDENTIFIER)) COLON conditions COLON loop_incr SPACE Execute CURLY_OPEN statement_body CURLY_CLOSE ;
+for: For (NUMBER_TYPE IDENTIFIER EQUALS_TO (left_num=NUMBER | left_id=IDENTIFIER)) COLON conditions COLON loop_incr Execute CURLY_OPEN statement_body CURLY_CLOSE ;
 
 loop_incr
         : ()
         | IDENTIFIER EQUALS_TO arithmetic_expr
         ;
 
-variable_declaration: type SPACE IDENTIFIER SPACE* EQUALS_TO SPACE* ( BOOLEAN
+variable_declaration: type IDENTIFIER EQUALS_TO ( BOOLEAN
                                                 | STRING
                                                 | NUMBER );
 
@@ -126,7 +126,6 @@ SEMICOLON  :';';
 COLON      :':';
 DOT        :'.';
 COMMA      :',';
-SPACE      :' ';
 QUOTES     :'"';
 
 // Arithmetic operators
