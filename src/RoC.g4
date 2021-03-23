@@ -24,31 +24,27 @@ equality_expr
             ;
 
 logical_expr
-            : logical_expr binary logical_expr     # LogicalExpressionAndOr
-            | comparison_expr                      # ComparisonExpression
-            | PAREN_OPEN logical_expr PAREN_CLOSE  # LogicalExpressionInParen
-            | BOOLEAN                              # BOOLEAN
-            | IDENTIFIER                           # LocalVariable
+            : logical_expr (AND | OR) logical_expr     # LogicalExpressionAndOr
+            | comparison_expr                          # ComparisonExpression
+            | PAREN_OPEN logical_expr PAREN_CLOSE      # LogicalExpressionInParen
+            | BOOLEAN                                  # BOOLEAN
+            | IDENTIFIER                               # LocalVariable
             ;
 
 comparison_expr
-                : comparison_operand comparator comparison_operand  # ComparisonExpressionWithOperator
-                | PAREN_OPEN comparison_expr PAREN_CLOSE            # ComparisonExpressionParens
+                : arithmetic_expr comparator arithmetic_expr  # ComparisonExpressionWithOperator
+                | PAREN_OPEN comparison_expr PAREN_CLOSE      # ComparisonExpressionParens
                 ;
-
-comparison_operand
-                   : arithmetic_expr
-                   ;
 
 statement_body: ((statement | variable_declaration) SEMICOLON?)+ ;
 
 arithmetic_expr
-              : MINUS arithmetic_expr                  # UMINUS
-              | arithmetic_expr mulop arithmetic_expr  # MULOPGRP
-              | arithmetic_expr addop arithmetic_expr  # ADDOPGRP
-              | PAREN_OPEN arithmetic_expr PAREN_CLOSE # PARENGRP
-              | NUMBER                                 # NUMBER
-              | IDENTIFIER                             # IDENTIFIER
+              : MINUS arithmetic_expr                                         # UMINUS
+              | arithmetic_expr (MULTIPLY | DIVIDE | MODULO) arithmetic_expr  # MULOPGRP
+              | arithmetic_expr (PLUS | MINUS) arithmetic_expr                # ADDOPGRP
+              | PAREN_OPEN arithmetic_expr PAREN_CLOSE                        # PARENGRP
+              | NUMBER                                                        # NUMBER
+              | IDENTIFIER                                                    # IDENTIFIER
               ;
 
 decisionStatement: If PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE
@@ -90,22 +86,6 @@ type_value
         | STRING
         | NUMBER
         ;
-
-addop
-    : PLUS
-    | MINUS
-    ;
-
-mulop
-    : MULTIPLY
-    | DIVIDE
-    | MODULO
-    ;
-
-binary
-     : AND
-     | OR
-     ;
 
 // Single character
 PAREN_OPEN :'(';

@@ -1,6 +1,17 @@
 package nl.saxion.cos;
 
 
-public class TypeChecker extends RoCBaseVisitor<>
+import nl.saxion.cos.model.DataType;
+
+public class TypeChecker extends RoCBaseVisitor<DataType>
 {
+    public TypeChecker()
+    {
+
+    }
+
+    public boolean isFailed()
+    {
+        return false;
+    }
 }

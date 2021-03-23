@@ -102,7 +102,7 @@ public class Compiler {
 		//         - An expression mixes values of incompatible data types
 		TypeChecker typeChecker = new TypeChecker();
 		typeChecker.visit(parseTree);
-		return true;
+		return !typeChecker.isFailed();
 	}
 
 	/**
@@ -120,24 +120,10 @@ public class Compiler {
 				.add(".super java/lang/Object")
 				.add();
 
-		// Main method
-		// TODO: You will have to create a visitor that visits the parse tree and generates
-		//       code for the nodes in that tree.
-		//       In your case, you will probably want to supply that visitor with the JasminCode
-		//       created above and emit lines of Jasmin code for the nodes in the parse tree.
-		//       For now, I'll just create a simple template that prints 'Hello world!'
+		CodeGenerator codeGenerator = new CodeGenerator(jasminBytecode);
+		codeGenerator.visit(parseTree);
 
-		jasminBytecode.add(".method public static main([Ljava/lang/String;)V")
-				.add(".limit stack 2")
-				.add(".limit locals 1")  // NOTE: The args-parameter is a local too
-				.add()
-				.add("getstatic java/lang/System/out Ljava/io/PrintStream;")            // Push System.out
-				.add("ldc \"Hello from ExampleLang!\"")                                 // Push message
-				.add("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V")  // Call println()
-				.add("return")
-				.add(".end method");
-
-		return jasminBytecode;
+		return codeGenerator.getJasminCode();
 	}
 
 	/**
@@ -168,16 +154,16 @@ public class Compiler {
 			Compiler compiler = new Compiler();
 
 			// Check that the user supplied a name of the source file
-			if (args.length == 0) {
+			/*if (args.length == 0) {
 				System.err.println("Usage: java Compiler <name of source>");
 				return;
-			}
+			}*/
 
 			// Split the file name
 			// It first strips the extension, so that: tests/myFile.exlang becomes tests/myFile.
 			// Then, it removes everything that seems a path, so we end up with just 'myFile' as
 			// the class name.
-			Path sourceCodePath = Paths.get(args[0]);
+			Path sourceCodePath = Paths.get("testFiles/hello.rc");
 
 			String sourceFileName = sourceCodePath.getFileName().toString();
 			int dotIndex = sourceFileName.lastIndexOf('.');

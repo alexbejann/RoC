@@ -1,0 +1,27 @@
+functia main()
+{
+    #RoC for loop
+    pentru numar i<-0 : i<10 : i<-i+1 executa
+    {
+        #RoC integer declaration
+        numar declarationTest <- i*2
+        #RoC print value multiplied
+        printeaza(declarationTest)
+    }
+
+    #RoC do while loop
+    numar i<-0;
+    executa
+    {
+        printeaza(i)
+        i<-i+1
+    }cat timp (i<10)
+
+    #RoC while loop
+    numar b<-2;
+    cat timp(b<20)
+    {
+        printeaza(b)
+        b<-b+1
+    }
+}

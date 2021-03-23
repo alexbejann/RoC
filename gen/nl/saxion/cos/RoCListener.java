@@ -168,16 +168,6 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitComparisonExpressionParens(RoCParser.ComparisonExpressionParensContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link RoCParser#comparison_operand}.
-	 * @param ctx the parse tree
-	 */
-	void enterComparison_operand(RoCParser.Comparison_operandContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RoCParser#comparison_operand}.
-	 * @param ctx the parse tree
-	 */
-	void exitComparison_operand(RoCParser.Comparison_operandContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link RoCParser#statement_body}.
 	 * @param ctx the parse tree
 	 */
@@ -329,34 +319,4 @@ public interface RoCListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitType_value(RoCParser.Type_valueContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link RoCParser#addop}.
-	 * @param ctx the parse tree
-	 */
-	void enterAddop(RoCParser.AddopContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RoCParser#addop}.
-	 * @param ctx the parse tree
-	 */
-	void exitAddop(RoCParser.AddopContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link RoCParser#mulop}.
-	 * @param ctx the parse tree
-	 */
-	void enterMulop(RoCParser.MulopContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RoCParser#mulop}.
-	 * @param ctx the parse tree
-	 */
-	void exitMulop(RoCParser.MulopContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link RoCParser#binary}.
-	 * @param ctx the parse tree
-	 */
-	void enterBinary(RoCParser.BinaryContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RoCParser#binary}.
-	 * @param ctx the parse tree
-	 */
-	void exitBinary(RoCParser.BinaryContext ctx);
 }

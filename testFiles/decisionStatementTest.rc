@@ -1,0 +1,27 @@
+functia main()
+{
+   #RoC foor loop with decisions
+   pentru numar i<-1 : i<=10 : i<-i+1 executa
+    {
+        daca(i == 1)
+        {
+            numar a <- i*2
+            printeaza(a)
+        }
+        altfel daca( i >= 6)
+        {
+            numar a <- i+2
+            printeaza(a)
+        }
+        altefel daca(i > 8 )
+        {
+            numar a <- i-2
+            printeaza(a)
+        }
+        daca nu
+        {
+            numar a <- i/3
+            printeaza(a)
+        }
+    }
+}

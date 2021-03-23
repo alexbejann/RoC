@@ -105,12 +105,6 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitComparisonExpressionParens(RoCParser.ComparisonExpressionParensContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link RoCParser#comparison_operand}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitComparison_operand(RoCParser.Comparison_operandContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link RoCParser#statement_body}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -200,22 +194,4 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitType_value(RoCParser.Type_valueContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link RoCParser#addop}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAddop(RoCParser.AddopContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link RoCParser#mulop}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMulop(RoCParser.MulopContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link RoCParser#binary}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBinary(RoCParser.BinaryContext ctx);
 }
