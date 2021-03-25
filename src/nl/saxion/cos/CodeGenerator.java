@@ -186,11 +186,15 @@ public class CodeGenerator extends RoCBaseVisitor<Void>
             {
                 jasminCode.add("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V");
             }
+            else if (ctx.type_value().BOOLEAN() != null)
+            {
+                //todo add boolean here
+            }
         }
         else if (ctx.IDENTIFIER() != null)
         {
             Variable variable = getVariable(ctx.IDENTIFIER().getText());
-            System.out.println("Variable "+ctx.IDENTIFIER().getText()+" "+ctx.IDENTIFIER().getSymbol()+" ");
+
             if (variable.getType() == DataType.NUMAR)
             {
                 jasminCode.add("invokevirtual java/io/PrintStream/println(I)V");
