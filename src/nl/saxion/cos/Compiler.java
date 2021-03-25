@@ -163,7 +163,7 @@ public class Compiler {
 			// It first strips the extension, so that: tests/myFile.exlang becomes tests/myFile.
 			// Then, it removes everything that seems a path, so we end up with just 'myFile' as
 			// the class name.
-			Path sourceCodePath = Paths.get("testFiles/hello.rc");
+			Path sourceCodePath = Paths.get("testFiles/"+args[0]);
 
 			String sourceFileName = sourceCodePath.getFileName().toString();
 			int dotIndex = sourceFileName.lastIndexOf('.');

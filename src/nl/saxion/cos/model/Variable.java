@@ -22,4 +22,9 @@ public class Variable
     {
         return type;
     }
+
+    public int getIndex()
+    {
+        return index;
+    }
 }

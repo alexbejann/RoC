@@ -1,11 +1,16 @@
 package nl.saxion.cos;
 
+import nl.saxion.cos.model.DataType;
+import nl.saxion.cos.model.Variable;
 import org.antlr.v4.runtime.tree.ParseTree;
+
+import java.util.HashMap;
 
 public class CodeGenerator extends RoCBaseVisitor<Void>
 {
 
     private JasminBytecode jasminCode;
+    private HashMap<String, Variable> variables = new HashMap<>();
 
     public CodeGenerator(JasminBytecode jasminBytecode)
     {
@@ -20,11 +25,18 @@ public class CodeGenerator extends RoCBaseVisitor<Void>
     @Override
     public Void visitProgram(RoCParser.ProgramContext ctx)
     {
+        jasminCode.add(".method public static main([Ljava/lang/String;)V");
+        jasminCode.add(".limit stack 99");
+        jasminCode.add(".limit locals 99");
+        jasminCode.add("");
 
-        for(ParseTree parseTree: ctx.children) {
+        for(ParseTree parseTree: ctx.children)
+        {
             visit(parseTree);
         }
 
+        jasminCode.add("return");
+        jasminCode.add(".end method");
         return null;
     }
 
@@ -154,10 +166,46 @@ public class CodeGenerator extends RoCBaseVisitor<Void>
         return super.visitDecisionStatement(ctx);
     }
 
+    /**
+     * Visit printStatement
+     * @param ctx of printStatement
+     */
     @Override
     public Void visitPrintStatement(RoCParser.PrintStatementContext ctx)
     {
-        return super.visitPrintStatement(ctx);
+        jasminCode.add("getstatic java/lang/System/out Ljava/io/PrintStream;");
+
+        if (ctx.type_value() != null)
+        {
+            visit(ctx.type_value());
+            if (ctx.type_value().NUMBER() != null)
+            {
+                jasminCode.add("invokevirtual java/io/PrintStream/println(I)V");
+            }
+            else if (ctx.type_value().STRING() != null)
+            {
+                jasminCode.add("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V");
+            }
+        }
+        else if (ctx.IDENTIFIER() != null)
+        {
+            Variable variable = getVariable(ctx.IDENTIFIER().getText());
+            System.out.println("Variable "+ctx.IDENTIFIER().getText()+" "+ctx.IDENTIFIER().getSymbol()+" ");
+            if (variable.getType() == DataType.NUMAR)
+            {
+                jasminCode.add("invokevirtual java/io/PrintStream/println(I)V");
+            }
+            else if (variable.getType() == DataType.SDC)
+            {
+                jasminCode.add("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V");
+            }
+            else if (variable.getType() == DataType.AUTOMAT)
+            {
+                //todo check type
+            }
+        }
+
+        return null;
     }
 
     @Override
@@ -175,18 +223,55 @@ public class CodeGenerator extends RoCBaseVisitor<Void>
     @Override
     public Void visitComparator(RoCParser.ComparatorContext ctx)
     {
-        return super.visitComparator(ctx);
+
+        return null;
     }
 
     @Override
     public Void visitType(RoCParser.TypeContext ctx)
     {
-        return super.visitType(ctx);
+        return null;
     }
 
     @Override
     public Void visitType_value(RoCParser.Type_valueContext ctx)
     {
-        return super.visitType_value(ctx);
+        if (ctx.STRING() != null)
+        {
+            System.out.println(ctx.getText());
+            jasminCode.add("ldc " + ctx.STRING().getText());
+        }
+        else if (ctx.BOOLEAN() != null)
+        {
+            System.out.println(ctx.getText());
+            jasminCode.add("ldc " + ctx.BOOLEAN().getText());
+        }
+        else if (ctx.NUMBER() != null)
+        {
+            System.out.println(ctx.getText());
+            jasminCode.add("ldc " + ctx.NUMBER().getText());
+        }
+        return null;
+    }
+
+    private Variable addVariable(String name, DataType type)
+    {
+        int position = variables.size() + 1;
+
+        if(variables.containsKey(name))
+        {
+            name += position;
+        }
+
+        Variable var = new Variable(name, type, position);
+
+        variables.put(name, var);
+
+        return var;
+    }
+
+    private Variable getVariable(String name)
+    {
+        return variables.get(name);
     }
 }
