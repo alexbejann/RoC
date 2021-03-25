@@ -1,6 +1,7 @@
 package nl.saxion.cos;
 
 import nl.saxion.cos.model.DataType;
+import nl.saxion.cos.model.Operator;
 import nl.saxion.cos.model.Variable;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -148,16 +149,46 @@ public class CodeGenerator extends RoCBaseVisitor<Void>
         return super.visitIDENTIFIER(ctx);
     }
 
+    /**
+     * Process MULTIPLY, DIVIDE, MODULO
+     * @param ctx context
+     * @return nothing
+     */
     @Override
     public Void visitMULOPGRP(RoCParser.MULOPGRPContext ctx)
     {
-        return super.visitMULOPGRP(ctx);
+        if (ctx.MULTIPLY() != null)
+        {
+            System.out.println("plus op "+ Operator.valueOf(ctx.MULTIPLY().getText()));
+        }
+        else if (ctx.DIVIDE() != null)
+        {
+            System.out.println("plus op "+ctx.DIVIDE().getText());
+        }
+        else if (ctx.MODULO() != null)
+        {
+            System.out.println("plus op "+ctx.MODULO().getText());
+        }
+        return null;
     }
 
+    /**
+     * Process PLUS and MINUS operations
+     * @param ctx of expression
+     * @return null
+     */
     @Override
     public Void visitADDOPGRP(RoCParser.ADDOPGRPContext ctx)
     {
-        return super.visitADDOPGRP(ctx);
+        if (ctx.PLUS() != null)
+        {
+            System.out.println("plus op "+ctx.PLUS().getText()+" ");
+        }
+        else if (ctx.MINUS() != null)
+        {
+            System.out.println("plus op "+ctx.PLUS().getText());
+        }
+        return null;
     }
 
     @Override
@@ -221,7 +252,29 @@ public class CodeGenerator extends RoCBaseVisitor<Void>
     @Override
     public Void visitVariable_declaration(RoCParser.Variable_declarationContext ctx)
     {
-        return super.visitVariable_declaration(ctx);
+        if (ctx.arithmetic_expr() != null)
+        {
+            System.out.println("expression"+ctx.getText());
+            visit(ctx.arithmetic_expr());
+        }
+        if (ctx.type().NUMBER_TYPE() != null)
+        {
+            System.out.println("number "+ctx.NUMBER()+" "+ctx.getText()+" "+ctx.IDENTIFIER(0).getText());
+            addVariable(ctx.IDENTIFIER(0).getText(),DataType.NUMAR);
+        }
+        else if (ctx.type().STRING_TYPE() != null)
+        {
+            System.out.println("number "+ctx.STRING()+" "+ctx.getText());
+        }
+        else if (ctx.type().BOOLEAN_TYPE() != null)
+        {
+            System.out.println("number "+ctx.BOOLEAN()+" "+ctx.getText());
+        }
+        else if (ctx.type().AUTO_TYPE() != null)
+        {
+            System.out.println("number "+ctx.getText());
+        }
+        return null;
     }
 
     @Override

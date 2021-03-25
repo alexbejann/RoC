@@ -1,0 +1,3 @@
+numar b<-2
+numar a<-12+2
+printeaza(a)

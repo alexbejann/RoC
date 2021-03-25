@@ -39,12 +39,12 @@ comparison_expr
 statement_body: ((statement | variable_declaration) SEMICOLON?)+ ;
 
 arithmetic_expr
-              : MINUS arithmetic_expr                                         # UMINUS
-              | arithmetic_expr (MULTIPLY | DIVIDE | MODULO) arithmetic_expr  # MULOPGRP
-              | arithmetic_expr (PLUS | MINUS) arithmetic_expr                # ADDOPGRP
-              | PAREN_OPEN arithmetic_expr PAREN_CLOSE                        # PARENGRP
-              | NUMBER                                                        # NUMBER
-              | IDENTIFIER                                                    # IDENTIFIER
+              : MINUS arithmetic_expr                                                       # UMINUS
+              | left=arithmetic_expr op=(MULTIPLY | DIVIDE | MODULO) right=arithmetic_expr  # MULOPGRP
+              | left=arithmetic_expr op=(PLUS | MINUS) right=arithmetic_expr                # ADDOPGRP
+              | PAREN_OPEN arithmetic_expr PAREN_CLOSE                                      # PARENGRP
+              | NUMBER                                                                      # NUMBER
+              | IDENTIFIER                                                                  # IDENTIFIER
               ;
 
 decisionStatement: If PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE
