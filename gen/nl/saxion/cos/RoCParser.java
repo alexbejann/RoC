@@ -1155,6 +1155,9 @@ public class RoCParser extends Parser {
 		}
 	}
 	public static class MULOPGRPContext extends Arithmetic_exprContext {
+		public Arithmetic_exprContext left;
+		public Token op;
+		public Arithmetic_exprContext right;
 		public List<Arithmetic_exprContext> arithmetic_expr() {
 			return getRuleContexts(Arithmetic_exprContext.class);
 		}
@@ -1180,6 +1183,9 @@ public class RoCParser extends Parser {
 		}
 	}
 	public static class ADDOPGRPContext extends Arithmetic_exprContext {
+		public Arithmetic_exprContext left;
+		public Token op;
+		public Arithmetic_exprContext right;
 		public List<Arithmetic_exprContext> arithmetic_expr() {
 			return getRuleContexts(Arithmetic_exprContext.class);
 		}
@@ -1284,13 +1290,15 @@ public class RoCParser extends Parser {
 					case 1:
 						{
 						_localctx = new MULOPGRPContext(new Arithmetic_exprContext(_parentctx, _parentState));
+						((MULOPGRPContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_arithmetic_expr);
 						setState(156);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(157);
+						((MULOPGRPContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << MULTIPLY) | (1L << DIVIDE) | (1L << MODULO))) != 0)) ) {
-						_errHandler.recoverInline(this);
+							((MULOPGRPContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -1298,19 +1306,21 @@ public class RoCParser extends Parser {
 							consume();
 						}
 						setState(158);
-						arithmetic_expr(6);
+						((MULOPGRPContext)_localctx).right = arithmetic_expr(6);
 						}
 						break;
 					case 2:
 						{
 						_localctx = new ADDOPGRPContext(new Arithmetic_exprContext(_parentctx, _parentState));
+						((ADDOPGRPContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_arithmetic_expr);
 						setState(159);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(160);
+						((ADDOPGRPContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==PLUS || _la==MINUS) ) {
-						_errHandler.recoverInline(this);
+							((ADDOPGRPContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -1318,7 +1328,7 @@ public class RoCParser extends Parser {
 							consume();
 						}
 						setState(161);
-						arithmetic_expr(5);
+						((ADDOPGRPContext)_localctx).right = arithmetic_expr(5);
 						}
 						break;
 					}
