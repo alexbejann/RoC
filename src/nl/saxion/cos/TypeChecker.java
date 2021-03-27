@@ -39,6 +39,41 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     }
 
     @Override
+    public DataType visitConditions(RoCParser.ConditionsContext ctx)
+    {
+        visit(ctx.equality_expr());
+        return null;
+    }
+
+    @Override
+    public DataType visitLogicalExpression(RoCParser.LogicalExpressionContext ctx)
+    {
+        System.out.println("ctx "+ctx.getText());
+        return super.visitLogicalExpression(ctx);
+    }
+
+    @Override
+    public DataType visitComparisonExpression(RoCParser.ComparisonExpressionContext ctx)
+    {
+        System.out.println("ctx "+ ctx.getText());
+        return super.visitComparisonExpression(ctx);
+    }
+
+    @Override
+    public DataType visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx)
+    {
+        System.out.println("ctx "+ctx.getText());
+        return null;
+    }
+
+    @Override
+    public DataType visitDecisionStatement(RoCParser.DecisionStatementContext ctx)
+    {
+        System.out.println("ctx "+ctx.getText());
+        return null;
+    }
+
+    @Override
     public DataType visitVariable_declaration(RoCParser.Variable_declarationContext ctx)
     {
         //visit the rhs and the lhs and
@@ -96,16 +131,14 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitPrintStatement(RoCParser.PrintStatementContext ctx)
     {
-        if (ctx.type_value() != null)
-            return visit(ctx.type_value());
+        return visit(ctx.type_value());
 
-        String name = ctx.IDENTIFIER().getText();
+        /*String name = ctx.IDENTIFIER().getText();
         Variable var = variableTable.lookUp(name);
         if (var == null)
             throw new CompilerException("Variable "+name+" not defined");
 
-        scope.put(ctx, variableTable);
-        return var.getType();
+        return var.getType();*/
     }
 
     @Override
@@ -156,6 +189,18 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
             System.out.println(ctx.getText());
             dataTypes.put(ctx,DataType.NUMAR);
             return DataType.NUMAR;
+        }
+        else if (ctx.IDENTIFIER() != null)
+        {
+            String name = ctx.IDENTIFIER().getText();
+            Variable var = variableTable.lookUp(name);
+            if (var == null)
+                throw new CompilerException("Variable "+name+" not defined");
+
+            dataTypes.put(ctx, variableTable.lookUp(name).getType());
+            //todo check if this can be removed
+            scope.put(ctx, variableTable);
+            return var.getType();
         }
 
         throw new CompilerException("Unrecognized data type");

@@ -76,25 +76,13 @@ public class RoCBaseListener implements RoCListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEqualityEquals(RoCParser.EqualityEqualsContext ctx) { }
+	@Override public void enterEqualityEqualsNotEquals(RoCParser.EqualityEqualsNotEqualsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitEqualityEquals(RoCParser.EqualityEqualsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterEqualityNotEquals(RoCParser.EqualityNotEqualsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitEqualityNotEquals(RoCParser.EqualityNotEqualsContext ctx) { }
+	@Override public void exitEqualityEqualsNotEquals(RoCParser.EqualityEqualsNotEqualsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

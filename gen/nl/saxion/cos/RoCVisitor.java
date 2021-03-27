@@ -42,19 +42,12 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLogicalExpression(RoCParser.LogicalExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code EqualityEquals}
+	 * Visit a parse tree produced by the {@code EqualityEqualsNotEquals}
 	 * labeled alternative in {@link RoCParser#equality_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitEqualityEquals(RoCParser.EqualityEqualsContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code EqualityNotEquals}
-	 * labeled alternative in {@link RoCParser#equality_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitEqualityNotEquals(RoCParser.EqualityNotEqualsContext ctx);
+	T visitEqualityEqualsNotEquals(RoCParser.EqualityEqualsNotEqualsContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ComparisonExpression}
 	 * labeled alternative in {@link RoCParser#logical_expr}.

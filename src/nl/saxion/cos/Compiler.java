@@ -9,6 +9,7 @@ import org.antlr.v4.runtime.tree.ParseTreeProperty;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 /**
  * Compiles source code in a custom language into Jasmin and then assembles a
@@ -129,10 +130,13 @@ public class Compiler {
 				.add(".super java/lang/Object")
 				.add();
 
-		CodeGenerator codeGenerator = new CodeGenerator(jasminBytecode, dataTypes, scope);
-		codeGenerator.visit(parseTree);
+		CodeGenerator codeGenerator = new CodeGenerator(dataTypes, scope);
+		List<String> code = codeGenerator.visit(parseTree);
 
-		return codeGenerator.getJasminCode();
+		jasminBytecode.addAll(code);
+		jasminBytecode.add("return");
+		jasminBytecode.add(".end method");
+		return jasminBytecode;
 	}
 
 	/**

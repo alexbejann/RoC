@@ -34,4 +34,32 @@ public class MethodTest extends TestBase
         }, output.toArray());
 
     }
+
+    /**
+     *
+     */
+    @Test
+    public void printIfFromMethod() throws IOException, AssembleException
+    {
+        String codeString = "functia main()\n" +
+                            "{\n" +
+                            "   numar a<-3\n" +
+                            "   numar b<-3*2\n" +
+                            "   daca(a < b)\n" +
+                            "   {\n" +
+                            "       printeaza(b)\n" +
+                            "   }\n" +
+                            "}";
+
+        Compiler c = new Compiler();
+        JasminBytecode code = c.compileString(codeString,"printIfHello");
+        Assertions.assertNotNull(code);
+
+        List<String> output = runCode(code);
+
+        assertArrayEquals(new String[] {
+                "6"
+        }, output.toArray());
+
+    }
 }

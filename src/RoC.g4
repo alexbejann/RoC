@@ -4,7 +4,7 @@ program: method_declaration* EOF;
 
 method_declaration
                   : Method methodName=IDENTIFIER PAREN_OPEN argument_list? PAREN_CLOSE (Return type)?
-                        CURLY_OPEN body=statement_body+ ( Return IDENTIFIER)? CURLY_CLOSE
+                        CURLY_OPEN body=statement_body+ (Return IDENTIFIER)? CURLY_CLOSE
                   ;
 
 argument_list
@@ -16,9 +16,8 @@ conditions
           ;
 
 equality_expr
-            : logical_expr                      # LogicalExpression
-            | equality_expr EQUALS logical_expr # EqualityEquals
-            | equality_expr NOT_EQ logical_expr # EqualityNotEquals
+            : logical_expr                                  # LogicalExpression
+            | equality_expr (EQUALS | NOT_EQ) logical_expr  # EqualityEqualsNotEquals
             ;
 
 logical_expr
@@ -56,7 +55,7 @@ decisionStatement: If PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_bod
                  (Else CURLY_OPEN statement_body CURLY_CLOSE)?
                  ;
 
-printStatement: Print PAREN_OPEN (IDENTIFIER | type_value) PAREN_CLOSE ;
+printStatement: Print PAREN_OPEN (type_value) PAREN_CLOSE ;
 
 iterationStatement
                   : While conditions Execute CURLY_OPEN statement_body CURLY_CLOSE
@@ -89,6 +88,7 @@ type_value
         : BOOLEAN
         | STRING
         | NUMBER
+        | IDENTIFIER
         ;
 
 // Single character

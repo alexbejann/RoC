@@ -19,7 +19,7 @@ public class CodeGeneratorTest extends TestBase
     public void printNumbersAndString() throws IOException, AssembleException
     {
         String codeString = "functia main()\n" +
-                            "{" +
+                            "{\n" +
                             "   printeaza(345)\n" +
                             "   printeaza(\"helloWorld\")\n" +
                             "   printeaza(ADEVARAT)\n" +

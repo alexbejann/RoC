@@ -60,29 +60,17 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitLogicalExpression(RoCParser.LogicalExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code EqualityEquals}
+	 * Enter a parse tree produced by the {@code EqualityEqualsNotEquals}
 	 * labeled alternative in {@link RoCParser#equality_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterEqualityEquals(RoCParser.EqualityEqualsContext ctx);
+	void enterEqualityEqualsNotEquals(RoCParser.EqualityEqualsNotEqualsContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code EqualityEquals}
+	 * Exit a parse tree produced by the {@code EqualityEqualsNotEquals}
 	 * labeled alternative in {@link RoCParser#equality_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitEqualityEquals(RoCParser.EqualityEqualsContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code EqualityNotEquals}
-	 * labeled alternative in {@link RoCParser#equality_expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterEqualityNotEquals(RoCParser.EqualityNotEqualsContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code EqualityNotEquals}
-	 * labeled alternative in {@link RoCParser#equality_expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitEqualityNotEquals(RoCParser.EqualityNotEqualsContext ctx);
+	void exitEqualityEqualsNotEquals(RoCParser.EqualityEqualsNotEqualsContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ComparisonExpression}
 	 * labeled alternative in {@link RoCParser#logical_expr}.
