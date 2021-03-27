@@ -23,11 +23,11 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMethod_declaration(RoCParser.Method_declarationContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link RoCParser#statement}.
+	 * Visit a parse tree produced by {@link RoCParser#argument_list}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStatement(RoCParser.StatementContext ctx);
+	T visitArgument_list(RoCParser.Argument_listContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link RoCParser#conditions}.
 	 * @param ctx the parse tree
@@ -118,6 +118,13 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitUMINUS(RoCParser.UMINUSContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ADDSUBGRP}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitADDSUBGRP(RoCParser.ADDSUBGRPContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code NUMBER}
 	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
 	 * @param ctx the parse tree
@@ -139,19 +146,12 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIDENTIFIER(RoCParser.IDENTIFIERContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code MULOPGRP}
+	 * Visit a parse tree produced by the {@code MULDIVMODOPGRP}
 	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMULOPGRP(RoCParser.MULOPGRPContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ADDOPGRP}
-	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitADDOPGRP(RoCParser.ADDOPGRPContext ctx);
+	T visitMULDIVMODOPGRP(RoCParser.MULDIVMODOPGRPContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link RoCParser#decisionStatement}.
 	 * @param ctx the parse tree

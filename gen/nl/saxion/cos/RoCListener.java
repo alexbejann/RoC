@@ -28,15 +28,15 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitMethod_declaration(RoCParser.Method_declarationContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link RoCParser#statement}.
+	 * Enter a parse tree produced by {@link RoCParser#argument_list}.
 	 * @param ctx the parse tree
 	 */
-	void enterStatement(RoCParser.StatementContext ctx);
+	void enterArgument_list(RoCParser.Argument_listContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link RoCParser#statement}.
+	 * Exit a parse tree produced by {@link RoCParser#argument_list}.
 	 * @param ctx the parse tree
 	 */
-	void exitStatement(RoCParser.StatementContext ctx);
+	void exitArgument_list(RoCParser.Argument_listContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link RoCParser#conditions}.
 	 * @param ctx the parse tree
@@ -190,6 +190,18 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitUMINUS(RoCParser.UMINUSContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ADDSUBGRP}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterADDSUBGRP(RoCParser.ADDSUBGRPContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ADDSUBGRP}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitADDSUBGRP(RoCParser.ADDSUBGRPContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code NUMBER}
 	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
 	 * @param ctx the parse tree
@@ -226,29 +238,17 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitIDENTIFIER(RoCParser.IDENTIFIERContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code MULOPGRP}
+	 * Enter a parse tree produced by the {@code MULDIVMODOPGRP}
 	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterMULOPGRP(RoCParser.MULOPGRPContext ctx);
+	void enterMULDIVMODOPGRP(RoCParser.MULDIVMODOPGRPContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code MULOPGRP}
+	 * Exit a parse tree produced by the {@code MULDIVMODOPGRP}
 	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitMULOPGRP(RoCParser.MULOPGRPContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ADDOPGRP}
-	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterADDOPGRP(RoCParser.ADDOPGRPContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ADDOPGRP}
-	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitADDOPGRP(RoCParser.ADDOPGRPContext ctx);
+	void exitMULDIVMODOPGRP(RoCParser.MULDIVMODOPGRPContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link RoCParser#decisionStatement}.
 	 * @param ctx the parse tree

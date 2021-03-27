@@ -1,10 +1,13 @@
 package nl.saxion.cos;
 
 import nl.saxion.cos.model.DataType;
-import nl.saxion.cos.model.Operator;
 import nl.saxion.cos.model.Variable;
+import nl.saxion.cos.model.VariableTable;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeProperty;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CodeGenerator extends RoCBaseVisitor<Void>
@@ -12,10 +15,14 @@ public class CodeGenerator extends RoCBaseVisitor<Void>
 
     private JasminBytecode jasminCode;
     private HashMap<String, Variable> variables = new HashMap<>();
+    private final ParseTreeProperty<DataType> dataTypes;
+    private final ParseTreeProperty<VariableTable> scope ;
 
-    public CodeGenerator(JasminBytecode jasminBytecode)
+    public CodeGenerator(JasminBytecode jasminBytecode, ParseTreeProperty<DataType> dataTypes, ParseTreeProperty<VariableTable> scope)
     {
         this.jasminCode = jasminBytecode;
+        this.dataTypes = dataTypes;
+        this.scope = scope;
     }
 
     public JasminBytecode getJasminCode()
@@ -26,10 +33,6 @@ public class CodeGenerator extends RoCBaseVisitor<Void>
     @Override
     public Void visitProgram(RoCParser.ProgramContext ctx)
     {
-        jasminCode.add(".method public static main([Ljava/lang/String;)V");
-        jasminCode.add(".limit stack 99");
-        jasminCode.add(".limit locals 99");
-        jasminCode.add("");
 
         for(ParseTree parseTree: ctx.children)
         {
@@ -44,109 +47,34 @@ public class CodeGenerator extends RoCBaseVisitor<Void>
     @Override
     public Void visitMethod_declaration(RoCParser.Method_declarationContext ctx)
     {
-        return super.visitMethod_declaration(ctx);
+        String name = ctx.methodName.getText();
+        if (name.equals("main"))
+        {
+            jasminCode.add(".method public static main([Ljava/lang/String;)V");
+            jasminCode.add(".limit stack 99");
+            jasminCode.add(".limit locals 99");
+
+        }
+        else
+        {
+            System.out.println("another method called "+name);
+        }
+        visit(ctx.body);
+        return null;
     }
 
-    @Override
-    public Void visitStatement(RoCParser.StatementContext ctx)
-    {
-        return super.visitStatement(ctx);
-    }
 
-    @Override
-    public Void visitConditions(RoCParser.ConditionsContext ctx)
-    {
-        return super.visitConditions(ctx);
-    }
-
-    @Override
-    public Void visitLogicalExpression(RoCParser.LogicalExpressionContext ctx)
-    {
-        return super.visitLogicalExpression(ctx);
-    }
-
-    @Override
-    public Void visitEqualityEquals(RoCParser.EqualityEqualsContext ctx)
-    {
-        return super.visitEqualityEquals(ctx);
-    }
-
-    @Override
-    public Void visitEqualityNotEquals(RoCParser.EqualityNotEqualsContext ctx)
-    {
-        return super.visitEqualityNotEquals(ctx);
-    }
-
-    @Override
-    public Void visitComparisonExpression(RoCParser.ComparisonExpressionContext ctx)
-    {
-        return super.visitComparisonExpression(ctx);
-    }
-
-    @Override
-    public Void visitLogicalExpressionInParen(RoCParser.LogicalExpressionInParenContext ctx)
-    {
-        return super.visitLogicalExpressionInParen(ctx);
-    }
-
-    @Override
-    public Void visitLocalVariable(RoCParser.LocalVariableContext ctx)
-    {
-        return super.visitLocalVariable(ctx);
-    }
-
-    @Override
-    public Void visitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx)
-    {
-        return super.visitLogicalExpressionAndOr(ctx);
-    }
-
-    @Override
-    public Void visitBOOLEAN(RoCParser.BOOLEANContext ctx)
-    {
-        return super.visitBOOLEAN(ctx);
-    }
-
-    @Override
-    public Void visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx)
-    {
-        return super.visitComparisonExpressionWithOperator(ctx);
-    }
-
-    @Override
-    public Void visitComparisonExpressionParens(RoCParser.ComparisonExpressionParensContext ctx)
-    {
-        return super.visitComparisonExpressionParens(ctx);
-    }
 
     @Override
     public Void visitStatement_body(RoCParser.Statement_bodyContext ctx)
     {
-        return super.visitStatement_body(ctx);
-    }
-
-    @Override
-    public Void visitUMINUS(RoCParser.UMINUSContext ctx)
-    {
-        return super.visitUMINUS(ctx);
-    }
-
-    @Override
-    public Void visitNUMBER(RoCParser.NUMBERContext ctx)
-    {
-        return super.visitNUMBER(ctx);
-    }
-
-    @Override
-    public Void visitPARENGRP(RoCParser.PARENGRPContext ctx)
-    {
-        return super.visitPARENGRP(ctx);
-    }
-
-    @Override
-    public Void visitIDENTIFIER(RoCParser.IDENTIFIERContext ctx)
-    {
-        return super.visitIDENTIFIER(ctx);
+        for (ParseTree child:ctx.children)
+        {
+            System.out.println("child "+child);
+            visit(child);
+        }
+        System.out.println("ctx "+ctx);
+        return null;
     }
 
     /**
@@ -155,19 +83,21 @@ public class CodeGenerator extends RoCBaseVisitor<Void>
      * @return nothing
      */
     @Override
-    public Void visitMULOPGRP(RoCParser.MULOPGRPContext ctx)
+    public Void visitMULDIVMODOPGRP(RoCParser.MULDIVMODOPGRPContext ctx)
     {
+        visit(ctx.left);
+        visit(ctx.right);
         if (ctx.MULTIPLY() != null)
         {
-            System.out.println("plus op "+ Operator.valueOf(ctx.MULTIPLY().getText()));
+            jasminCode.add("imul");
         }
         else if (ctx.DIVIDE() != null)
         {
-            System.out.println("plus op "+ctx.DIVIDE().getText());
+            jasminCode.add("idiv");
         }
         else if (ctx.MODULO() != null)
         {
-            System.out.println("plus op "+ctx.MODULO().getText());
+            jasminCode.add("irem");
         }
         return null;
     }
@@ -178,23 +108,26 @@ public class CodeGenerator extends RoCBaseVisitor<Void>
      * @return null
      */
     @Override
-    public Void visitADDOPGRP(RoCParser.ADDOPGRPContext ctx)
+    public Void visitADDSUBGRP(RoCParser.ADDSUBGRPContext ctx)
     {
+        visit(ctx.left);
+        visit(ctx.right);
         if (ctx.PLUS() != null)
         {
-            System.out.println("plus op "+ctx.PLUS().getText()+" ");
+            jasminCode.add("iadd");
         }
         else if (ctx.MINUS() != null)
         {
-            System.out.println("plus op "+ctx.PLUS().getText());
+            jasminCode.add("isub");
         }
         return null;
     }
 
     @Override
-    public Void visitDecisionStatement(RoCParser.DecisionStatementContext ctx)
+    public Void visitNUMBER(RoCParser.NUMBERContext ctx)
     {
-        return super.visitDecisionStatement(ctx);
+        jasminCode.add("ldc "+ctx.getText());
+        return null;
     }
 
     /**
@@ -219,24 +152,30 @@ public class CodeGenerator extends RoCBaseVisitor<Void>
             }
             else if (ctx.type_value().BOOLEAN() != null)
             {
-                //todo add boolean here
+                jasminCode.add("invokevirtual java/io/PrintStream/println(Z)V");
             }
         }
         else if (ctx.IDENTIFIER() != null)
         {
-            Variable variable = getVariable(ctx.IDENTIFIER().getText());
-
-            if (variable.getType() == DataType.NUMAR)
+            //check context
+            String name = ctx.IDENTIFIER().getText();
+            System.out.println("Identifier "+ctx.IDENTIFIER().getText()+" "+name);
+            //todo check ctx might differ
+            Variable var = scope.get(ctx).lookUp(name);
+            switch (var.getType())
             {
-                jasminCode.add("invokevirtual java/io/PrintStream/println(I)V");
-            }
-            else if (variable.getType() == DataType.SDC)
-            {
-                jasminCode.add("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V");
-            }
-            else if (variable.getType() == DataType.AUTOMAT)
-            {
-                //todo check type
+                case NUMAR:
+                    jasminCode.add("iload "+var.getIndex());
+                    jasminCode.add("invokevirtual java/io/PrintStream/println(I)V");
+                    break;
+                case SDC:
+                    jasminCode.add("aload "+var.getIndex());
+                    jasminCode.add("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V");
+                    break;
+                case BOOL:
+                    jasminCode.add("iload "+var.getIndex());
+                    jasminCode.add("invokevirtual java/io/PrintStream/println(Z)V");
+                    break;
             }
         }
 
@@ -244,15 +183,37 @@ public class CodeGenerator extends RoCBaseVisitor<Void>
     }
 
     @Override
-    public Void visitIterationStatement(RoCParser.IterationStatementContext ctx)
-    {
-        return super.visitIterationStatement(ctx);
-    }
-
-    @Override
     public Void visitVariable_declaration(RoCParser.Variable_declarationContext ctx)
     {
+        String name = ctx.lhs.getText();
+        Variable var = scope.get(ctx).lookUp(name);
         if (ctx.arithmetic_expr() != null)
+            visit(ctx.arithmetic_expr());
+
+        switch (dataTypes.get(ctx))
+        {
+            case NUMAR:
+                if (ctx.arithmetic_expr() == null)
+                    jasminCode.add("ldc " + ctx.NUMBER().getText());
+
+                jasminCode.add("istore " + var.getIndex());
+                break;
+            case SDC:
+                jasminCode.add("ldc " + ctx.STRING().getText());
+                jasminCode.add("astore " + var.getIndex());
+                break;
+            case BOOL:
+                if (ctx.BOOLEAN().getText().equals("ADEVARAT"))
+                {
+                    jasminCode.add("ldc 1");
+                } else
+                {
+                    jasminCode.add("ldc 0");
+                }
+                jasminCode.add("istore " + var.getIndex());
+                break;
+        }
+        /*if (ctx.arithmetic_expr() != null)
         {
             System.out.println("expression"+ctx.getText());
             visit(ctx.arithmetic_expr());
@@ -269,44 +230,31 @@ public class CodeGenerator extends RoCBaseVisitor<Void>
         else if (ctx.type().BOOLEAN_TYPE() != null)
         {
             System.out.println("number "+ctx.BOOLEAN()+" "+ctx.getText());
-        }
-        else if (ctx.type().AUTO_TYPE() != null)
-        {
-            System.out.println("number "+ctx.getText());
-        }
-        return null;
-    }
-
-    @Override
-    public Void visitComparator(RoCParser.ComparatorContext ctx)
-    {
-
-        return null;
-    }
-
-    @Override
-    public Void visitType(RoCParser.TypeContext ctx)
-    {
+        }*/
         return null;
     }
 
     @Override
     public Void visitType_value(RoCParser.Type_valueContext ctx)
     {
-        if (ctx.STRING() != null)
+        switch (dataTypes.get(ctx))
         {
-            System.out.println(ctx.getText());
-            jasminCode.add("ldc " + ctx.STRING().getText());
-        }
-        else if (ctx.BOOLEAN() != null)
-        {
-            System.out.println(ctx.getText());
-            jasminCode.add("ldc " + ctx.BOOLEAN().getText());
-        }
-        else if (ctx.NUMBER() != null)
-        {
-            System.out.println(ctx.getText());
-            jasminCode.add("ldc " + ctx.NUMBER().getText());
+            case SDC:
+                jasminCode.add("ldc " + ctx.STRING().getText());
+                break;
+            case BOOL:
+                if (ctx.BOOLEAN().getText().equals("ADEVARAT"))
+                {
+                    jasminCode.add("ldc 1");
+                }
+                else
+                {
+                    jasminCode.add("ldc 0");
+                }
+                break;
+            case NUMAR:
+                jasminCode.add("ldc " + ctx.NUMBER().getText());
+                break;
         }
         return null;
     }
@@ -330,5 +278,25 @@ public class CodeGenerator extends RoCBaseVisitor<Void>
     private Variable getVariable(String name)
     {
         return variables.get(name);
+    }
+
+    private Variable loadIdentifier(TerminalNode identifier)
+    {
+        Variable variable = getVariable(identifier.getText());
+
+        switch (variable.getType())
+        {
+            case NUMAR:
+                jasminCode.add("iload " + variable.getIndex());
+                break;
+            case SDC:
+
+                break;
+            case BOOL:
+
+                break;
+        }
+
+        return getVariable(identifier.getText());
     }
 }

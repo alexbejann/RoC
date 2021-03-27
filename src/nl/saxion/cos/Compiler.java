@@ -1,11 +1,14 @@
 package nl.saxion.cos;
 
+import nl.saxion.cos.model.DataType;
+import nl.saxion.cos.model.VariableTable;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeProperty;
+
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
 /**
  * Compiles source code in a custom language into Jasmin and then assembles a
@@ -18,6 +21,9 @@ public class Compiler {
 	 * The number of errors detected by the lexer and parser.
 	 */
 	private int errorCount = 0;
+	private ParseTreeProperty<DataType> dataTypes;
+	private ParseTreeProperty<VariableTable> scope = new ParseTreeProperty();
+	private VariableTable variableTable;
 
 	/**
 	 * Compiles a complete source code file.
@@ -52,7 +58,10 @@ public class Compiler {
 	 * @param className    Name of the class to create.
 	 */
 	private JasminBytecode compile( CharStream input, String className ) {
+
+		variableTable = new VariableTable();
 		// Phase 1/2: Run the lexer and parser
+		dataTypes = new ParseTreeProperty();
 		ParseTree parseTree = runLexerAndParser(input);
 
 		// ANTLR tries to do its best in creating a parse tree, even if the source code contains
@@ -100,7 +109,7 @@ public class Compiler {
 		//         - The user is trying to assign a value to a variable with a different type
 		//         - An if-statement has a condition that is not a boolean
 		//         - An expression mixes values of incompatible data types
-		TypeChecker typeChecker = new TypeChecker();
+		TypeChecker typeChecker = new TypeChecker(dataTypes, scope, variableTable);
 		typeChecker.visit(parseTree);
 		return !typeChecker.isFailed();
 	}
@@ -120,7 +129,7 @@ public class Compiler {
 				.add(".super java/lang/Object")
 				.add();
 
-		CodeGenerator codeGenerator = new CodeGenerator(jasminBytecode);
+		CodeGenerator codeGenerator = new CodeGenerator(jasminBytecode, dataTypes, scope);
 		codeGenerator.visit(parseTree);
 
 		return codeGenerator.getJasminCode();

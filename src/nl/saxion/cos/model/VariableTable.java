@@ -2,13 +2,14 @@ package nl.saxion.cos.model;
 
 import java.util.HashMap;
 
-public class SymbolTable
+public class VariableTable
 {
     private int nextIndex = 0;
 
     private final HashMap<String, Variable> symbols;
+    private VariableTable parentScope;
 
-    public SymbolTable()
+    public VariableTable()
     {
         this.symbols = new HashMap<>();
     }
@@ -21,10 +22,22 @@ public class SymbolTable
     public Variable lookUp(String name)
     {
         Variable variable = symbols.get(name);
+        if (variable == null && parentScope != null)
+            variable = parentScope.lookUp(name);
 
-        return symbols.get(name);
+        return variable;
     }
 
+    /**
+     * Add variable to hashmap
+     * @param name IDENTIFIER
+     * @param type Variable Type
+     */
+    public void add(String name, DataType type)
+    {
+        nextIndex++;
+        symbols.put(name, new Variable(name, type, nextIndex));
+    }
     /**
      * Add variable to hashmap
      * @param name IDENTIFIER
@@ -37,18 +50,18 @@ public class SymbolTable
         symbols.put(name, new Variable(name, type, index));
     }
 
-    /*public SymbolTable openScope()
+    public VariableTable openScope()
     {
-        SymbolTable childScope = new SymbolTable();
+        VariableTable childScope = new VariableTable();
         childScope.parentScope = this;
         childScope.nextIndex = nextIndex;
         return childScope;
 
     }
 
-    public SymbolTable getParentScope()
+    public VariableTable getParentScope()
     {
         return parentScope;
 
-    }*/
+    }
 }

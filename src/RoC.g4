@@ -1,17 +1,15 @@
 grammar RoC;
 
-program: variable_declaration* method_declaration* statement* EOF;
+program: method_declaration* EOF;
 
 method_declaration
-                  : Method IDENTIFIER PAREN_OPEN (type IDENTIFIER (COMMA type  IDENTIFIER)*)? PAREN_CLOSE (Return type)?
-                        CURLY_OPEN statement_body+ ( Return IDENTIFIER)? CURLY_CLOSE
+                  : Method methodName=IDENTIFIER PAREN_OPEN argument_list? PAREN_CLOSE (Return type)?
+                        CURLY_OPEN body=statement_body+ ( Return IDENTIFIER)? CURLY_CLOSE
                   ;
 
-statement
-         : decisionStatement
-         | iterationStatement
-         | printStatement
-         ;
+argument_list
+            : (type IDENTIFIER (COMMA type  IDENTIFIER)*)
+            ;
 
 conditions
           : equality_expr
@@ -36,12 +34,18 @@ comparison_expr
                 | PAREN_OPEN comparison_expr PAREN_CLOSE      # ComparisonExpressionParens
                 ;
 
-statement_body: ((statement | variable_declaration) SEMICOLON?)+ ;
+statement_body
+                : (decisionStatement
+                | iterationStatement
+                | printStatement
+                | variable_declaration
+                | variable_declaration SEMICOLON?)+
+                ;
 
 arithmetic_expr
               : MINUS arithmetic_expr                                                       # UMINUS
-              | left=arithmetic_expr op=(MULTIPLY | DIVIDE | MODULO) right=arithmetic_expr  # MULOPGRP
-              | left=arithmetic_expr op=(PLUS | MINUS) right=arithmetic_expr                # ADDOPGRP
+              | left=arithmetic_expr op=(MULTIPLY | DIVIDE | MODULO) right=arithmetic_expr  # MULDIVMODOPGRP
+              | left=arithmetic_expr op=(PLUS | MINUS)               right=arithmetic_expr  # ADDSUBGRP
               | PAREN_OPEN arithmetic_expr PAREN_CLOSE                                      # PARENGRP
               | NUMBER                                                                      # NUMBER
               | IDENTIFIER                                                                  # IDENTIFIER
@@ -60,11 +64,11 @@ iterationStatement
                   | Execute CURLY_OPEN statement_body CURLY_CLOSE While conditions
                   ;
 
-variable_declaration: type IDENTIFIER EQUALS_TO ( BOOLEAN
-                                                | STRING
-                                                | NUMBER
-                                                | IDENTIFIER
-                                                | arithmetic_expr);
+variable_declaration: type lhs=IDENTIFIER EQUALS_TO ( BOOLEAN
+                                                    | STRING
+                                                    | NUMBER
+                                                    | rhs=IDENTIFIER
+                                                    | arithmetic_expr);
 
 comparator
         : GT
@@ -127,7 +131,7 @@ Method :'functia'    ;
 // Types values
 BOOLEAN: 'ADEVARAT' | 'FALS';
 STRING : '"' ~('\r'|'\n'|'"')* '"';
-NUMBER : '-'? [0-9]+ ( ('.')? [0-9]+ )?;
+NUMBER : '0' | ('- ')? [1-9][0-9]* ('.'[0-9]*)?;
 
 // Relational Operators
 AND   : '&&';
