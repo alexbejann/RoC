@@ -7,12 +7,12 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class CodeGenerator extends RoCBaseVisitor<List<String>>
 {
 
+    private String jumpLabel;
     private final ParseTreeProperty<DataType> dataTypes;
     private final ParseTreeProperty<VariableTable> scope ;
 
@@ -44,7 +44,6 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             jasminCode.add(".method public static main([Ljava/lang/String;)V");
             jasminCode.add(".limit stack 99");
             jasminCode.add(".limit locals 99");
-
         }
         else
         {
@@ -69,8 +68,91 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     @Override
     public List<String> visitConditions(RoCParser.ConditionsContext ctx)
     {
-        visit(ctx.equality_expr());
-        return null;
+        List<String> jasminCode = new ArrayList<>();
+        System.out.println(ctx.equality_expr().getText());
+        jasminCode.addAll(visit(ctx.equality_expr()));
+        return jasminCode;
+    }
+
+    @Override
+    public List<String> visitLogicalExpression(RoCParser.LogicalExpressionContext ctx)
+    {
+        List<String> jasminCode = new ArrayList<>();
+        jasminCode.addAll(visitChildren(ctx));
+        return jasminCode;
+    }
+
+    @Override
+    public List<String> visitComparisonExpression(RoCParser.ComparisonExpressionContext ctx)
+    {
+        List<String> jasminCode = new ArrayList<>();
+        jasminCode.addAll(visitChildren(ctx));
+        return jasminCode;
+    }
+
+    @Override
+    public List<String> visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx)
+    {
+        jumpLabel = "L"+ctx.left.getText();
+        List<String> jasminCode = new ArrayList<>();
+        jasminCode.addAll(visit(ctx.left));
+        jasminCode.addAll(visit(ctx.right));
+        jasminCode.addAll(visit(ctx.comparator()));
+        jasminCode.add(jumpLabel+":");
+        return jasminCode;
+    }
+
+    @Override
+    public List<String> visitDecisionStatement(RoCParser.DecisionStatementContext ctx)
+    {
+        System.out.println("ctx "+ctx.getText());
+        List<String> jasminCode = new ArrayList<>();
+        if (ctx.if_lhs != null)
+        {
+            System.out.println("ctx "+ctx.if_lhs.getText());
+            jasminCode.addAll(visit(ctx.if_lhs));
+            jasminCode.addAll(visit(ctx.if_rhs));
+        }
+        else if (ctx.elseIF_lhs != null)
+        {
+            System.out.println("ctx "+ctx.elseIF_lhs.getText());
+            jasminCode.addAll(visit(ctx.elseIF_lhs));
+        }
+        else if (ctx.else_lhs != null)
+        {
+            //todo implement this
+            System.out.println("ctx "+ctx.else_lhs.getText());
+            //jasminCode.addAll(visit(ctx.else_lhs));
+        }
+
+        return jasminCode;
+    }
+
+    @Override
+    public List<String> visitComparator(RoCParser.ComparatorContext ctx)
+    {
+        List<String> jasminCode = new ArrayList<>();
+        if(ctx.GT() != null)
+        {
+            jasminCode.add("if_icmpgt "+ jumpLabel);
+        }
+        else if (ctx.EQ() != null)
+        {
+            jasminCode.add("if_icmpeq ");
+        }
+        else if(ctx.GE() != null)
+        {
+            jasminCode.add("if_icmpge ");
+        }
+        else if(ctx.LE() != null)
+        {
+            jasminCode.add("if_icmple ");
+        }
+        else if(ctx.LT() != null)
+        {
+            jasminCode.add("if_icmplt ");
+        }
+        return jasminCode;
     }
 
     /**
@@ -127,6 +209,15 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     {
         List<String> jasminCode = new ArrayList<>();
         jasminCode.add("ldc "+ctx.getText());
+        return jasminCode;
+    }
+
+    @Override
+    public List<String> visitIDENTIFIER(RoCParser.IDENTIFIERContext ctx)
+    {
+        List<String> jasminCode = new ArrayList<>();
+        Variable variable = scope.get(ctx).lookUp(ctx.IDENTIFIER().getText());
+        jasminCode.add("iload "+variable.getIndex());
         return jasminCode;
     }
 

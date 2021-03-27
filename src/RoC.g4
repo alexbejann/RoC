@@ -29,8 +29,8 @@ logical_expr
             ;
 
 comparison_expr
-                : arithmetic_expr comparator arithmetic_expr  # ComparisonExpressionWithOperator
-                | PAREN_OPEN comparison_expr PAREN_CLOSE      # ComparisonExpressionParens
+                : left=arithmetic_expr comparator right=arithmetic_expr     # ComparisonExpressionWithOperator
+                | PAREN_OPEN comparison_expr PAREN_CLOSE                    # ComparisonExpressionParens
                 ;
 
 statement_body
@@ -50,9 +50,9 @@ arithmetic_expr
               | IDENTIFIER                                                                  # IDENTIFIER
               ;
 
-decisionStatement: If PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE
-                 (Else_If PAREN_OPEN conditions PAREN_CLOSE CURLY_OPEN statement_body CURLY_CLOSE )*
-                 (Else CURLY_OPEN statement_body CURLY_CLOSE)?
+decisionStatement: If PAREN_OPEN if_lhs=conditions PAREN_CLOSE CURLY_OPEN if_rhs=statement_body CURLY_CLOSE
+                 (Else_If PAREN_OPEN elseIF_lhs=conditions PAREN_CLOSE CURLY_OPEN elseIF_rhs=statement_body CURLY_CLOSE )*
+                 (Else CURLY_OPEN else_lhs=statement_body CURLY_CLOSE)?
                  ;
 
 printStatement: Print PAREN_OPEN (type_value) PAREN_CLOSE ;

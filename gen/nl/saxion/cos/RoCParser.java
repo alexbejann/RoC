@@ -800,14 +800,16 @@ public class RoCParser extends Parser {
 		}
 	}
 	public static class ComparisonExpressionWithOperatorContext extends Comparison_exprContext {
+		public Arithmetic_exprContext left;
+		public Arithmetic_exprContext right;
+		public ComparatorContext comparator() {
+			return getRuleContext(ComparatorContext.class,0);
+		}
 		public List<Arithmetic_exprContext> arithmetic_expr() {
 			return getRuleContexts(Arithmetic_exprContext.class);
 		}
 		public Arithmetic_exprContext arithmetic_expr(int i) {
 			return getRuleContext(Arithmetic_exprContext.class,i);
-		}
-		public ComparatorContext comparator() {
-			return getRuleContext(ComparatorContext.class,0);
 		}
 		public ComparisonExpressionWithOperatorContext(Comparison_exprContext ctx) { copyFrom(ctx); }
 		@Override
@@ -837,11 +839,11 @@ public class RoCParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(105);
-				arithmetic_expr(0);
+				((ComparisonExpressionWithOperatorContext)_localctx).left = arithmetic_expr(0);
 				setState(106);
 				comparator();
 				setState(107);
-				arithmetic_expr(0);
+				((ComparisonExpressionWithOperatorContext)_localctx).right = arithmetic_expr(0);
 				}
 				break;
 			case 2:
@@ -1282,16 +1284,15 @@ public class RoCParser extends Parser {
 	}
 
 	public static class DecisionStatementContext extends ParserRuleContext {
+		public ConditionsContext if_lhs;
+		public Statement_bodyContext if_rhs;
+		public ConditionsContext elseIF_lhs;
+		public Statement_bodyContext elseIF_rhs;
+		public Statement_bodyContext else_lhs;
 		public TerminalNode If() { return getToken(RoCParser.If, 0); }
 		public List<TerminalNode> PAREN_OPEN() { return getTokens(RoCParser.PAREN_OPEN); }
 		public TerminalNode PAREN_OPEN(int i) {
 			return getToken(RoCParser.PAREN_OPEN, i);
-		}
-		public List<ConditionsContext> conditions() {
-			return getRuleContexts(ConditionsContext.class);
-		}
-		public ConditionsContext conditions(int i) {
-			return getRuleContext(ConditionsContext.class,i);
 		}
 		public List<TerminalNode> PAREN_CLOSE() { return getTokens(RoCParser.PAREN_CLOSE); }
 		public TerminalNode PAREN_CLOSE(int i) {
@@ -1301,15 +1302,21 @@ public class RoCParser extends Parser {
 		public TerminalNode CURLY_OPEN(int i) {
 			return getToken(RoCParser.CURLY_OPEN, i);
 		}
+		public List<TerminalNode> CURLY_CLOSE() { return getTokens(RoCParser.CURLY_CLOSE); }
+		public TerminalNode CURLY_CLOSE(int i) {
+			return getToken(RoCParser.CURLY_CLOSE, i);
+		}
+		public List<ConditionsContext> conditions() {
+			return getRuleContexts(ConditionsContext.class);
+		}
+		public ConditionsContext conditions(int i) {
+			return getRuleContext(ConditionsContext.class,i);
+		}
 		public List<Statement_bodyContext> statement_body() {
 			return getRuleContexts(Statement_bodyContext.class);
 		}
 		public Statement_bodyContext statement_body(int i) {
 			return getRuleContext(Statement_bodyContext.class,i);
-		}
-		public List<TerminalNode> CURLY_CLOSE() { return getTokens(RoCParser.CURLY_CLOSE); }
-		public TerminalNode CURLY_CLOSE(int i) {
-			return getToken(RoCParser.CURLY_CLOSE, i);
 		}
 		public List<TerminalNode> Else_If() { return getTokens(RoCParser.Else_If); }
 		public TerminalNode Else_If(int i) {
@@ -1347,13 +1354,13 @@ public class RoCParser extends Parser {
 			setState(150);
 			match(PAREN_OPEN);
 			setState(151);
-			conditions();
+			((DecisionStatementContext)_localctx).if_lhs = conditions();
 			setState(152);
 			match(PAREN_CLOSE);
 			setState(153);
 			match(CURLY_OPEN);
 			setState(154);
-			statement_body();
+			((DecisionStatementContext)_localctx).if_rhs = statement_body();
 			setState(155);
 			match(CURLY_CLOSE);
 			setState(166);
@@ -1367,13 +1374,13 @@ public class RoCParser extends Parser {
 				setState(157);
 				match(PAREN_OPEN);
 				setState(158);
-				conditions();
+				((DecisionStatementContext)_localctx).elseIF_lhs = conditions();
 				setState(159);
 				match(PAREN_CLOSE);
 				setState(160);
 				match(CURLY_OPEN);
 				setState(161);
-				statement_body();
+				((DecisionStatementContext)_localctx).elseIF_rhs = statement_body();
 				setState(162);
 				match(CURLY_CLOSE);
 				}
@@ -1392,7 +1399,7 @@ public class RoCParser extends Parser {
 				setState(170);
 				match(CURLY_OPEN);
 				setState(171);
-				statement_body();
+				((DecisionStatementContext)_localctx).else_lhs = statement_body();
 				setState(172);
 				match(CURLY_CLOSE);
 				}

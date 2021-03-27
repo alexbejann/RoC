@@ -1,12 +1,13 @@
 package nl.saxion.cos;
 
+import nl.saxion.cos.exceptions.CompilerException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MethodTest extends TestBase
 {
@@ -36,18 +37,19 @@ public class MethodTest extends TestBase
     }
 
     /**
-     *
+     * Expected to b and a to be printed in the console
      */
     @Test
     public void printIfFromMethod() throws IOException, AssembleException
     {
         String codeString = "functia main()\n" +
                             "{\n" +
-                            "   numar a<-3\n" +
-                            "   numar b<-3*2\n" +
-                            "   daca(a < b)\n" +
+                            "   numar a<-2\n" +
+                            "   numar b<-2*3\n" +
+                            "   daca(b > 3)\n" +
                             "   {\n" +
                             "       printeaza(b)\n" +
+                            "       printeaza(a)\n" +
                             "   }\n" +
                             "}";
 
@@ -58,8 +60,39 @@ public class MethodTest extends TestBase
         List<String> output = runCode(code);
 
         assertArrayEquals(new String[] {
-                "6"
+                "6","2"
         }, output.toArray());
+
+    }
+
+    /**
+     * Expected error because trying to access variable from another block
+     */
+    @Test
+    public void printFromAnotherBlock() throws IOException, AssembleException
+    {
+        String codeString = "functia main()\n" +
+                "{\n" +
+                "   numar a<-2\n" +
+                "   numar b<-2*3\n" +
+                "   daca(b > 3)\n" +
+                "   {\n" +
+                "       numar c<-2\n" +
+                "       printeaza(b)\n" +
+                "       printeaza(a)\n" +
+                "   }\n" +
+                "   printeaza(c)\n" +
+                "}";
+
+        Compiler c = new Compiler();
+
+        CompilerException exception = assertThrows(CompilerException.class, () -> {
+            c.compileString(codeString,"printFromAnotherBlock");
+        });
+        String expectedMessage = "Variable c not defined";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
 
     }
 }
