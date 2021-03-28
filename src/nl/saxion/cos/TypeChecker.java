@@ -48,7 +48,6 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitLogicalExpression(RoCParser.LogicalExpressionContext ctx)
     {
-        System.out.println("ctx "+ctx.getText());
         visitChildren(ctx);
         return null;
     }
@@ -56,15 +55,18 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitComparisonExpression(RoCParser.ComparisonExpressionContext ctx)
     {
-        System.out.println("ctx "+ ctx.getText());
-        visitChildren(ctx);
-        return null;
+        return visitChildren(ctx);
     }
 
     @Override
     public DataType visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx)
     {
-        System.out.println("ctx "+ctx.getText());
+        return visitChildren(ctx);
+    }
+
+    @Override
+    public DataType visitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx)
+    {
         visitChildren(ctx);
         return null;
     }
@@ -72,7 +74,6 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitDecisionStatement(RoCParser.DecisionStatementContext ctx)
     {
-        System.out.println("ctx "+ctx.getText());
         visitChildren(ctx);
         return null;
     }
@@ -171,13 +172,11 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     {
         if (ctx.STRING() != null)
         {
-            System.out.println(ctx.getText());
             dataTypes.put(ctx,DataType.SDC);
             return DataType.SDC;
         }
         else if (ctx.BOOLEAN() != null)
         {
-            System.out.println(ctx.getText());
             dataTypes.put(ctx,DataType.BOOL);
             return DataType.BOOL;
         }

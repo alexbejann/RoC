@@ -29,15 +29,15 @@ class CompilerTest extends TestBase {
 
 	@Test
 	void checkByteCode() throws Exception {
-		// Compile the file testFiles/hello.exlang
+		// Compile the file testFiles/decisionStatementElse.rc
 		Compiler c = new Compiler();
-		JasminBytecode code = c.compileFile("testFiles/hello.exlang", "HelloWorld");
+		JasminBytecode code = c.compileFile("testFiles/decisionStatementElse.rc", "DecisionStatementElse");
 		assertNotNull(code);
 
 		// Check that the bytecode matches what we expect
 		assertArrayEquals(new String[] {
 				".bytecode 49.0",
-				".class public HelloWorld",
+				".class public DecisionStatementElse",
 				".super java/lang/Object",
 				"",
 				".method public static main([Ljava/lang/String;)V",

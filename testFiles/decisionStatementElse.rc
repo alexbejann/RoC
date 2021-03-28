@@ -1,0 +1,12 @@
+functia main()
+{
+    numar b <- 6
+    daca(b < 3)
+    {
+        printeaza(b)
+    }
+    altfel daca
+    {
+        printeaza(5)
+    }
+}

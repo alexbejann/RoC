@@ -16,16 +16,16 @@ conditions
           ;
 
 equality_expr
-            : logical_expr                                  # LogicalExpression
-            | equality_expr (EQUALS | NOT_EQ) logical_expr  # EqualityEqualsNotEquals
+            : logical_expr                                              # LogicalExpression
+            | left=equality_expr (EQUALS | NOT_EQ) right=logical_expr   # EqualityEqualsNotEquals
             ;
 
 logical_expr
-            : logical_expr (AND | OR) logical_expr     # LogicalExpressionAndOr
-            | comparison_expr                          # ComparisonExpression
-            | PAREN_OPEN logical_expr PAREN_CLOSE      # LogicalExpressionInParen
-            | BOOLEAN                                  # BOOLEAN
-            | IDENTIFIER                               # LocalVariable
+            : left=logical_expr (AND | OR) right=logical_expr       # LogicalExpressionAndOr
+            | comparison_expr                                       # ComparisonExpression
+            | PAREN_OPEN logical_expr PAREN_CLOSE                   # LogicalExpressionInParen
+            | BOOLEAN                                               # BOOLEAN
+            | IDENTIFIER                                            # LocalVariable
             ;
 
 comparison_expr

@@ -456,14 +456,16 @@ public class RoCParser extends Parser {
 		}
 	}
 	public static class EqualityEqualsNotEqualsContext extends Equality_exprContext {
+		public Equality_exprContext left;
+		public Logical_exprContext right;
 		public Equality_exprContext equality_expr() {
 			return getRuleContext(Equality_exprContext.class,0);
 		}
+		public TerminalNode EQUALS() { return getToken(RoCParser.EQUALS, 0); }
+		public TerminalNode NOT_EQ() { return getToken(RoCParser.NOT_EQ, 0); }
 		public Logical_exprContext logical_expr() {
 			return getRuleContext(Logical_exprContext.class,0);
 		}
-		public TerminalNode EQUALS() { return getToken(RoCParser.EQUALS, 0); }
-		public TerminalNode NOT_EQ() { return getToken(RoCParser.NOT_EQ, 0); }
 		public EqualityEqualsNotEqualsContext(Equality_exprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -515,6 +517,7 @@ public class RoCParser extends Parser {
 					{
 					{
 					_localctx = new EqualityEqualsNotEqualsContext(new Equality_exprContext(_parentctx, _parentState));
+					((EqualityEqualsNotEqualsContext)_localctx).left = _prevctx;
 					pushNewRecursionContext(_localctx, _startState, RULE_equality_expr);
 					setState(79);
 					if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
@@ -529,7 +532,7 @@ public class RoCParser extends Parser {
 						consume();
 					}
 					setState(81);
-					logical_expr(0);
+					((EqualityEqualsNotEqualsContext)_localctx).right = logical_expr(0);
 					}
 					} 
 				}
@@ -619,6 +622,8 @@ public class RoCParser extends Parser {
 		}
 	}
 	public static class LogicalExpressionAndOrContext extends Logical_exprContext {
+		public Logical_exprContext left;
+		public Logical_exprContext right;
 		public List<Logical_exprContext> logical_expr() {
 			return getRuleContexts(Logical_exprContext.class);
 		}
@@ -732,6 +737,7 @@ public class RoCParser extends Parser {
 					{
 					{
 					_localctx = new LogicalExpressionAndOrContext(new Logical_exprContext(_parentctx, _parentState));
+					((LogicalExpressionAndOrContext)_localctx).left = _prevctx;
 					pushNewRecursionContext(_localctx, _startState, RULE_logical_expr);
 					setState(97);
 					if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
@@ -746,7 +752,7 @@ public class RoCParser extends Parser {
 						consume();
 					}
 					setState(99);
-					logical_expr(6);
+					((LogicalExpressionAndOrContext)_localctx).right = logical_expr(6);
 					}
 					} 
 				}
