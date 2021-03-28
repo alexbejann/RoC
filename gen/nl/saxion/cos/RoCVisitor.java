@@ -170,6 +170,13 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariable_declaration(RoCParser.Variable_declarationContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code AssignmentExpression}
+	 * labeled alternative in {@link RoCParser#varExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignmentExpression(RoCParser.AssignmentExpressionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link RoCParser#comparator}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -37,7 +37,7 @@ statement_body
                 : (decisionStatement
                 | iterationStatement
                 | printStatement
-                | variable_declaration
+                | varExpression
                 | variable_declaration SEMICOLON?)+
                 ;
 
@@ -68,6 +68,10 @@ variable_declaration: type lhs=IDENTIFIER EQUALS_TO ( BOOLEAN
                                                     | NUMBER
                                                     | rhs=IDENTIFIER
                                                     | arithmetic_expr);
+
+varExpression
+            : IDENTIFIER EQUALS_TO arithmetic_expr # AssignmentExpression
+            ;
 
 comparator
         : GT

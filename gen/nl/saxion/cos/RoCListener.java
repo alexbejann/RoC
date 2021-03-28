@@ -278,6 +278,18 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitVariable_declaration(RoCParser.Variable_declarationContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code AssignmentExpression}
+	 * labeled alternative in {@link RoCParser#varExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignmentExpression(RoCParser.AssignmentExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AssignmentExpression}
+	 * labeled alternative in {@link RoCParser#varExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignmentExpression(RoCParser.AssignmentExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link RoCParser#comparator}.
 	 * @param ctx the parse tree
 	 */

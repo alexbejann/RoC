@@ -79,6 +79,19 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     }
 
     @Override
+    public DataType visitAssignmentExpression(RoCParser.AssignmentExpressionContext ctx)
+    {
+        visit(ctx.arithmetic_expr());
+        String name = ctx.IDENTIFIER().getText();
+        Variable var = variableTable.lookUp(name);
+        if (var == null)
+            throw new CompilerException("Variable "+name+" not defined");
+
+        scope.put(ctx, variableTable);
+        return var.getType();
+    }
+
+    @Override
     public DataType visitVariable_declaration(RoCParser.Variable_declarationContext ctx)
     {
         //visit the rhs and the lhs and
@@ -163,6 +176,12 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     }
 
     @Override
+    public DataType visitBOOLEAN(RoCParser.BOOLEANContext ctx)
+    {
+        return DataType.BOOL;
+    }
+
+    @Override
     public DataType visitType_value(RoCParser.Type_valueContext ctx)
     {
         if (ctx.STRING() != null)
@@ -177,7 +196,6 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         }
         else if (ctx.NUMBER() != null)
         {
-            System.out.println(ctx.getText());
             dataTypes.put(ctx,DataType.NUMAR);
             return DataType.NUMAR;
         }
@@ -205,7 +223,6 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         if (var == null)
             throw new CompilerException("Variable "+name+" not defined");
 
-        dataTypes.put(ctx, variableTable.lookUp(name).getType());
         //todo check if this can be removed
         scope.put(ctx, variableTable);
         return var.getType();

@@ -293,6 +293,18 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     }
 
     @Override
+    public List<String> visitAssignmentExpression(RoCParser.AssignmentExpressionContext ctx)
+    {
+        String name = ctx.IDENTIFIER().getText();
+        Variable var = scope.get(ctx).lookUp(name);
+
+        List<String> jasminCode = new ArrayList<>(visit(ctx.arithmetic_expr()));
+        jasminCode.add("istore "+var.getIndex());
+
+        return jasminCode;
+    }
+
+    @Override
     public List<String> visitType_value(RoCParser.Type_valueContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
