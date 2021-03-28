@@ -7,9 +7,12 @@
 - ~~Specify block statements~~
 - Specify global and local scope 
 - ~~Should we keep `functia` keyword in our language?~~ `Yes, we will keep the keyword`
-- implement scoping
+- ~~implement scoping~~
 - implement iteration statements
-- implement conditional statements
+- ~~implement conditional statements~~
+- implement logical operators
+- implement scanner
+- implement assignment `a<-a+123`  
 - implement methods
 
 # TODO grammar:
