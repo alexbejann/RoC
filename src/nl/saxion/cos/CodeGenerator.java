@@ -48,6 +48,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         }
         else
         {
+            //todo implement this
             System.out.println("another method called "+name);
         }
         jasminCode.addAll(visit(ctx.body));
@@ -69,25 +70,19 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     @Override
     public List<String> visitConditions(RoCParser.ConditionsContext ctx)
     {
-        List<String> jasminCode = new ArrayList<>();
-        jasminCode.addAll(visit(ctx.equality_expr()));
-        return jasminCode;
+        return new ArrayList<>(visit(ctx.equality_expr()));
     }
 
     @Override
     public List<String> visitLogicalExpression(RoCParser.LogicalExpressionContext ctx)
     {
-        List<String> jasminCode = new ArrayList<>();
-        jasminCode.addAll(visitChildren(ctx));
-        return jasminCode;
+        return new ArrayList<>(visitChildren(ctx));
     }
 
     @Override
     public List<String> visitComparisonExpression(RoCParser.ComparisonExpressionContext ctx)
     {
-        List<String> jasminCode = new ArrayList<>();
-        jasminCode.addAll(visitChildren(ctx));
-        return jasminCode;
+        return new ArrayList<>(visitChildren(ctx));
     }
 
     @Override
