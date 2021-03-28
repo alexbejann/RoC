@@ -96,14 +96,12 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
                 if (ctx.NUMBER() == null && ctx.arithmetic_expr() == null)
                     throw new CompilerException("Type mismatch expected numar!");
 
-                System.out.println("numar " + ctx.getText());
                 variableTable.add(name, DataType.NUMAR);
                 break;
             case "sdc":
                 if (ctx.STRING() == null)
                     throw new CompilerException("Type mismatch expected sdc!");
 
-                System.out.println("sdc " + ctx.getText());
                 variableTable.add(name, DataType.SDC);
                 break;
             case "bool":
@@ -115,15 +113,12 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
             case "automat":
                 if (ctx.STRING() != null)
                 {
-                    System.out.println("string auto " + ctx.getText());
                     variableTable.add(name, DataType.SDC);
                 } else if (ctx.NUMBER() != null || ctx.arithmetic_expr() != null)
                 {
-                    System.out.println("number auto " + ctx.getText());
                     variableTable.add(name, DataType.NUMAR);
                 } else if (ctx.BOOLEAN() != null)
                 {
-                    System.out.println("bool auto " + ctx.getText());
                     variableTable.add(name, DataType.BOOL);
                 }
                 break;
