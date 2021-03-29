@@ -15,9 +15,9 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
 
     private String jumpLabel;
     private final ParseTreeProperty<DataType> dataTypes;
-    private final ParseTreeProperty<VariableTable> scope ;
+    private final ParseTreeProperty<Variable> scope ;
 
-    public CodeGenerator( ParseTreeProperty<DataType> dataTypes, ParseTreeProperty<VariableTable> scope)
+    public CodeGenerator( ParseTreeProperty<DataType> dataTypes, ParseTreeProperty<Variable> scope)
     {
         this.dataTypes = dataTypes;
         this.scope = scope;
@@ -224,7 +224,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitIDENTIFIER(RoCParser.IDENTIFIERContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
-        Variable variable = scope.get(ctx).lookUp(ctx.IDENTIFIER().getText());
+        Variable variable = scope.get(ctx);
         jasminCode.add("iload "+variable.getIndex());
         return jasminCode;
     }
@@ -262,7 +262,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     {
         List<String> jasminCode = new ArrayList<>();
         String name = ctx.lhs.getText();
-        Variable var = scope.get(ctx).lookUp(name);
+        Variable var = scope.get(ctx);
         if (ctx.arithmetic_expr() != null)
             jasminCode.addAll(visit(ctx.arithmetic_expr()));
 
@@ -296,7 +296,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitAssignmentExpression(RoCParser.AssignmentExpressionContext ctx)
     {
         String name = ctx.IDENTIFIER().getText();
-        Variable var = scope.get(ctx).lookUp(name);
+        Variable var = scope.get(ctx);
 
         List<String> jasminCode = new ArrayList<>(visit(ctx.arithmetic_expr()));
         jasminCode.add("istore "+var.getIndex());
@@ -311,7 +311,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         if (ctx.IDENTIFIER() != null)
         {
             //todo check this if can be removed or if it's a good practice
-            Variable var = scope.get(ctx).lookUp(ctx.IDENTIFIER().getText());
+            Variable var = scope.get(ctx);
             switch (var.getType())
             {
                 case NUMAR:

@@ -1,6 +1,7 @@
 package nl.saxion.cos;
 
 import nl.saxion.cos.model.DataType;
+import nl.saxion.cos.model.Variable;
 import nl.saxion.cos.model.VariableTable;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -23,7 +24,7 @@ public class Compiler {
 	 */
 	private int errorCount = 0;
 	private ParseTreeProperty<DataType> dataTypes;
-	private ParseTreeProperty<VariableTable> scope = new ParseTreeProperty();
+	private ParseTreeProperty<Variable> scope = new ParseTreeProperty();
 	private VariableTable variableTable;
 
 	/**

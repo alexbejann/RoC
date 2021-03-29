@@ -10,11 +10,11 @@ import org.antlr.v4.runtime.tree.ParseTreeProperty;
 public class TypeChecker extends RoCBaseVisitor<DataType>
 {
     private final ParseTreeProperty<DataType> dataTypes;
-    private final ParseTreeProperty<VariableTable> scope;
+    private final ParseTreeProperty<Variable> scope;
     private VariableTable variableTable;
     private boolean failed = false;
 
-    public TypeChecker(ParseTreeProperty<DataType> dataTypes, ParseTreeProperty<VariableTable> scope, VariableTable variableTable)
+    public TypeChecker(ParseTreeProperty<DataType> dataTypes, ParseTreeProperty<Variable> scope, VariableTable variableTable)
     {
 
         this.dataTypes = dataTypes;
@@ -31,7 +31,6 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitStatement_body(RoCParser.Statement_bodyContext ctx)
     {
-        scope.put(ctx,variableTable);
         variableTable = variableTable.openScope();
         visitChildren(ctx);
         variableTable = variableTable.getParentScope();
@@ -87,7 +86,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         if (var == null)
             throw new CompilerException("Variable "+name+" not defined");
 
-        scope.put(ctx, variableTable);
+        scope.put(ctx, var);
         return var.getType();
     }
 
@@ -137,7 +136,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
                 break;
         }
         dataTypes.put(ctx, variableTable.lookUp(name).getType());
-        scope.put(ctx, variableTable);
+        scope.put(ctx, variableTable.lookUp(name));
         return variableTable.lookUp(name).getType();
     }
 
@@ -208,7 +207,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
 
             dataTypes.put(ctx, variableTable.lookUp(name).getType());
             //todo check if this can be removed
-            scope.put(ctx, variableTable);
+            scope.put(ctx, var);
             return var.getType();
         }
 
@@ -224,7 +223,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
             throw new CompilerException("Variable "+name+" not defined");
 
         //todo check if this can be removed
-        scope.put(ctx, variableTable);
+        scope.put(ctx, var);
         return var.getType();
     }
 }
