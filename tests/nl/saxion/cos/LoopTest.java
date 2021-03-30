@@ -17,34 +17,25 @@ public class LoopTest extends TestBase
     @Test
     public void forLoopWithIfStatement() throws IOException, AssembleException
     {
-        /*String codeString = "functia main()\n" +
+        String codeString = "functia main()\n" +
                             "{\n" +
                             "   numar a<-2*3\n" +
                             "   a<-a+1\n" +
                             "   cat timp(a < 10) executa\n" +
                             "   {\n" +
                             "       a<-a+1\n" +
-                            "       daca(a > 8)\n" +
-                            "       {\n" +
-                            "           printeaza(a)\n" +
-                            "       }\n" +
                             "   }\n" +
-                            "}";*/
-        String codeString = "functia main()\n" +
-                            "{\n" +
-                            "   numar a<-3\n" +
-                            "   a<-a+1\n" +
                             "   printeaza(a)\n" +
                             "}";
 
         Compiler c = new Compiler();
-        JasminBytecode code = c.compileString(codeString,"decisionStatementsIf");
+        JasminBytecode code = c.compileString(codeString,"forLoopWithIfStatement");
         Assertions.assertNotNull(code);
 
         List<String> output = runCode(code);
 
         assertArrayEquals(new String[] {
-                "4"
+                "10"
         }, output.toArray());
 
     }

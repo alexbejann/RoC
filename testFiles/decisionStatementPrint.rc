@@ -1,0 +1,12 @@
+functia main()
+{
+   numar a<-2
+   numar b<-2*3
+   numar c<-2*a
+   daca(b > 3)
+   {
+       printeaza(b)
+       printeaza(a)
+       printeaza(c)
+   }
+}

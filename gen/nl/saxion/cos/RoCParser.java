@@ -1493,9 +1493,24 @@ public class RoCParser extends Parser {
 	}
 
 	public static class IterationStatementContext extends ParserRuleContext {
+		public IterationStatementContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_iterationStatement; }
+	 
+		public IterationStatementContext() { }
+		public void copyFrom(IterationStatementContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class ForLoopContext extends IterationStatementContext {
 		public Token left_num;
 		public Token left_id;
-		public TerminalNode While() { return getToken(RoCParser.While, 0); }
+		public TerminalNode For() { return getToken(RoCParser.For, 0); }
+		public List<TerminalNode> COLON() { return getTokens(RoCParser.COLON); }
+		public TerminalNode COLON(int i) {
+			return getToken(RoCParser.COLON, i);
+		}
 		public ConditionsContext conditions() {
 			return getRuleContext(ConditionsContext.class,0);
 		}
@@ -1505,11 +1520,6 @@ public class RoCParser extends Parser {
 			return getRuleContext(Statement_bodyContext.class,0);
 		}
 		public TerminalNode CURLY_CLOSE() { return getToken(RoCParser.CURLY_CLOSE, 0); }
-		public TerminalNode For() { return getToken(RoCParser.For, 0); }
-		public List<TerminalNode> COLON() { return getTokens(RoCParser.COLON); }
-		public TerminalNode COLON(int i) {
-			return getToken(RoCParser.COLON, i);
-		}
 		public TerminalNode NUMBER_TYPE() { return getToken(RoCParser.NUMBER_TYPE, 0); }
 		public List<TerminalNode> IDENTIFIER() { return getTokens(RoCParser.IDENTIFIER); }
 		public TerminalNode IDENTIFIER(int i) {
@@ -1523,21 +1533,70 @@ public class RoCParser extends Parser {
 			return getRuleContext(Arithmetic_exprContext.class,0);
 		}
 		public TerminalNode NUMBER() { return getToken(RoCParser.NUMBER, 0); }
-		public IterationStatementContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_iterationStatement; }
+		public ForLoopContext(IterationStatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof RoCListener ) ((RoCListener)listener).enterIterationStatement(this);
+			if ( listener instanceof RoCListener ) ((RoCListener)listener).enterForLoop(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof RoCListener ) ((RoCListener)listener).exitIterationStatement(this);
+			if ( listener instanceof RoCListener ) ((RoCListener)listener).exitForLoop(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof RoCVisitor ) return ((RoCVisitor<? extends T>)visitor).visitIterationStatement(this);
+			if ( visitor instanceof RoCVisitor ) return ((RoCVisitor<? extends T>)visitor).visitForLoop(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class DoWhileLoopContext extends IterationStatementContext {
+		public TerminalNode Execute() { return getToken(RoCParser.Execute, 0); }
+		public TerminalNode CURLY_OPEN() { return getToken(RoCParser.CURLY_OPEN, 0); }
+		public Statement_bodyContext statement_body() {
+			return getRuleContext(Statement_bodyContext.class,0);
+		}
+		public TerminalNode CURLY_CLOSE() { return getToken(RoCParser.CURLY_CLOSE, 0); }
+		public TerminalNode While() { return getToken(RoCParser.While, 0); }
+		public ConditionsContext conditions() {
+			return getRuleContext(ConditionsContext.class,0);
+		}
+		public DoWhileLoopContext(IterationStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof RoCListener ) ((RoCListener)listener).enterDoWhileLoop(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof RoCListener ) ((RoCListener)listener).exitDoWhileLoop(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof RoCVisitor ) return ((RoCVisitor<? extends T>)visitor).visitDoWhileLoop(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class WhileLoopContext extends IterationStatementContext {
+		public TerminalNode While() { return getToken(RoCParser.While, 0); }
+		public ConditionsContext conditions() {
+			return getRuleContext(ConditionsContext.class,0);
+		}
+		public TerminalNode Execute() { return getToken(RoCParser.Execute, 0); }
+		public TerminalNode CURLY_OPEN() { return getToken(RoCParser.CURLY_OPEN, 0); }
+		public Statement_bodyContext statement_body() {
+			return getRuleContext(Statement_bodyContext.class,0);
+		}
+		public TerminalNode CURLY_CLOSE() { return getToken(RoCParser.CURLY_CLOSE, 0); }
+		public WhileLoopContext(IterationStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof RoCListener ) ((RoCListener)listener).enterWhileLoop(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof RoCListener ) ((RoCListener)listener).exitWhileLoop(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof RoCVisitor ) return ((RoCVisitor<? extends T>)visitor).visitWhileLoop(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1550,6 +1609,7 @@ public class RoCParser extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case While:
+				_localctx = new WhileLoopContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(183);
@@ -1567,6 +1627,7 @@ public class RoCParser extends Parser {
 				}
 				break;
 			case For:
+				_localctx = new ForLoopContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(190);
@@ -1584,13 +1645,13 @@ public class RoCParser extends Parser {
 				case NUMBER:
 					{
 					setState(194);
-					((IterationStatementContext)_localctx).left_num = match(NUMBER);
+					((ForLoopContext)_localctx).left_num = match(NUMBER);
 					}
 					break;
 				case IDENTIFIER:
 					{
 					setState(195);
-					((IterationStatementContext)_localctx).left_id = match(IDENTIFIER);
+					((ForLoopContext)_localctx).left_id = match(IDENTIFIER);
 					}
 					break;
 				default:
@@ -1622,6 +1683,7 @@ public class RoCParser extends Parser {
 				}
 				break;
 			case Execute:
+				_localctx = new DoWhileLoopContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(210);

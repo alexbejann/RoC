@@ -1,0 +1,18 @@
+functia main()
+{
+   numar b<-50
+   numar d<-5
+   daca(b >= d)
+   {
+       printeaza(b)
+   }
+   daca nu(b = d)
+   {
+       printeaza(b)
+   }
+   altfel daca
+   {
+       numar c<-2
+       printeaza(c)
+   }
+}

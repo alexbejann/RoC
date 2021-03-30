@@ -266,5 +266,30 @@ public class CodeGeneratorTest extends TestBase
 
     }
 
+    /**
+     * Test var assignment
+     */
+    @Test
+    public void varAssignmentExpression() throws IOException, AssembleException
+    {
+        String codeString = "functia main()\n" +
+                "{\n" +
+                "   numar a<-3\n" +
+                "   a<-a+1\n" +
+                "   printeaza(a)\n" +
+                "}";
+
+        Compiler c = new Compiler();
+        JasminBytecode code = c.compileString(codeString,"decisionStatementsIf");
+        Assertions.assertNotNull(code);
+
+        List<String> output = runCode(code);
+
+        assertArrayEquals(new String[] {
+                "4"
+        }, output.toArray());
+
+    }
+
 
 }

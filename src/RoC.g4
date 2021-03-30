@@ -58,9 +58,9 @@ decisionStatement: If PAREN_OPEN if_lhs=conditions PAREN_CLOSE CURLY_OPEN if_rhs
 printStatement: Print PAREN_OPEN (type_value) PAREN_CLOSE ;
 
 iterationStatement
-                  : While conditions Execute CURLY_OPEN statement_body CURLY_CLOSE
-                  | For (NUMBER_TYPE IDENTIFIER EQUALS_TO (left_num=NUMBER | left_id=IDENTIFIER)) COLON conditions COLON (IDENTIFIER EQUALS_TO arithmetic_expr) Execute CURLY_OPEN statement_body CURLY_CLOSE
-                  | Execute CURLY_OPEN statement_body CURLY_CLOSE While conditions
+                  : While conditions Execute CURLY_OPEN statement_body CURLY_CLOSE #WhileLoop
+                  | For (NUMBER_TYPE IDENTIFIER EQUALS_TO (left_num=NUMBER | left_id=IDENTIFIER)) COLON conditions COLON (IDENTIFIER EQUALS_TO arithmetic_expr) Execute CURLY_OPEN statement_body CURLY_CLOSE #ForLoop
+                  | Execute CURLY_OPEN statement_body CURLY_CLOSE While conditions #DoWhileLoop
                   ;
 
 variable_declaration: type lhs=IDENTIFIER EQUALS_TO ( BOOLEAN

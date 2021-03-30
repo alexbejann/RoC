@@ -258,15 +258,41 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitPrintStatement(RoCParser.PrintStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link RoCParser#iterationStatement}.
+	 * Enter a parse tree produced by the {@code WhileLoop}
+	 * labeled alternative in {@link RoCParser#iterationStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterIterationStatement(RoCParser.IterationStatementContext ctx);
+	void enterWhileLoop(RoCParser.WhileLoopContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link RoCParser#iterationStatement}.
+	 * Exit a parse tree produced by the {@code WhileLoop}
+	 * labeled alternative in {@link RoCParser#iterationStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitIterationStatement(RoCParser.IterationStatementContext ctx);
+	void exitWhileLoop(RoCParser.WhileLoopContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ForLoop}
+	 * labeled alternative in {@link RoCParser#iterationStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterForLoop(RoCParser.ForLoopContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ForLoop}
+	 * labeled alternative in {@link RoCParser#iterationStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitForLoop(RoCParser.ForLoopContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code DoWhileLoop}
+	 * labeled alternative in {@link RoCParser#iterationStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterDoWhileLoop(RoCParser.DoWhileLoopContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code DoWhileLoop}
+	 * labeled alternative in {@link RoCParser#iterationStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitDoWhileLoop(RoCParser.DoWhileLoopContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link RoCParser#variable_declaration}.
 	 * @param ctx the parse tree

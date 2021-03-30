@@ -2,20 +2,20 @@ package nl.saxion.cos;
 
 import nl.saxion.cos.model.DataType;
 import nl.saxion.cos.model.Variable;
-import nl.saxion.cos.model.VariableTable;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class CodeGenerator extends RoCBaseVisitor<List<String>>
 {
 
     private String jumpLabel;
+    private String loopsJumpLabel;
+    private int labelCounter = 0;
     private final ParseTreeProperty<DataType> dataTypes;
-    private final ParseTreeProperty<Variable> scope ;
+    private final ParseTreeProperty<Variable> scope;
 
     public CodeGenerator( ParseTreeProperty<DataType> dataTypes, ParseTreeProperty<Variable> scope)
     {
@@ -86,6 +86,12 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     }
 
     @Override
+    public List<String> visitComparisonExpressionParens(RoCParser.ComparisonExpressionParensContext ctx)
+    {
+        return new ArrayList<>(visit(ctx.comparison_expr()));
+    }
+
+    @Override
     public List<String> visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
@@ -108,19 +114,21 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitDecisionStatement(RoCParser.DecisionStatementContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
-        //generated random label with UUID
-        jumpLabel = "L"+ UUID.randomUUID();
+        //generated random label
+        jumpLabel = "L"+ (labelCounter++);
+        String tempJumplabel = jumpLabel;
 
         if (ctx.if_lhs != null)
         {
             jasminCode.addAll(visit(ctx.if_lhs));
-            jasminCode.add(jumpLabel+":");
             jasminCode.addAll(visit(ctx.if_rhs));
             if (ctx.else_lhs != null || ctx.elseIF_lhs != null)
                 jasminCode.add("goto endif");
         }
         if(ctx.elseIF_lhs != null)
         {
+            jasminCode.add(jumpLabel+":");
+            jumpLabel = "L"+(labelCounter++);
             jasminCode.addAll(visit(ctx.elseIF_lhs));
             jasminCode.addAll(visit(ctx.elseIF_rhs));
             if (ctx.else_lhs != null)
@@ -132,7 +140,13 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             jasminCode.addAll(visit(ctx.else_lhs));
         }
         if (ctx.else_lhs != null || ctx.elseIF_lhs != null)
+        {
             jasminCode.add("endif:");
+        }
+        else
+        {
+            jasminCode.add(tempJumplabel+":");
+        }
         return jasminCode;
     }
 
@@ -142,23 +156,23 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         List<String> jasminCode = new ArrayList<>();
         if(ctx.GT() != null)
         {
-            jasminCode.add("if_icmpgt "+ jumpLabel);
-        }
-        else if (ctx.EQ() != null)
-        {
-            jasminCode.add("if_icmpeq "+ jumpLabel);
+            jasminCode.add("if_icmpgt "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
         }
         else if(ctx.GE() != null)
         {
-            jasminCode.add("if_icmpge "+ jumpLabel);
-        }
-        else if(ctx.LE() != null)
-        {
-            jasminCode.add("if_icmple "+ jumpLabel);
+            jasminCode.add("if_icmpge "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
         }
         else if(ctx.LT() != null)
         {
-            jasminCode.add("if_icmplt "+ jumpLabel);
+            jasminCode.add("if_icmplt "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
+        }
+        else if(ctx.LE() != null)
+        {
+            jasminCode.add("if_icmple "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
+        }
+        else if (ctx.EQ() != null)
+        {
+            jasminCode.add("if_icmpeq "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
         }
         return jasminCode;
     }
@@ -349,6 +363,22 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
                 jasminCode.add("ldc " + ctx.NUMBER().getText());
                 break;
         }
+        return jasminCode;
+    }
+
+    @Override
+    public List<String> visitWhileLoop(RoCParser.WhileLoopContext ctx)
+    {
+        //todo implement this loop after this call a NPE will be thrown
+        List<String> jasminCode = new ArrayList<>();
+        String loopJumpLabel = "Loop"+(labelCounter++);
+        loopsJumpLabel ="endLoop"+(labelCounter++);
+        System.out.println("ctx "+ctx.getText());
+        jasminCode.add(loopJumpLabel+":");
+        jasminCode.addAll(visit(ctx.conditions()));
+        jasminCode.addAll(visit(ctx.statement_body()));
+        jasminCode.add("goto "+loopJumpLabel);
+        jasminCode.add(loopsJumpLabel+":");
         return jasminCode;
     }
 }

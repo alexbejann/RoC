@@ -158,11 +158,26 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPrintStatement(RoCParser.PrintStatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link RoCParser#iterationStatement}.
+	 * Visit a parse tree produced by the {@code WhileLoop}
+	 * labeled alternative in {@link RoCParser#iterationStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIterationStatement(RoCParser.IterationStatementContext ctx);
+	T visitWhileLoop(RoCParser.WhileLoopContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ForLoop}
+	 * labeled alternative in {@link RoCParser#iterationStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForLoop(RoCParser.ForLoopContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code DoWhileLoop}
+	 * labeled alternative in {@link RoCParser#iterationStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDoWhileLoop(RoCParser.DoWhileLoopContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link RoCParser#variable_declaration}.
 	 * @param ctx the parse tree

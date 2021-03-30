@@ -12,7 +12,7 @@
 - ~~implement conditional statements~~
 - implement logical operators
 - implement scanner
-- implement assignment `a<-a+123`  
+- ~~implement assignment `a<-a+123`/~~  
 - implement methods
 
 # TODO grammar:

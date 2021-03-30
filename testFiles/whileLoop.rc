@@ -1,0 +1,10 @@
+functia main()
+{
+   numar a<-2*3
+   a<-a+1
+   cat timp(a < 10) executa
+   {
+       a<-a+1
+   }
+   printeaza(a)
+}
