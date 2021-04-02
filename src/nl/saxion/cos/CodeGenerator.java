@@ -117,6 +117,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         //generated random label
         jumpLabel = "L"+ (labelCounter++);
         String tempJumplabel = jumpLabel;
+        //todo add endif label counter for nested if statements
 
         if (ctx.if_lhs != null)
         {
@@ -154,25 +155,25 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitComparator(RoCParser.ComparatorContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
-        if(ctx.GT() != null)
-        {
-            jasminCode.add("if_icmpgt "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
-        }
-        else if(ctx.GE() != null)
-        {
-            jasminCode.add("if_icmpge "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
-        }
-        else if(ctx.LT() != null)
-        {
-            jasminCode.add("if_icmplt "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
-        }
-        else if(ctx.LE() != null)
+        if(ctx.GT() != null) // >
         {
             jasminCode.add("if_icmple "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
         }
-        else if (ctx.EQ() != null)
+        else if(ctx.GE() != null) //  >=
         {
-            jasminCode.add("if_icmpeq "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
+            jasminCode.add("if_icmplt "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
+        }
+        else if(ctx.LT() != null)//  <
+        {
+            jasminCode.add("if_icmpge "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
+        }
+        else if(ctx.LE() != null) // <=
+        {
+            jasminCode.add("if_icmpgt "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
+        }
+        else if (ctx.EQ() != null)// =
+        {
+            jasminCode.add("if_icmpne "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
         }
         return jasminCode;
     }
@@ -377,6 +378,21 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         jasminCode.add(loopJumpLabel+":");
         jasminCode.addAll(visit(ctx.conditions()));
         jasminCode.addAll(visit(ctx.statement_body()));
+        jasminCode.add("goto "+loopJumpLabel);
+        jasminCode.add(loopsJumpLabel+":");
+        return jasminCode;
+    }
+
+    @Override
+    public List<String> visitForLoop(RoCParser.ForLoopContext ctx)
+    {
+        //todo do we want to implement this ?
+        List<String> jasminCode = new ArrayList<>();
+
+        String loopJumpLabel = "Loop"+(labelCounter++);
+        loopsJumpLabel ="endLoop"+(labelCounter++);
+        jasminCode.addAll(visit(ctx.conditions()));
+        jasminCode.addAll(visit(ctx.arithmetic_expr()));
         jasminCode.add("goto "+loopJumpLabel);
         jasminCode.add(loopsJumpLabel+":");
         return jasminCode;
