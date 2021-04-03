@@ -12,7 +12,6 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
 {
 
     private String jumpLabel;
-    private String loopsJumpLabel;
     private int labelCounter = 0;
     private final ParseTreeProperty<DataType> dataTypes;
     private final ParseTreeProperty<Variable> scope;
@@ -61,7 +60,6 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         List<String> jasminCode = new ArrayList<>();
         for (ParseTree child:ctx.children)
         {
-            System.out.println("child "+child);
             jasminCode.addAll(visit(child));
         }
         return jasminCode;
@@ -76,13 +74,23 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     @Override
     public List<String> visitLogicalExpression(RoCParser.LogicalExpressionContext ctx)
     {
-        return new ArrayList<>(visitChildren(ctx));
+        List<String> jasminCode = new ArrayList<>();
+        for (ParseTree child:ctx.children)
+        {
+            jasminCode.addAll(visit(child));
+        }
+        return jasminCode;
     }
 
     @Override
     public List<String> visitComparisonExpression(RoCParser.ComparisonExpressionContext ctx)
     {
-        return new ArrayList<>(visitChildren(ctx));
+        List<String> jasminCode = new ArrayList<>();
+        for (ParseTree child:ctx.children)
+        {
+            jasminCode.addAll(visit(child));
+        }
+        return jasminCode;
     }
 
     @Override
@@ -117,6 +125,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         //generated random label
         jumpLabel = "L"+ (labelCounter++);
         String tempJumplabel = jumpLabel;
+        String endIfLabel = "endif"+labelCounter;
         //todo add endif label counter for nested if statements
 
         if (ctx.if_lhs != null)
@@ -124,7 +133,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             jasminCode.addAll(visit(ctx.if_lhs));
             jasminCode.addAll(visit(ctx.if_rhs));
             if (ctx.else_lhs != null || ctx.elseIF_lhs != null)
-                jasminCode.add("goto endif");
+                jasminCode.add("goto "+endIfLabel);
         }
         if(ctx.elseIF_lhs != null)
         {
@@ -133,7 +142,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             jasminCode.addAll(visit(ctx.elseIF_lhs));
             jasminCode.addAll(visit(ctx.elseIF_rhs));
             if (ctx.else_lhs != null)
-                jasminCode.add("goto endif");
+                jasminCode.add("goto "+endIfLabel);
         }
         if (ctx.else_lhs != null)
         {
@@ -142,7 +151,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         }
         if (ctx.else_lhs != null || ctx.elseIF_lhs != null)
         {
-            jasminCode.add("endif:");
+            jasminCode.add(endIfLabel+":");
         }
         else
         {
@@ -157,23 +166,23 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         List<String> jasminCode = new ArrayList<>();
         if(ctx.GT() != null) // >
         {
-            jasminCode.add("if_icmple "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
+            jasminCode.add("if_icmple "+ (jumpLabel));
         }
         else if(ctx.GE() != null) //  >=
         {
-            jasminCode.add("if_icmplt "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
+            jasminCode.add("if_icmplt "+ (jumpLabel));
         }
         else if(ctx.LT() != null)//  <
         {
-            jasminCode.add("if_icmpge "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
+            jasminCode.add("if_icmpge "+ (jumpLabel));
         }
         else if(ctx.LE() != null) // <=
         {
-            jasminCode.add("if_icmpgt "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
+            jasminCode.add("if_icmpgt "+ (jumpLabel));
         }
         else if (ctx.EQ() != null)// =
         {
-            jasminCode.add("if_icmpne "+ (jumpLabel == null ? loopsJumpLabel : jumpLabel));
+            jasminCode.add("if_icmpne "+ (jumpLabel));
         }
         return jasminCode;
     }
@@ -377,13 +386,13 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     {
         List<String> jasminCode = new ArrayList<>();
         String loopJumpLabel = "Loop"+(labelCounter++);
-        loopsJumpLabel ="endLoop"+(labelCounter++);
+        jumpLabel ="endLoop"+(labelCounter++);
         System.out.println("ctx "+ctx.getText());
         jasminCode.add(loopJumpLabel+":");
         jasminCode.addAll(visit(ctx.conditions()));
         jasminCode.addAll(visit(ctx.statement_body()));
         jasminCode.add("goto "+loopJumpLabel);
-        jasminCode.add(loopsJumpLabel+":");
+        jasminCode.add(jumpLabel+":");
         return jasminCode;
     }
 
@@ -398,12 +407,12 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         List<String> jasminCode = new ArrayList<>();
 
         String loopJumpLabel = "Loop"+(labelCounter++);
-        loopsJumpLabel ="endLoop"+(labelCounter++);
+        jumpLabel ="endLoop"+(labelCounter++);
         jasminCode.add(loopJumpLabel+":");
         jasminCode.addAll(visit(ctx.conditions()));
         jasminCode.addAll(visit(ctx.statement_body()));
         jasminCode.add("goto "+loopJumpLabel);
-        jasminCode.add(loopsJumpLabel+":");
+        jasminCode.add(jumpLabel+":");
         return jasminCode;
     }
 
@@ -419,11 +428,11 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         List<String> jasminCode = new ArrayList<>();
 
         String loopJumpLabel = "Loop"+(labelCounter++);
-        loopsJumpLabel ="endLoop"+(labelCounter++);
+        jumpLabel ="endLoop"+(labelCounter++);
         jasminCode.addAll(visit(ctx.conditions()));
         jasminCode.addAll(visit(ctx.arithmetic_expr()));
         jasminCode.add("goto "+loopJumpLabel);
-        jasminCode.add(loopsJumpLabel+":");
+        jasminCode.add(jumpLabel+":");
         return jasminCode;
     }
 }
