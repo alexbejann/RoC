@@ -112,18 +112,6 @@ public class RoCBaseListener implements RoCListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLocalVariable(RoCParser.LocalVariableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLocalVariable(RoCParser.LocalVariableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -131,18 +119,6 @@ public class RoCBaseListener implements RoCListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBOOLEAN(RoCParser.BOOLEANContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBOOLEAN(RoCParser.BOOLEANContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -184,18 +160,6 @@ public class RoCBaseListener implements RoCListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterUMINUS(RoCParser.UMINUSContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitUMINUS(RoCParser.UMINUSContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterADDSUBGRP(RoCParser.ADDSUBGRPContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -220,6 +184,18 @@ public class RoCBaseListener implements RoCListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSTRING(RoCParser.STRINGContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSTRING(RoCParser.STRINGContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterPARENGRP(RoCParser.PARENGRPContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -239,6 +215,18 @@ public class RoCBaseListener implements RoCListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitIDENTIFIER(RoCParser.IDENTIFIERContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBOOLEAN(RoCParser.BOOLEANContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBOOLEAN(RoCParser.BOOLEANContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

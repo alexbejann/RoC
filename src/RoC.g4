@@ -24,8 +24,6 @@ logical_expr
             : left=logical_expr (AND | OR) right=logical_expr       # LogicalExpressionAndOr
             | comparison_expr                                       # ComparisonExpression
             | PAREN_OPEN logical_expr PAREN_CLOSE                   # LogicalExpressionInParen
-            | BOOLEAN                                               # BOOLEAN
-            | IDENTIFIER                                            # LocalVariable
             ;
 
 comparison_expr
@@ -42,11 +40,12 @@ statement_body
                 ;
 
 arithmetic_expr
-              : MINUS arithmetic_expr                                                       # UMINUS
-              | left=arithmetic_expr op=(MULTIPLY | DIVIDE | MODULO) right=arithmetic_expr  # MULDIVMODOPGRP
+              : left=arithmetic_expr op=(MULTIPLY | DIVIDE | MODULO) right=arithmetic_expr  # MULDIVMODOPGRP
               | left=arithmetic_expr op=(PLUS | MINUS)               right=arithmetic_expr  # ADDSUBGRP
               | PAREN_OPEN arithmetic_expr PAREN_CLOSE                                      # PARENGRP
               | NUMBER                                                                      # NUMBER
+              | STRING                                                                      # STRING
+              | BOOLEAN                                                                     # BOOLEAN
               | IDENTIFIER                                                                  # IDENTIFIER
               ;
 
@@ -63,11 +62,7 @@ iterationStatement
                   | Execute CURLY_OPEN statement_body CURLY_CLOSE While conditions #DoWhileLoop
                   ;
 
-variable_declaration: type lhs=IDENTIFIER EQUALS_TO ( BOOLEAN
-                                                    | STRING
-                                                    | NUMBER
-                                                    | rhs=IDENTIFIER
-                                                    | arithmetic_expr);
+variable_declaration: type IDENTIFIER EQUALS_TO arithmetic_expr;
 
 varExpression
             : IDENTIFIER EQUALS_TO arithmetic_expr # AssignmentExpression

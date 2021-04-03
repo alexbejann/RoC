@@ -96,18 +96,6 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitLogicalExpressionInParen(RoCParser.LogicalExpressionInParenContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code LocalVariable}
-	 * labeled alternative in {@link RoCParser#logical_expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterLocalVariable(RoCParser.LocalVariableContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code LocalVariable}
-	 * labeled alternative in {@link RoCParser#logical_expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitLocalVariable(RoCParser.LocalVariableContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code LogicalExpressionAndOr}
 	 * labeled alternative in {@link RoCParser#logical_expr}.
 	 * @param ctx the parse tree
@@ -119,18 +107,6 @@ public interface RoCListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code BOOLEAN}
-	 * labeled alternative in {@link RoCParser#logical_expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterBOOLEAN(RoCParser.BOOLEANContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code BOOLEAN}
-	 * labeled alternative in {@link RoCParser#logical_expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitBOOLEAN(RoCParser.BOOLEANContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ComparisonExpressionWithOperator}
 	 * labeled alternative in {@link RoCParser#comparison_expr}.
@@ -166,18 +142,6 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitStatement_body(RoCParser.Statement_bodyContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code UMINUS}
-	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterUMINUS(RoCParser.UMINUSContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code UMINUS}
-	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitUMINUS(RoCParser.UMINUSContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code ADDSUBGRP}
 	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
 	 * @param ctx the parse tree
@@ -202,6 +166,18 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitNUMBER(RoCParser.NUMBERContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code STRING}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterSTRING(RoCParser.STRINGContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code STRING}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitSTRING(RoCParser.STRINGContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code PARENGRP}
 	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
 	 * @param ctx the parse tree
@@ -225,6 +201,18 @@ public interface RoCListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIDENTIFIER(RoCParser.IDENTIFIERContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BOOLEAN}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterBOOLEAN(RoCParser.BOOLEANContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BOOLEAN}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitBOOLEAN(RoCParser.BOOLEANContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code MULDIVMODOPGRP}
 	 * labeled alternative in {@link RoCParser#arithmetic_expr}.

@@ -63,26 +63,12 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLogicalExpressionInParen(RoCParser.LogicalExpressionInParenContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code LocalVariable}
-	 * labeled alternative in {@link RoCParser#logical_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLocalVariable(RoCParser.LocalVariableContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code LogicalExpressionAndOr}
 	 * labeled alternative in {@link RoCParser#logical_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code BOOLEAN}
-	 * labeled alternative in {@link RoCParser#logical_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBOOLEAN(RoCParser.BOOLEANContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ComparisonExpressionWithOperator}
 	 * labeled alternative in {@link RoCParser#comparison_expr}.
@@ -104,13 +90,6 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement_body(RoCParser.Statement_bodyContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code UMINUS}
-	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitUMINUS(RoCParser.UMINUSContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code ADDSUBGRP}
 	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
 	 * @param ctx the parse tree
@@ -125,6 +104,13 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNUMBER(RoCParser.NUMBERContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code STRING}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSTRING(RoCParser.STRINGContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code PARENGRP}
 	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
 	 * @param ctx the parse tree
@@ -138,6 +124,13 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIDENTIFIER(RoCParser.IDENTIFIERContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BOOLEAN}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBOOLEAN(RoCParser.BOOLEANContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code MULDIVMODOPGRP}
 	 * labeled alternative in {@link RoCParser#arithmetic_expr}.

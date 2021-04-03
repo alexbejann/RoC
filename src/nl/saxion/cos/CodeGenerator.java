@@ -245,6 +245,29 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     }
 
     @Override
+    public List<String> visitSTRING(RoCParser.STRINGContext ctx)
+    {
+        List<String> jasminCode = new ArrayList<>();
+        jasminCode.add("ldc "+ctx.getText());
+        return jasminCode;
+    }
+
+    @Override
+    public List<String> visitBOOLEAN(RoCParser.BOOLEANContext ctx)
+    {
+        List<String> jasminCode = new ArrayList<>();
+
+        if (ctx.BOOLEAN().getText().equals("ADEVARAT"))
+        {
+            jasminCode.add("ldc 1");
+        } else
+        {
+            jasminCode.add("ldc 0");
+        }
+        return jasminCode;
+    }
+
+    @Override
     public List<String> visitIDENTIFIER(RoCParser.IDENTIFIERContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
@@ -285,32 +308,17 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitVariable_declaration(RoCParser.Variable_declarationContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
-        String name = ctx.lhs.getText();
         Variable var = scope.get(ctx);
-        if (ctx.arithmetic_expr() != null)
-            jasminCode.addAll(visit(ctx.arithmetic_expr()));
 
+        jasminCode.addAll(visit(ctx.arithmetic_expr()));
         switch (dataTypes.get(ctx))
         {
             case NUMAR:
-                if (ctx.arithmetic_expr() == null)
-                    jasminCode.add("ldc " + ctx.NUMBER().getText());
-
+            case BOOL:
                 jasminCode.add("istore " + var.getIndex());
                 break;
             case SDC:
-                jasminCode.add("ldc " + ctx.STRING().getText());
                 jasminCode.add("astore " + var.getIndex());
-                break;
-            case BOOL:
-                if (ctx.BOOLEAN().getText().equals("ADEVARAT"))
-                {
-                    jasminCode.add("ldc 1");
-                } else
-                {
-                    jasminCode.add("ldc 0");
-                }
-                jasminCode.add("istore " + var.getIndex());
                 break;
         }
         return jasminCode;

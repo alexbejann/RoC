@@ -94,9 +94,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     public DataType visitVariable_declaration(RoCParser.Variable_declarationContext ctx)
     {
         //visit the rhs and the lhs and
-        if (ctx.arithmetic_expr() != null)
-            visit(ctx.arithmetic_expr());
-
+        DataType type = visit(ctx.arithmetic_expr());
         String name = ctx.lhs.getText();
         if (variableTable.lookUp(name) != null)
             throw new CompilerException("Variable "+name+" already defined!");
@@ -105,31 +103,32 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         {
             case "numar":
                 System.out.println("numar "+ctx.getText());
-                if (ctx.NUMBER() == null && ctx.arithmetic_expr() == null)
+                if (type != DataType.NUMAR)
                     throw new CompilerException("Type mismatch expected numar!");
 
                 variableTable.add(name, DataType.NUMAR);
                 break;
             case "sdc":
-                if (ctx.STRING() == null)
+                if (type != DataType.SDC)
                     throw new CompilerException("Type mismatch expected sdc!");
 
                 variableTable.add(name, DataType.SDC);
                 break;
             case "bool":
-                if (ctx.BOOLEAN() == null)
+                if (type != DataType.BOOL)
                     throw new CompilerException("Type mismatch expected bool!");
+
                 System.out.println("bool " + ctx.getText());
                 variableTable.add(name, DataType.BOOL);
                 break;
             case "automat":
-                if (ctx.STRING() != null)
+                if (type == DataType.SDC)
                 {
                     variableTable.add(name, DataType.SDC);
-                } else if (ctx.NUMBER() != null || ctx.arithmetic_expr() != null)
+                } else if (type == DataType.NUMAR)
                 {
                     variableTable.add(name, DataType.NUMAR);
-                } else if (ctx.BOOLEAN() != null)
+                } else if (type == DataType.BOOL)
                 {
                     variableTable.add(name, DataType.BOOL);
                 }
@@ -178,6 +177,12 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     public DataType visitBOOLEAN(RoCParser.BOOLEANContext ctx)
     {
         return DataType.BOOL;
+    }
+
+    @Override
+    public DataType visitSTRING(RoCParser.STRINGContext ctx)
+    {
+        return DataType.SDC;
     }
 
     @Override
