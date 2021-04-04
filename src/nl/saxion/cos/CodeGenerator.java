@@ -70,6 +70,9 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     @Override
     public List<String> visitConditions(RoCParser.ConditionsContext ctx)
     {
+        //generated random label
+        jumpLabel = "L"+ (labelCounter++);
+        endIfLabel = "endif"+labelCounter;
         return new ArrayList<>(visit(ctx.logical_expr()));
     }
 
@@ -94,8 +97,6 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
-        jumpLabel = "L"+ (labelCounter++);
-        endIfLabel = "endif"+labelCounter;
         jasminCode.addAll(visit(ctx.left));
         jasminCode.addAll(visit(ctx.right));
         if (dataTypes.get(ctx) != null)
@@ -118,10 +119,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
-        //generated random label
-        jumpLabel = "L"+ (labelCounter++);
         String tempLabel = jumpLabel;
-        endIfLabel = "endif"+labelCounter;
         boolean isLogicalOrTemp = ctx.OR() != null;
         isLogicalOR = isLogicalOrTemp;
 
