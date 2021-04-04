@@ -105,7 +105,19 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         List<String> jasminCode = new ArrayList<>();
         jasminCode.addAll(visit(ctx.left));
         jasminCode.addAll(visit(ctx.right));
-        jasminCode.addAll(visit(ctx.comparator()));
+        if (dataTypes.get(ctx) != null)
+        {
+            // call equals method
+            jasminCode.add("invokevirtual java/lang/String/equals(Ljava/lang/Object;)Z");
+            if(ctx.comparator().getText().equals("="))
+                jasminCode.add("ifeq "+jumpLabel);
+            else
+                jasminCode.add("ifne "+jumpLabel);
+        }
+        else
+        {
+            jasminCode.addAll(visit(ctx.comparator()));
+        }
         return jasminCode;
     }
 
@@ -272,7 +284,10 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     {
         List<String> jasminCode = new ArrayList<>();
         Variable variable = scope.get(ctx);
-        jasminCode.add("iload "+variable.getIndex());
+        if (variable.getType() == DataType.SDC)
+            jasminCode.add("aload "+variable.getIndex());
+        else
+            jasminCode.add("iload "+variable.getIndex());
         return jasminCode;
     }
 

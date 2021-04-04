@@ -60,7 +60,18 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx)
     {
-        return visitChildren(ctx);
+        DataType leftHS = visit(ctx.left);
+        DataType rightHS = visit(ctx.right);
+        if (leftHS != rightHS)
+            throw new CompilerException("You can't compare "+leftHS+" with "+rightHS);
+
+        if (leftHS == DataType.SDC && rightHS == DataType.SDC)
+        {
+            dataTypes.put(ctx, DataType.SDC);
+        }
+        visit(ctx.comparator());
+
+        return null;
     }
 
     @Override
@@ -102,7 +113,6 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         switch (ctx.type().getText())
         {
             case "numar":
-                System.out.println("numar "+ctx.getText());
                 if (type != DataType.NUMAR)
                     throw new CompilerException("Type mismatch expected numar!");
 
