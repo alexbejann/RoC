@@ -1805,6 +1805,7 @@ public class RoCParser extends Parser {
 		public TerminalNode LT() { return getToken(RoCParser.LT, 0); }
 		public TerminalNode LE() { return getToken(RoCParser.LE, 0); }
 		public TerminalNode EQ() { return getToken(RoCParser.EQ, 0); }
+		public TerminalNode NOT_EQ() { return getToken(RoCParser.NOT_EQ, 0); }
 		public ComparatorContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1833,7 +1834,7 @@ public class RoCParser extends Parser {
 			{
 			setState(226);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << GT) | (1L << GE) | (1L << LT) | (1L << LE) | (1L << EQ))) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << GT) | (1L << GE) | (1L << LT) | (1L << LE) | (1L << EQ) | (1L << NOT_EQ))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -2015,7 +2016,7 @@ public class RoCParser extends Parser {
 		"\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\5\r\u00da"+
 		"\n\r\3\16\3\16\3\16\3\16\3\16\3\17\3\17\3\17\3\17\3\20\3\20\3\21\3\21"+
 		"\3\22\3\22\3\22\2\5\n\f\22\23\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 "+
-		"\"\2\t\3\2+,\3\2#$\3\2\20\22\3\2\16\17\3\2%)\3\2\23\26\4\2 \"//\2\u00f4"+
+		"\"\2\t\3\2+,\3\2#$\3\2\20\22\3\2\16\17\4\2%)++\3\2\23\26\4\2 \"//\2\u00f4"+
 		"\2\'\3\2\2\2\4,\3\2\2\2\6C\3\2\2\2\bN\3\2\2\2\nP\3\2\2\2\fa\3\2\2\2\16"+
 		"s\3\2\2\2\20}\3\2\2\2\22\u008a\3\2\2\2\24\u0097\3\2\2\2\26\u00b2\3\2\2"+
 		"\2\30\u00d9\3\2\2\2\32\u00db\3\2\2\2\34\u00e0\3\2\2\2\36\u00e4\3\2\2\2"+

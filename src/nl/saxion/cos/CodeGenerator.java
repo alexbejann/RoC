@@ -111,7 +111,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             jasminCode.add("invokevirtual java/lang/String/equals(Ljava/lang/Object;)Z");
             if(ctx.comparator().getText().equals("="))
                 jasminCode.add("ifeq "+jumpLabel);
-            else
+            else if (ctx.comparator().getText().equals("!="))
                 jasminCode.add("ifne "+jumpLabel);
         }
         else
@@ -195,6 +195,10 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         else if (ctx.EQ() != null)// =
         {
             jasminCode.add("if_icmpne "+ (jumpLabel));
+        }
+        else if (ctx.NOT_EQ() != null)// !=
+        {
+            jasminCode.add("if_icmpeq "+ (jumpLabel));
         }
         return jasminCode;
     }

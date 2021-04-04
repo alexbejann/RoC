@@ -62,7 +62,7 @@ iterationStatement
                   | Execute CURLY_OPEN statement_body CURLY_CLOSE While conditions #DoWhileLoop
                   ;
 
-variable_declaration: type IDENTIFIER EQUALS_TO arithmetic_expr;
+variable_declaration: type lhs=IDENTIFIER EQUALS_TO arithmetic_expr;
 
 varExpression
             : IDENTIFIER EQUALS_TO arithmetic_expr # AssignmentExpression
@@ -74,6 +74,7 @@ comparator
         | LT
         | LE
         | EQ
+        | NOT_EQ
         ;
 
 type
