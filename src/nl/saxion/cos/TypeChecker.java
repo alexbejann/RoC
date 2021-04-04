@@ -40,14 +40,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitConditions(RoCParser.ConditionsContext ctx)
     {
-        visit(ctx.equality_expr());
-        return null;
-    }
-
-    @Override
-    public DataType visitLogicalExpression(RoCParser.LogicalExpressionContext ctx)
-    {
-        visitChildren(ctx);
+        visit(ctx.logical_expr());
         return null;
     }
 

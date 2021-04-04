@@ -1,7 +1,6 @@
 package nl.saxion.cos;
 
 import nl.saxion.cos.model.DataType;
-import nl.saxion.cos.model.LogicalOperator;
 import nl.saxion.cos.model.Variable;
 import nl.saxion.cos.model.VariableTable;
 import org.antlr.v4.runtime.*;

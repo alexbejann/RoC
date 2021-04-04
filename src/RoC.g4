@@ -12,13 +12,8 @@ argument_list
             ;
 
 conditions
-          : equality_expr
+          : logical_expr
           ;
-
-equality_expr
-            : logical_expr                                              # LogicalExpression
-            | left=equality_expr (EQUALS | NOT_EQ) right=logical_expr   # EqualityEqualsNotEquals
-            ;
 
 logical_expr
             : left=logical_expr (AND | OR) right=logical_expr       # LogicalExpressionAndOr

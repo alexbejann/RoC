@@ -12,6 +12,8 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
 {
 
     private String jumpLabel;
+    private String endIfLabel;
+    private boolean isLogicalOR = false;
     private int labelCounter = 0;
     private final ParseTreeProperty<DataType> dataTypes;
     private final ParseTreeProperty<Variable> scope;
@@ -68,18 +70,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     @Override
     public List<String> visitConditions(RoCParser.ConditionsContext ctx)
     {
-        return new ArrayList<>(visit(ctx.equality_expr()));
-    }
-
-    @Override
-    public List<String> visitLogicalExpression(RoCParser.LogicalExpressionContext ctx)
-    {
-        List<String> jasminCode = new ArrayList<>();
-        for (ParseTree child:ctx.children)
-        {
-            jasminCode.addAll(visit(child));
-        }
-        return jasminCode;
+        return new ArrayList<>(visit(ctx.logical_expr()));
     }
 
     @Override
@@ -125,8 +116,20 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
+        //generated random label
+        jumpLabel = "L"+ (labelCounter++);
+        String tempLabel = jumpLabel;
+        endIfLabel = "endif"+labelCounter;
+        boolean isLogicalOrTemp = ctx.OR() != null;
+        isLogicalOR = isLogicalOrTemp;
+
         jasminCode.addAll(visit(ctx.left));
+        if (isLogicalOrTemp)
+            jumpLabel = "L"+ (labelCounter++);
+
         jasminCode.addAll(visit(ctx.right));
+        if (isLogicalOrTemp)
+            jasminCode.add(tempLabel+":");
         return jasminCode;
     }
 
@@ -134,10 +137,6 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitDecisionStatement(RoCParser.DecisionStatementContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
-        //generated random label
-        jumpLabel = "L"+ (labelCounter++);
-        String tempJumplabel = jumpLabel;
-        String endIfLabel = "endif"+labelCounter;
         //todo add endif label counter for nested if statements
 
         if (ctx.if_lhs != null)
@@ -167,7 +166,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         }
         else
         {
-            jasminCode.add(tempJumplabel+":");
+            jasminCode.add(jumpLabel+":");
         }
         return jasminCode;
     }
@@ -178,28 +177,47 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         List<String> jasminCode = new ArrayList<>();
         if(ctx.GT() != null) // >
         {
-            jasminCode.add("if_icmple "+ (jumpLabel));
+            if (isLogicalOR)
+                jasminCode.add("if_icmpgt "+ (jumpLabel));
+            else
+                jasminCode.add("if_icmple "+ (jumpLabel));
         }
         else if(ctx.GE() != null) //  >=
         {
-            jasminCode.add("if_icmplt "+ (jumpLabel));
+            if (isLogicalOR)
+                jasminCode.add("if_icmpge "+ (jumpLabel));
+            else
+                jasminCode.add("if_icmplt "+ (jumpLabel));
         }
         else if(ctx.LT() != null)//  <
         {
-            jasminCode.add("if_icmpge "+ (jumpLabel));
+            if (isLogicalOR)
+                jasminCode.add("if_icmplt "+ (jumpLabel));
+            else
+                jasminCode.add("if_icmpge "+ (jumpLabel));
         }
         else if(ctx.LE() != null) // <=
         {
-            jasminCode.add("if_icmpgt "+ (jumpLabel));
+            if (isLogicalOR)
+                jasminCode.add("if_icmple "+ (jumpLabel));
+            else
+                jasminCode.add("if_icmpgt "+ (jumpLabel));
         }
         else if (ctx.EQ() != null)// =
         {
-            jasminCode.add("if_icmpne "+ (jumpLabel));
+            if (isLogicalOR)
+                jasminCode.add("if_icmpeq "+ (jumpLabel));
+            else
+                jasminCode.add("if_icmpne "+ (jumpLabel));
         }
         else if (ctx.NOT_EQ() != null)// !=
         {
-            jasminCode.add("if_icmpeq "+ (jumpLabel));
+            if (isLogicalOR)
+                jasminCode.add("if_icmpne "+ (jumpLabel));
+            else
+                jasminCode.add("if_icmpeq "+ (jumpLabel));
         }
+        isLogicalOR = false;
         return jasminCode;
     }
 

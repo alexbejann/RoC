@@ -64,30 +64,6 @@ public class RoCBaseListener implements RoCListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLogicalExpression(RoCParser.LogicalExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLogicalExpression(RoCParser.LogicalExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterEqualityEqualsNotEquals(RoCParser.EqualityEqualsNotEqualsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitEqualityEqualsNotEquals(RoCParser.EqualityEqualsNotEqualsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterComparisonExpression(RoCParser.ComparisonExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
