@@ -94,6 +94,8 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
+        jumpLabel = "L"+ (labelCounter++);
+        endIfLabel = "endif"+labelCounter;
         jasminCode.addAll(visit(ctx.left));
         jasminCode.addAll(visit(ctx.right));
         if (dataTypes.get(ctx) != null)
