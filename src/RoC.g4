@@ -3,8 +3,8 @@ grammar RoC;
 program: method_declaration* EOF;
 
 method_declaration
-                  : Method methodName=IDENTIFIER PAREN_OPEN argument_list? PAREN_CLOSE (Return type)?
-                        CURLY_OPEN body=statement_body+ (Return IDENTIFIER)? CURLY_CLOSE
+                  : Method methodName=IDENTIFIER PAREN_OPEN argument_list? PAREN_CLOSE (Return returnType=type)?
+                        CURLY_OPEN body=statement_body+ (Return returnValue=type_value)? CURLY_CLOSE
                   ;
 
 argument_list

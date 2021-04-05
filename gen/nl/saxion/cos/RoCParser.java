@@ -179,16 +179,15 @@ public class RoCParser extends Parser {
 
 	public static class Method_declarationContext extends ParserRuleContext {
 		public Token methodName;
+		public TypeContext returnType;
 		public Statement_bodyContext body;
+		public Type_valueContext returnValue;
 		public TerminalNode Method() { return getToken(RoCParser.Method, 0); }
 		public TerminalNode PAREN_OPEN() { return getToken(RoCParser.PAREN_OPEN, 0); }
 		public TerminalNode PAREN_CLOSE() { return getToken(RoCParser.PAREN_CLOSE, 0); }
 		public TerminalNode CURLY_OPEN() { return getToken(RoCParser.CURLY_OPEN, 0); }
 		public TerminalNode CURLY_CLOSE() { return getToken(RoCParser.CURLY_CLOSE, 0); }
-		public List<TerminalNode> IDENTIFIER() { return getTokens(RoCParser.IDENTIFIER); }
-		public TerminalNode IDENTIFIER(int i) {
-			return getToken(RoCParser.IDENTIFIER, i);
-		}
+		public TerminalNode IDENTIFIER() { return getToken(RoCParser.IDENTIFIER, 0); }
 		public Argument_listContext argument_list() {
 			return getRuleContext(Argument_listContext.class,0);
 		}
@@ -204,6 +203,9 @@ public class RoCParser extends Parser {
 		}
 		public Statement_bodyContext statement_body(int i) {
 			return getRuleContext(Statement_bodyContext.class,i);
+		}
+		public Type_valueContext type_value() {
+			return getRuleContext(Type_valueContext.class,0);
 		}
 		public Method_declarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -257,7 +259,7 @@ public class RoCParser extends Parser {
 				setState(51);
 				match(Return);
 				setState(52);
-				type();
+				((Method_declarationContext)_localctx).returnType = type();
 				}
 			}
 
@@ -285,7 +287,7 @@ public class RoCParser extends Parser {
 				setState(61);
 				match(Return);
 				setState(62);
-				match(IDENTIFIER);
+				((Method_declarationContext)_localctx).returnValue = type_value();
 				}
 			}
 
@@ -2071,12 +2073,12 @@ public class RoCParser extends Parser {
 		"./\7\37\2\2/\60\7/\2\2\60\62\7\3\2\2\61\63\5\6\4\2\62\61\3\2\2\2\62\63"+
 		"\3\2\2\2\63\64\3\2\2\2\64\67\7\4\2\2\65\66\7\36\2\2\668\5\"\22\2\67\65"+
 		"\3\2\2\2\678\3\2\2\289\3\2\2\29;\7\5\2\2:<\5\16\b\2;:\3\2\2\2<=\3\2\2"+
-		"\2=;\3\2\2\2=>\3\2\2\2>A\3\2\2\2?@\7\36\2\2@B\7/\2\2A?\3\2\2\2AB\3\2\2"+
-		"\2BC\3\2\2\2CD\7\6\2\2D\5\3\2\2\2EF\5\"\22\2FM\7/\2\2GH\7\f\2\2HI\5\""+
-		"\22\2IJ\7/\2\2JL\3\2\2\2KG\3\2\2\2LO\3\2\2\2MK\3\2\2\2MN\3\2\2\2N\7\3"+
-		"\2\2\2OM\3\2\2\2PQ\5\n\6\2Q\t\3\2\2\2RS\b\6\1\2SY\5\f\7\2TU\7\3\2\2UV"+
-		"\5\n\6\2VW\7\4\2\2WY\3\2\2\2XR\3\2\2\2XT\3\2\2\2Y_\3\2\2\2Z[\f\5\2\2["+
-		"\\\t\2\2\2\\^\5\n\6\6]Z\3\2\2\2^a\3\2\2\2_]\3\2\2\2_`\3\2\2\2`\13\3\2"+
+		"\2=;\3\2\2\2=>\3\2\2\2>A\3\2\2\2?@\7\36\2\2@B\5$\23\2A?\3\2\2\2AB\3\2"+
+		"\2\2BC\3\2\2\2CD\7\6\2\2D\5\3\2\2\2EF\5\"\22\2FM\7/\2\2GH\7\f\2\2HI\5"+
+		"\"\22\2IJ\7/\2\2JL\3\2\2\2KG\3\2\2\2LO\3\2\2\2MK\3\2\2\2MN\3\2\2\2N\7"+
+		"\3\2\2\2OM\3\2\2\2PQ\5\n\6\2Q\t\3\2\2\2RS\b\6\1\2SY\5\f\7\2TU\7\3\2\2"+
+		"UV\5\n\6\2VW\7\4\2\2WY\3\2\2\2XR\3\2\2\2XT\3\2\2\2Y_\3\2\2\2Z[\f\5\2\2"+
+		"[\\\t\2\2\2\\^\5\n\6\6]Z\3\2\2\2^a\3\2\2\2_]\3\2\2\2_`\3\2\2\2`\13\3\2"+
 		"\2\2a_\3\2\2\2bc\5\24\13\2cd\5 \21\2de\5\24\13\2ek\3\2\2\2fg\7\3\2\2g"+
 		"h\5\f\7\2hi\7\4\2\2ik\3\2\2\2jb\3\2\2\2jf\3\2\2\2k\r\3\2\2\2lv\5\26\f"+
 		"\2mv\5\32\16\2nv\5\20\t\2ov\5\30\r\2pv\5\36\20\2qs\5\34\17\2rt\7\t\2\2"+

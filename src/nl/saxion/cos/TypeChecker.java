@@ -28,6 +28,21 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     }
 
     @Override
+    public DataType visitMethod_declaration(RoCParser.Method_declarationContext ctx)
+    {
+        if (ctx.returnType == null && ctx.returnValue != null)
+        {
+            throw new CompilerException("You can't return in a void method!");
+        }
+        else if (ctx.returnType != null && ctx.returnValue == null)
+        {
+            throw new CompilerException("The method should return: "+ctx.returnType.getText()+" type!");
+        }
+        visitChildren(ctx);
+        return null;
+    }
+
+    @Override
     public DataType visitType(RoCParser.TypeContext ctx)
     {
         if (ctx.STRING_TYPE() != null)
