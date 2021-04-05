@@ -24,11 +24,17 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         this.scope = scope;
     }
 
+    /**
+     * This method visits all the children from root 'program' in antlr
+     * The method is supposed to visit every node of the generated tree
+     * @param ctx ProgramContext
+     * @return jasminCode
+     */
     @Override
     public List<String> visitProgram(RoCParser.ProgramContext ctx)
     {
 
-        ArrayList<String> data = new ArrayList<>();
+        List<String> data = new ArrayList<>();
         for(ParseTree child : ctx.children) {
             List<String> result = visit(child);
             if (result != null) data.addAll(visit(child));
@@ -93,6 +99,13 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         return new ArrayList<>(visit(ctx.comparison_expr()));
     }
 
+    /**
+     * The method is processing the if statements with operators
+     * The method is also responsible of the equals function when 2 strings
+     * are compared
+     * @param ctx ComparisonExpressionWithOperatorContext
+     * @return jasminCode
+     */
     @Override
     public List<String> visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx)
     {
@@ -115,6 +128,12 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         return jasminCode;
     }
 
+    /**
+     * This method handles the process of the if
+     * statements that contains '&&' and/or '||'
+     * @param ctx LogicalExpressionAndOrContext
+     * @return jasminCode with the if statement generated
+     */
     @Override
     public List<String> visitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx)
     {
@@ -170,6 +189,15 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         return jasminCode;
     }
 
+    /**
+     * This method adds the comparator for the previous declare values
+     * e.g.
+     *  ldc 2
+     *  ldc 5
+     *  if_icmgt {@link CodeGenerator#jumpLabel}
+     * @param ctx ComparatorContext
+     * @return jasminCode that includes the comparator
+     */
     @Override
     public List<String> visitComparator(RoCParser.ComparatorContext ctx)
     {
@@ -269,6 +297,12 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         return jasminCode;
     }
 
+    /**
+     * Adds the number to the jasmin code
+     * e.g. ldc 2
+     * @param ctx NUMBERContext
+     * @return jasminCode for the number
+     */
     @Override
     public List<String> visitNUMBER(RoCParser.NUMBERContext ctx)
     {
@@ -277,6 +311,12 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         return jasminCode;
     }
 
+    /**
+     * Adds the number to the jasmin code
+     * e.g. ldc "Some string here"
+     * @param ctx STRINGContext
+     * @return jasminCode for the number
+     */
     @Override
     public List<String> visitSTRING(RoCParser.STRINGContext ctx)
     {
@@ -285,6 +325,14 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         return jasminCode;
     }
 
+    /**
+     * Adds the proper boolean value to jasminCode
+     * e.g.
+     * bool a<- ADEVARAT
+     * jasmin: ldc 1
+     * @param ctx BOOLEANContext
+     * @return jasminCode with proper boolean value
+     */
     @Override
     public List<String> visitBOOLEAN(RoCParser.BOOLEANContext ctx)
     {
@@ -300,6 +348,11 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         return jasminCode;
     }
 
+    /**
+     * Loads the proper variable from the stack
+     * @param ctx IDENTIFIERContext
+     * @return jasminCode with proper variable load from the stack
+     */
     @Override
     public List<String> visitIDENTIFIER(RoCParser.IDENTIFIERContext ctx)
     {
@@ -340,6 +393,13 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         return jasminCode;
     }
 
+    /**
+     * This method is handling the variables declaration
+     * e.g.
+     * sdc a<- "some string here"
+     * @param ctx Variable_declarationContext
+     * @return jasminCode to store the proper variable on the stack
+     */
     @Override
     public List<String> visitVariable_declaration(RoCParser.Variable_declarationContext ctx)
     {
@@ -360,10 +420,17 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         return jasminCode;
     }
 
+    /**
+     * The method is storing a value for a particular variable
+     * e.g.
+     * numar a <- 10
+     * a <- 11, the value 10 is replaced with 11
+     * @param ctx AssignmentExpression
+     * @return jasminCode with the proper variable stored on the stack
+     */
     @Override
     public List<String> visitAssignmentExpression(RoCParser.AssignmentExpressionContext ctx)
     {
-        String name = ctx.IDENTIFIER().getText();
         Variable var = scope.get(ctx);
 
         List<String> jasminCode = new ArrayList<>(visit(ctx.arithmetic_expr()));
@@ -372,6 +439,11 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         return jasminCode;
     }
 
+    /**
+     * Adds the variable from the stack and print parameter
+     * @param ctx Type_valueContext
+     * @return jasminCode with proper variable loaded from the stack and PrintStream parameter
+     */
     @Override
     public List<String> visitType_value(RoCParser.Type_valueContext ctx)
     {
