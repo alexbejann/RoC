@@ -136,6 +136,30 @@ public class RoCBaseListener implements RoCListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMethodCall(RoCParser.MethodCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMethodCall(RoCParser.MethodCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMethodCallArgumentList(RoCParser.MethodCallArgumentListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMethodCallArgumentList(RoCParser.MethodCallArgumentListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterADDSUBGRP(RoCParser.ADDSUBGRPContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -203,6 +227,18 @@ public class RoCBaseListener implements RoCListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBOOLEAN(RoCParser.BOOLEANContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMethodCallExpr(RoCParser.MethodCallExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMethodCallExpr(RoCParser.MethodCallExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

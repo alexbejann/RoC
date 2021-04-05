@@ -87,6 +87,20 @@ public class RoCBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ro
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitMethodCall(RoCParser.MethodCallContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitMethodCallArgumentList(RoCParser.MethodCallArgumentListContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitADDSUBGRP(RoCParser.ADDSUBGRPContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -123,6 +137,13 @@ public class RoCBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ro
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitBOOLEAN(RoCParser.BOOLEANContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitMethodCallExpr(RoCParser.MethodCallExprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

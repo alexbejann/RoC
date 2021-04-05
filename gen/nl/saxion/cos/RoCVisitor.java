@@ -76,6 +76,20 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement_body(RoCParser.Statement_bodyContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code MethodCall}
+	 * labeled alternative in {@link RoCParser#functionCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethodCall(RoCParser.MethodCallContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code MethodCallArgumentList}
+	 * labeled alternative in {@link RoCParser#functionArgumentList}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethodCallArgumentList(RoCParser.MethodCallArgumentListContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ADDSUBGRP}
 	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
 	 * @param ctx the parse tree
@@ -117,6 +131,13 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitBOOLEAN(RoCParser.BOOLEANContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code MethodCallExpr}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethodCallExpr(RoCParser.MethodCallExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code MULDIVMODOPGRP}
 	 * labeled alternative in {@link RoCParser#arithmetic_expr}.

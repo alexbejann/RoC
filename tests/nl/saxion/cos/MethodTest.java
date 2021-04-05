@@ -267,4 +267,32 @@ public class MethodTest extends TestBase
         }, output.toArray());
 
     }
+
+    /**
+     * Test if statement
+     */
+    @Test
+    public void declareMethod() throws IOException, AssembleException
+    {
+        String codeString = "functia main()" +
+                            "{\n" +
+                            "   f()\n" +
+                            "}" +
+                            "functia foo()" +
+                            "{\n" +
+                            "   numar a<- 2\n" +
+                            "   printeaza(a)\n" +
+                            "}";
+
+        Compiler c = new Compiler();
+        JasminBytecode code = c.compileString(codeString,"decisionStatementsIf");
+        Assertions.assertNotNull(code);
+
+        List<String> output = runCode(code);
+
+        assertArrayEquals(new String[] {
+                "2"
+        }, output.toArray());
+
+    }
 }

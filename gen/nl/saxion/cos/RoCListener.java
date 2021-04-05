@@ -118,6 +118,30 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitStatement_body(RoCParser.Statement_bodyContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code MethodCall}
+	 * labeled alternative in {@link RoCParser#functionCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterMethodCall(RoCParser.MethodCallContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MethodCall}
+	 * labeled alternative in {@link RoCParser#functionCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitMethodCall(RoCParser.MethodCallContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code MethodCallArgumentList}
+	 * labeled alternative in {@link RoCParser#functionArgumentList}.
+	 * @param ctx the parse tree
+	 */
+	void enterMethodCallArgumentList(RoCParser.MethodCallArgumentListContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MethodCallArgumentList}
+	 * labeled alternative in {@link RoCParser#functionArgumentList}.
+	 * @param ctx the parse tree
+	 */
+	void exitMethodCallArgumentList(RoCParser.MethodCallArgumentListContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ADDSUBGRP}
 	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
 	 * @param ctx the parse tree
@@ -189,6 +213,18 @@ public interface RoCListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBOOLEAN(RoCParser.BOOLEANContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code MethodCallExpr}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterMethodCallExpr(RoCParser.MethodCallExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MethodCallExpr}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitMethodCallExpr(RoCParser.MethodCallExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code MULDIVMODOPGRP}
 	 * labeled alternative in {@link RoCParser#arithmetic_expr}.

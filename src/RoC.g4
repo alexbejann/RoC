@@ -29,15 +29,25 @@ comparison_expr
 statement_body
                 : (decisionStatement
                 | iterationStatement
+                | functionCall
                 | printStatement
                 | varExpression
                 | variable_declaration SEMICOLON?)+
                 ;
 
+functionCall
+            : IDENTIFIER PAREN_OPEN functionArgumentList? PAREN_CLOSE #MethodCall
+            ;
+
+functionArgumentList
+                    :(type_value(COMMA type_value)*) #MethodCallArgumentList
+                    ;
+
 arithmetic_expr
               : left=arithmetic_expr op=(MULTIPLY | DIVIDE | MODULO) right=arithmetic_expr  # MULDIVMODOPGRP
               | left=arithmetic_expr op=(PLUS | MINUS)               right=arithmetic_expr  # ADDSUBGRP
               | PAREN_OPEN arithmetic_expr PAREN_CLOSE                                      # PARENGRP
+              | functionCall                                                                # MethodCallExpr
               | NUMBER                                                                      # NUMBER
               | STRING                                                                      # STRING
               | BOOLEAN                                                                     # BOOLEAN
