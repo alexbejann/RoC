@@ -88,15 +88,15 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     @Override
     public List<String> visitType(RoCParser.TypeContext ctx) {
         List<String> jasminCode = new ArrayList<>();
-        switch (ctx.getText())
+        switch (dataTypes.get(ctx))
         {
-            case "sdc":
+            case SDC:
                 jasminCode.add("Ljava/lang/String;");
                 break;
-            case "numar" :
+            case NUMAR:
                 jasminCode.add("I");
                 break;
-            case "bool" :
+            case BOOL:
                 jasminCode.add("Z");
                 break;
             default:

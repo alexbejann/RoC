@@ -27,6 +27,30 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         return failed;
     }
 
+    @Override
+    public DataType visitType(RoCParser.TypeContext ctx)
+    {
+        if (ctx.STRING_TYPE() != null)
+        {
+            dataTypes.put(ctx,DataType.SDC);
+            return DataType.SDC;
+        }
+        else if (ctx.BOOLEAN_TYPE() != null)
+        {
+            dataTypes.put(ctx,DataType.BOOL);
+            return DataType.BOOL;
+        }
+        else if (ctx.NUMBER_TYPE() != null)
+        {
+            dataTypes.put(ctx,DataType.NUMAR);
+            return DataType.NUMAR;
+        }
+        else if (ctx.getText().equals("automat"))
+        {
+            throw new CompilerException("automat data type can't be used as an argument list: "+ctx.getText());
+        }
+        throw new CompilerException("Unrecognized data type: "+ctx.getText());
+    }
 
     @Override
     public DataType visitStatement_body(RoCParser.Statement_bodyContext ctx)
