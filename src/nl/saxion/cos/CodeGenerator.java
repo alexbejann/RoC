@@ -55,10 +55,66 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         }
         else
         {
-            //todo implement this
-            System.out.println("another method called "+name);
+            //Use StringBuilder to avoid having parameters on separate lines
+            StringBuilder argumentList = new StringBuilder();
+            StringBuilder returnType = new StringBuilder();
+
+            for (String s : visit(ctx.argument_list()))
+            {
+                argumentList.append(s);
+            }
+
+            for (String s: visit(ctx.type()))
+            {
+                returnType.append(s);
+            }
+
+            String methodDeclaration = "";
+            methodDeclaration+= ".method public static ";
+            methodDeclaration+= name;
+            methodDeclaration+= "(";
+            methodDeclaration+= argumentList.toString();
+            methodDeclaration+= ")";
+            methodDeclaration+= returnType.toString();
+
+            jasminCode.add(methodDeclaration);
+            jasminCode.add(".limit stack 5");
+            jasminCode.add(".limit locals 5");
         }
         jasminCode.addAll(visit(ctx.body));
+        return jasminCode;
+    }
+
+    @Override
+    public List<String> visitType(RoCParser.TypeContext ctx) {
+        List<String> jasminCode = new ArrayList<>();
+        switch (ctx.getText())
+        {
+            case "sdc":
+                jasminCode.add("Ljava/lang/String;");
+                break;
+            case "numar" :
+                jasminCode.add("I");
+                break;
+            case "bool" :
+                jasminCode.add("Z");
+                break;
+            default:
+                jasminCode.add("V");
+        }
+        return jasminCode;
+    }
+
+    @Override
+    public List<String> visitArgument_list(RoCParser.Argument_listContext ctx) {
+        List<String> jasminCode = new ArrayList<>();
+        for (ParseTree child : ctx.children)
+        {
+            if (child instanceof RoCParser.TypeContext)
+            {
+                jasminCode.addAll(visit(child));
+            }
+        }
         return jasminCode;
     }
 

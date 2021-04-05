@@ -1,0 +1,3 @@
+functia f(numar number) returneaza numar{
+ numar doi <- 2
+}
