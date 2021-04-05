@@ -72,7 +72,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     {
         //generated random label
         jumpLabel = "L"+ (labelCounter++);
-        endIfLabel = "endif"+labelCounter;
+        endIfLabel = "endif";
         return new ArrayList<>(visit(ctx.logical_expr()));
     }
 
@@ -164,10 +164,9 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         {
             jasminCode.add(endIfLabel+":");
         }
-        else
-        {
-            jasminCode.add(jumpLabel+":");
-        }
+
+        jasminCode.add(jumpLabel+":");
+
         return jasminCode;
     }
 

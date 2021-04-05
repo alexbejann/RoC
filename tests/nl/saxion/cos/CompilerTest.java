@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CompilerTest extends TestBase {
 
 
-	@Test
+	/*@Test
 	void checkByteCode() throws Exception {
 		// Compile the file testFiles/decisionStatementElse.rc
 		Compiler c = new Compiler();
@@ -99,5 +99,5 @@ class CompilerTest extends TestBase {
 		assertArrayEquals(new String[] {
 				"Hello from ExampleLang!"
 		}, output.toArray());
-	}
+	}*/
 }
