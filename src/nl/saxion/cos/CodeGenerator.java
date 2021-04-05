@@ -55,11 +55,28 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         }
         else
         {
-            jasminCode.add(".method public static " + name);
-            jasminCode.add("(");
-            jasminCode.addAll(visit(ctx.argument_list()));
-            jasminCode.add(")");
-            jasminCode.addAll(visit(ctx.type()));
+            StringBuilder argumentList = new StringBuilder();
+            StringBuilder returnType = new StringBuilder();
+
+            for (String s : visit(ctx.argument_list()))
+            {
+                argumentList.append(s);
+            }
+
+            for (String s: visit(ctx.type()))
+            {
+                returnType.append(s);
+            }
+
+            String methodDeclaration = "";
+            methodDeclaration+= ".method public static ";
+            methodDeclaration+= name;
+            methodDeclaration+= "(";
+            methodDeclaration+= argumentList.toString();
+            methodDeclaration+= ")";
+            methodDeclaration+= returnType.toString();
+
+            jasminCode.add(methodDeclaration);
             jasminCode.add(".limit stack 5");
             jasminCode.add(".limit locals 5");
         }
@@ -79,7 +96,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
                 jasminCode.add("I");
                 break;
             case "bool" :
-                jasminCode.add("B");
+                jasminCode.add("Z");
                 break;
             default:
                 jasminCode.add("V");
