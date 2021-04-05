@@ -55,6 +55,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         }
         else
         {
+            //Use StringBuilder to avoid having parameters on separate lines
             StringBuilder argumentList = new StringBuilder();
             StringBuilder returnType = new StringBuilder();
 
