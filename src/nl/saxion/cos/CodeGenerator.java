@@ -55,10 +55,48 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         }
         else
         {
-            //todo implement this
-            System.out.println("another method called "+name);
+            jasminCode.add(".method public static " + name);
+            jasminCode.add("(");
+            jasminCode.addAll(visit(ctx.argument_list()));
+            jasminCode.add(")");
+            jasminCode.addAll(visit(ctx.type()));
+            jasminCode.add(".limit stack 5");
+            jasminCode.add(".limit locals 5");
         }
         jasminCode.addAll(visit(ctx.body));
+        return jasminCode;
+    }
+
+    @Override
+    public List<String> visitType(RoCParser.TypeContext ctx) {
+        List<String> jasminCode = new ArrayList<>();
+        switch (ctx.getText())
+        {
+            case "sdc":
+                jasminCode.add("Ljava/lang/String;");
+                break;
+            case "numar" :
+                jasminCode.add("I");
+                break;
+            case "bool" :
+                jasminCode.add("B");
+                break;
+            default:
+                jasminCode.add("V");
+        }
+        return jasminCode;
+    }
+
+    @Override
+    public List<String> visitArgument_list(RoCParser.Argument_listContext ctx) {
+        List<String> jasminCode = new ArrayList<>();
+        for (ParseTree child : ctx.children)
+        {
+            if (child instanceof RoCParser.TypeContext)
+            {
+                jasminCode.addAll(visit(child));
+            }
+        }
         return jasminCode;
     }
 
