@@ -5,12 +5,12 @@
 - ~~Add operators and describe how are they gonna work~~ 
 - Do we want this a=b=c -> a=(b=c)? In RoC would be a<-b<-c -> a<-(b<-c). If not, make an assignment a statement and not an expression 
 - ~~Specify block statements~~
-- Specify global and local scope 
+- ~~Specify global and local scope~~ 
 - ~~Should we keep `functia` keyword in our language?~~ `Yes, we will keep the keyword`
 - ~~implement scoping~~
-- implement iteration statements
+- ~~implement iteration statements~~
 - ~~implement conditional statements~~
-- implement logical operators
+- ~~implement logical operators~~
 - implement scanner
 - ~~implement assignment `a<-a+123`/~~  
 - implement methods
