@@ -1,6 +1,7 @@
 package nl.saxion.cos.model;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 public class VariableTable
 {
@@ -67,16 +68,15 @@ public class VariableTable
 
     public String getTypeLetter(String type)
     {
-        switch (type)
+        switch (type.toLowerCase(Locale.ROOT))
         {
             case "numar":
-                return "i";
+                return "I";
             case "sdc":
-                return "s";
+                return "Ljava/lang/String;";
             case "automat":
-                return "a";
             case "bool":
-                return "b";
+                return "Z";
             default:
                 return "?";
         }

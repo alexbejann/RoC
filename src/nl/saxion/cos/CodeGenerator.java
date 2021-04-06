@@ -4,6 +4,7 @@ import nl.saxion.cos.model.DataType;
 import nl.saxion.cos.model.Variable;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
+import org.antlr.v4.runtime.tree.TerminalNodeImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,11 +90,10 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             {
                 methodDeclaration += visit(ctx.returnType);
             }
-            methodDeclaration+= returnType.toString();
 
             jasminCode.add(methodDeclaration);
-            jasminCode.add(".limit stack 5");
-            jasminCode.add(".limit locals 5");
+            jasminCode.add(".limit stack 10");
+            jasminCode.add(".limit locals 10");
         }
         jasminCode.addAll(visit(ctx.body));
         jasminCode.add("return");
@@ -103,6 +103,8 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
 
     @Override
     public List<String> visitType(RoCParser.TypeContext ctx) {
+        //todo replace this to get the right type from the variable table
+        // instead of having this switch implementation
         List<String> jasminCode = new ArrayList<>();
         switch (dataTypes.get(ctx))
         {
@@ -139,14 +141,18 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     {
         List<String> jasminCode = new ArrayList<>();
         String methodName = ctx.IDENTIFIER().getText();
-        List<String> parametersList = new ArrayList<>();
+        Variable var = scope.get(ctx);
         //todo please refine this hardcoded return value void, also the return type should be
         // after the argumentslist is returned
-        jasminCode.add("invokestatic "+ className +"/"+ methodName +"()V\n");
         if (ctx.functionArgumentList() != null)
         {
             jasminCode.addAll(visit(ctx.functionArgumentList()));
         }
+        String parameters =  "("+var.getName().split("@", 2)[1] +")V\n";
+
+        String methodInvoke = "invokestatic "+ className +"/"+ methodName;
+        methodInvoke += parameters;
+        jasminCode.add(methodInvoke);//todo arguments should be added between the curly brackets and
 
         return jasminCode;
     }
@@ -156,6 +162,13 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     {
         List<String> jasminCode = new ArrayList<>();
         //todo implement the arguments for this
+        for (ParseTree c: ctx.children)
+        {
+            if (!(",".equals(c.getText()) || c instanceof TerminalNodeImpl))
+            {
+                System.out.println("ctx "+c.getText());//todo create a list of parameters
+            }
+        }
         return jasminCode;
     }
 

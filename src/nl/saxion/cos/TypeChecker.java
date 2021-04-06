@@ -76,6 +76,8 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitMethodCall(RoCParser.MethodCallContext ctx)
     {
+        //todo check if the method already exists if so,
+        // throw exception
         String identifier = ctx.IDENTIFIER().getText();
 
         String name = identifier.concat("@");
@@ -88,9 +90,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
             {
                 if (!(",".equals(c.getText()) || c instanceof TerminalNodeImpl))
                 {
-                    //todo get the types to match the functions
-                    System.out.println("ctx "+ c.toString());
-                    //name += variableTable.getTypeLetter(dataTypes.get(c));
+                    name += variableTable.getTypeLetter(dataTypes.get(c).toString());
                 }
             }
         }
@@ -101,18 +101,10 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
             throw new CompilerException("Method was not defined, or the parameters don't match!");
         }
 
+        scope.put(ctx, var);
+        dataTypes.put(ctx, var.getType());
         return var.getType();
     }
-
-    @Override
-    public DataType visitArgument_list(RoCParser.Argument_listContext ctx)
-    {
-
-
-        return null;
-    }
-
-
 
     @Override
     public DataType visitType(RoCParser.TypeContext ctx)
