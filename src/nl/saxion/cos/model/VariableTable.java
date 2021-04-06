@@ -64,4 +64,21 @@ public class VariableTable
         return parentScope;
 
     }
+
+    public String getTypeLetter(String type)
+    {
+        switch (type)
+        {
+            case "numar":
+                return "i";
+            case "sdc":
+                return "s";
+            case "automat":
+                return "a";
+            case "bool":
+                return "b";
+            default:
+                return "?";
+        }
+    }
 }

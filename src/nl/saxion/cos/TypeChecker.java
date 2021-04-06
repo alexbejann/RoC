@@ -5,7 +5,9 @@ import nl.saxion.cos.exceptions.CompilerException;
 import nl.saxion.cos.model.DataType;
 import nl.saxion.cos.model.Variable;
 import nl.saxion.cos.model.VariableTable;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
+import org.antlr.v4.runtime.tree.TerminalNodeImpl;
 
 public class TypeChecker extends RoCBaseVisitor<DataType>
 {
@@ -40,24 +42,77 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
             throw new CompilerException("The method should return: "+ctx.returnType.getText()+" type!");
         }
 
+        String name = ctx.methodName.getText();
+
+        name += "@";
+
+        if (ctx.argument_list() != null)
+        {
+            System.out.println("ctx "+ctx.argument_list().children.toString());
+            for (ParseTree c :ctx.argument_list().children)
+            {
+                if (!(",".equals(c.getText()) || c instanceof TerminalNodeImpl))
+                    name += variableTable.getTypeLetter(c.getChild(0).getText());
+            }
+        }
         if (ctx.returnType == null)
         {
-            dataTypes.put(ctx, null);
+            variableTable.add(name, null);
         }
         else
         {
             DataType type = visit(ctx.returnType);
-            dataTypes.put(ctx, type);
+            variableTable.add(name, type);
         }
-
-        //todo @ should be used
-        //scope.put(ctx, name);
+        scope.put(ctx, variableTable.lookUp(name));
 
         variableTable = variableTable.openScope();
         visitChildren(ctx);
         variableTable = variableTable.getParentScope();
+
+        return variableTable.lookUp(name).getType();
+    }
+
+    @Override
+    public DataType visitMethodCall(RoCParser.MethodCallContext ctx)
+    {
+        String identifier = ctx.IDENTIFIER().getText();
+
+        String name = identifier.concat("@");
+
+        if (ctx.functionArgumentList() != null)
+        {
+            visitChildren(ctx.functionArgumentList());
+
+            for (ParseTree c : ctx.functionArgumentList().children)
+            {
+                if (!(",".equals(c.getText()) || c instanceof TerminalNodeImpl))
+                {
+                    //todo get the types to match the functions
+                    System.out.println("ctx "+ c.toString());
+                    //name += variableTable.getTypeLetter(dataTypes.get(c));
+                }
+            }
+        }
+
+        Variable var = variableTable.lookUp(name);
+        if (var == null)
+        {
+            throw new CompilerException("Method was not defined, or the parameters don't match!");
+        }
+
+        return var.getType();
+    }
+
+    @Override
+    public DataType visitArgument_list(RoCParser.Argument_listContext ctx)
+    {
+
+
         return null;
     }
+
+
 
     @Override
     public DataType visitType(RoCParser.TypeContext ctx)
