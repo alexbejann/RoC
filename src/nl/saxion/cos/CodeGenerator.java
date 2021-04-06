@@ -17,11 +17,13 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     private int labelCounter = 0;
     private final ParseTreeProperty<DataType> dataTypes;
     private final ParseTreeProperty<Variable> scope;
+    private final String className;
 
-    public CodeGenerator( ParseTreeProperty<DataType> dataTypes, ParseTreeProperty<Variable> scope)
+    public CodeGenerator( ParseTreeProperty<DataType> dataTypes, ParseTreeProperty<Variable> scope, String className)
     {
         this.dataTypes = dataTypes;
         this.scope = scope;
+        this.className = className;
     }
 
     /**
@@ -58,15 +60,20 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             //Use StringBuilder to avoid having parameters on separate lines
             StringBuilder argumentList = new StringBuilder();
             StringBuilder returnType = new StringBuilder();
-
-            for (String s : visit(ctx.argument_list()))
+            if (ctx.argument_list() != null)
             {
-                argumentList.append(s);
+                for (String s : visit(ctx.argument_list()))
+                {
+                    argumentList.append(s);
+                }
             }
 
-            for (String s: visit(ctx.type()))
+            if (ctx.returnType != null)
             {
-                returnType.append(s);
+                for (String s: visit(ctx.type()))
+                {
+                    returnType.append(s);
+                }
             }
 
             String methodDeclaration = "";
@@ -74,7 +81,14 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             methodDeclaration+= name;
             methodDeclaration+= "(";
             methodDeclaration+= argumentList.toString();
-            methodDeclaration+= ")";
+            if (dataTypes.get(ctx) == null)
+            {
+                methodDeclaration+= ")V";//TODO specificy the return type here now it returns oid everytime
+            }
+            else
+            {
+                methodDeclaration += visit(ctx.returnType);
+            }
             methodDeclaration+= returnType.toString();
 
             jasminCode.add(methodDeclaration);
@@ -82,6 +96,8 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             jasminCode.add(".limit locals 5");
         }
         jasminCode.addAll(visit(ctx.body));
+        jasminCode.add("return");
+        jasminCode.add(".end method");
         return jasminCode;
     }
 
@@ -115,6 +131,31 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
                 jasminCode.addAll(visit(child));
             }
         }
+        return jasminCode;
+    }
+
+    @Override
+    public List<String> visitMethodCall(RoCParser.MethodCallContext ctx)
+    {
+        List<String> jasminCode = new ArrayList<>();
+        String methodName = ctx.IDENTIFIER().getText();
+        List<String> parametersList = new ArrayList<>();
+        //todo please refine this hardcoded return value void, also the return type should be
+        // after the argumentslist is returned
+        jasminCode.add("invokestatic "+ className +"/"+ methodName +"()V\n");
+        if (ctx.functionArgumentList() != null)
+        {
+            jasminCode.addAll(visit(ctx.functionArgumentList()));
+        }
+
+        return jasminCode;
+    }
+
+    @Override
+    public List<String> visitMethodCallArgumentList(RoCParser.MethodCallArgumentListContext ctx)
+    {
+        List<String> jasminCode = new ArrayList<>();
+        //todo implement the arguments for this
         return jasminCode;
     }
 

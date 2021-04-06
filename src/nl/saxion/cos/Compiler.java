@@ -131,12 +131,10 @@ public class Compiler {
 				.add(".super java/lang/Object")
 				.add();
 
-		CodeGenerator codeGenerator = new CodeGenerator(dataTypes, scope);
+		CodeGenerator codeGenerator = new CodeGenerator(dataTypes, scope, className);
 		List<String> code = codeGenerator.visit(parseTree);
 
 		jasminBytecode.addAll(code);
-		jasminBytecode.add("return");
-		jasminBytecode.add(".end method");
 		return jasminBytecode;
 	}
 

@@ -30,6 +30,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitMethod_declaration(RoCParser.Method_declarationContext ctx)
     {
+        //TODO in here open new scope and reset the counter of the VariableTable to 0
         if (ctx.returnType == null && ctx.returnValue != null)
         {
             throw new CompilerException("You can't return in a void method!");
@@ -38,7 +39,23 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         {
             throw new CompilerException("The method should return: "+ctx.returnType.getText()+" type!");
         }
+
+        if (ctx.returnType == null)
+        {
+            dataTypes.put(ctx, null);
+        }
+        else
+        {
+            DataType type = visit(ctx.returnType);
+            dataTypes.put(ctx, type);
+        }
+
+        //todo @ should be used
+        //scope.put(ctx, name);
+
+        variableTable = variableTable.openScope();
         visitChildren(ctx);
+        variableTable = variableTable.getParentScope();
         return null;
     }
 

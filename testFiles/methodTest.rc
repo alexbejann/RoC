@@ -1,0 +1,9 @@
+functia main()
+{
+    foo()
+}
+ functia foo()
+{
+    numar a<- 2
+    printeaza(a)
+}

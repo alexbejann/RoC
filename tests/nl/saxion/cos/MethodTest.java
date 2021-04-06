@@ -269,14 +269,14 @@ public class MethodTest extends TestBase
     }
 
     /**
-     * Test if statement
+     * Test method call
      */
     @Test
     public void declareMethod() throws IOException, AssembleException
     {
         String codeString = "functia main()" +
                             "{\n" +
-                            "   f()\n" +
+                            "   foo()\n" +
                             "}" +
                             "functia foo()" +
                             "{\n" +
@@ -285,7 +285,7 @@ public class MethodTest extends TestBase
                             "}";
 
         Compiler c = new Compiler();
-        JasminBytecode code = c.compileString(codeString,"decisionStatementsIf");
+        JasminBytecode code = c.compileString(codeString,"Test");
         Assertions.assertNotNull(code);
 
         List<String> output = runCode(code);
