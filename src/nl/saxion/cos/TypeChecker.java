@@ -66,7 +66,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         }
         scope.put(ctx, variableTable.lookUp(name));
 
-        variableTable = variableTable.openScope();
+        variableTable = variableTable.openScope();//todo check the offset thing the index is wrong at this moment
         visitChildren(ctx);
         variableTable = variableTable.getParentScope();
 
@@ -248,7 +248,9 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitPrintStatement(RoCParser.PrintStatementContext ctx)
     {
-        return visit(ctx.type_value());
+        DataType type = visit(ctx.type_value());
+        dataTypes.put(ctx, type);
+        return type;
     }
 
     @Override

@@ -96,7 +96,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             jasminCode.add(".limit locals 10");
         }
         jasminCode.addAll(visit(ctx.body));
-        jasminCode.add("return");
+        jasminCode.add("return");//todo update this to return the appropiate type e.g. ireturn
         jasminCode.add(".end method");
         return jasminCode;
     }
@@ -144,12 +144,34 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         Variable var = scope.get(ctx);
         //todo please refine this hardcoded return value void, also the return type should be
         // after the argumentslist is returned
-        if (ctx.functionArgumentList() != null)
+        String parameters = "()";
+        String returnType = "V";
+        //check return type
+        if (dataTypes.get(ctx) != null)
         {
-            jasminCode.addAll(visit(ctx.functionArgumentList()));
+            switch (dataTypes.get(ctx))
+            {
+                case SDC:
+                    returnType = "Ljava/lang/String;";
+                    break;
+                case NUMAR:
+                    returnType = "I";
+                    break;
+                case BOOL:
+                    returnType = "Z";
+                    break;
+            }
         }
-        String parameters =  "("+var.getName().split("@", 2)[1] +")V\n";
+        // if arguments list is null means, no parameters
+        if (ctx.functionArgumentList() != null)//todo load parameters
+        {
+            //load arguments
+            jasminCode.addAll(visit(ctx.functionArgumentList()));
+            //add parameters types to function call
+            parameters =  "("+var.getName().split("@", 2)[1] +")";
+        }
 
+        parameters += returnType;
         String methodInvoke = "invokestatic "+ className +"/"+ methodName;
         methodInvoke += parameters;
         jasminCode.add(methodInvoke);//todo arguments should be added between the curly brackets and
@@ -162,12 +184,9 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     {
         List<String> jasminCode = new ArrayList<>();
         //todo implement the arguments for this
-        for (ParseTree c: ctx.children)
+        for (ParseTree c: ctx.type_value())
         {
-            if (!(",".equals(c.getText()) || c instanceof TerminalNodeImpl))
-            {
-                System.out.println("ctx "+c.getText());//todo create a list of parameters
-            }
+            jasminCode.addAll(visit(c));
         }
         return jasminCode;
     }
@@ -487,17 +506,18 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         jasminCode.add("getstatic java/lang/System/out Ljava/io/PrintStream;");
 
         jasminCode.addAll(visit(ctx.type_value()));
-        if (ctx.type_value().NUMBER() != null)
+
+        switch (dataTypes.get(ctx))
         {
-            jasminCode.add("invokevirtual java/io/PrintStream/println(I)V");
-        }
-        else if (ctx.type_value().STRING() != null)
-        {
-            jasminCode.add("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V");
-        }
-        else if (ctx.type_value().BOOLEAN() != null)
-        {
-            jasminCode.add("invokevirtual java/io/PrintStream/println(Z)V");
+            case NUMAR:
+                jasminCode.add("invokevirtual java/io/PrintStream/println(I)V");
+                break;
+            case SDC:
+                jasminCode.add("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V");
+                break;
+            case BOOL:
+                jasminCode.add("invokevirtual java/io/PrintStream/println(Z)V");
+                break;
         }
 
         return jasminCode;
@@ -565,16 +585,11 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             switch (var.getType())
             {
                 case NUMAR:
+                case BOOL:
                     jasminCode.add("iload "+var.getIndex());
-                    jasminCode.add("invokevirtual java/io/PrintStream/println(I)V");
                     break;
                 case SDC:
                     jasminCode.add("aload "+var.getIndex());
-                    jasminCode.add("invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V");
-                    break;
-                case BOOL:
-                    jasminCode.add("iload "+var.getIndex());
-                    jasminCode.add("invokevirtual java/io/PrintStream/println(Z)V");
                     break;
             }
             return jasminCode;
