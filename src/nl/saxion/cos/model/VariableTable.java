@@ -5,9 +5,8 @@ import java.util.Locale;
 
 public class VariableTable
 {
-    private int nextIndex = 0;
-
     private final HashMap<String, Variable> symbols;
+    private int nextIndex = 0;
     private VariableTable parentScope;
 
     public VariableTable(int offset)
@@ -17,7 +16,6 @@ public class VariableTable
     }
 
     /**
-     *
      * @param name to lookup
      * @return if found return the variable
      */
@@ -31,14 +29,24 @@ public class VariableTable
     }
 
     /**
+     * @param name to lookup
+     * @return if found return the variable
+     */
+    public Variable lookUpLocal(String name)
+    {
+        return symbols.get(name);
+    }
+
+    /**
      * Add variable to hashmap
+     *
      * @param name IDENTIFIER
      * @param type Variable Type
      */
     public void add(String name, DataType type)
     {
-        nextIndex++;
         symbols.put(name, new Variable(name, type, nextIndex));
+        nextIndex++;
     }
     /**
      * Add variable to hashmap
@@ -52,13 +60,27 @@ public class VariableTable
         symbols.put(name, new Variable(name, type, index));
     }
 
+    // openScope(), 'openFunctionScope()' and 'openFunctionScope()' are convenience methods.
+    public VariableTable openFunctionScope()
+    {
+        return createScope(0);
+    }
+
+    public VariableTable openMethodScope()
+    {
+        return createScope(1);
+    }
+
     public VariableTable openScope()
     {
-        VariableTable childScope = new VariableTable(nextIndex);
-        childScope.parentScope = this;
-        //childScope.nextIndex = nextIndex;
-        return childScope;
+        return createScope(nextIndex);
+    }
 
+    private VariableTable createScope(int offset)
+    {
+        VariableTable childScope = new VariableTable(offset);
+        childScope.parentScope = this;
+        return childScope;
     }
 
     public VariableTable getParentScope()

@@ -1,9 +1,10 @@
+functia foo2(numar a, sdc s)
+{
+   printeaza(a)
+   printeaza(s)
+}
 functia main()
 {
-    foo()
-}
- functia foo()
-{
-    numar a<- 2
-    printeaza(a)
+   automat a<-2
+   foo2(a, "Alex")
 }

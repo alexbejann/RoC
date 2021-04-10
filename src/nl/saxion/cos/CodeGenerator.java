@@ -578,7 +578,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     {
         List<String> jasminCode = new ArrayList<>();
 
-        /*if (ctx.IDENTIFIER() != null)
+        if (ctx.IDENTIFIER() != null)
         {
             //todo check this if can be removed or if it's a good practice
             Variable var = scope.get(ctx);
@@ -593,7 +593,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
                     break;
             }
             return jasminCode;
-        }*/
+        }
 
         switch (dataTypes.get(ctx))
         {

@@ -1,6 +1,5 @@
 package nl.saxion.cos;
 
-
 import nl.saxion.cos.exceptions.CompilerException;
 import nl.saxion.cos.model.DataType;
 import nl.saxion.cos.model.Variable;
@@ -48,7 +47,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
 
         if (ctx.argument_list() != null)
         {
-            System.out.println("ctx "+ctx.argument_list().children.toString());
+            visit(ctx.argument_list());
             for (ParseTree c :ctx.argument_list().children)
             {
                 if (!(",".equals(c.getText()) || c instanceof TerminalNodeImpl))
@@ -66,7 +65,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         }
         scope.put(ctx, variableTable.lookUp(name));
 
-        variableTable = variableTable.openScope();//todo check the offset thing the index is wrong at this moment
+        variableTable = variableTable.openFunctionScope();//todo check the offset thing the index is wrong at this moment
         visitChildren(ctx);
         variableTable = variableTable.getParentScope();
 
@@ -218,7 +217,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         //visit the rhs and the lhs and
         DataType type = visit(ctx.arithmetic_expr());
         String name = ctx.lhs.getText();
-        if (variableTable.lookUp(name) != null)
+        if (variableTable.lookUpLocal(name) != null)
             throw new CompilerException("Variable "+name+" already defined!");
 
         switch (ctx.type().getText())

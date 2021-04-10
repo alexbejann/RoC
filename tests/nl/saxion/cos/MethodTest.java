@@ -274,14 +274,13 @@ public class MethodTest extends TestBase
     @Test
     public void declareMethod() throws IOException, AssembleException
     {
-        String codeString = "functia main()" +
+        String codeString = "functia foo2(numar a, sdc s, bool b)" +
                             "{\n" +
-                            "   foo()\n" +
-                            "}" +
-                            "functia foo()" +
+                            "   printeaza(2)\n" +
+                            "}\n" +
+                            "functia main()" +
                             "{\n" +
-                            "   numar a<- 2\n" +
-                            "   printeaza(a)\n" +
+                            "   foo2(2, \"Alex\", FALS)\n" +
                             "}";
 
         Compiler c = new Compiler();
@@ -292,6 +291,35 @@ public class MethodTest extends TestBase
 
         assertArrayEquals(new String[] {
                 "2"
+        }, output.toArray());
+
+    }
+
+    /**
+     * Test method call
+     */
+    @Test
+    public void useParameterDeclaredMethod() throws IOException, AssembleException
+    {
+        String codeString = "functia foo2(numar a, sdc s, bool b)" +
+                "{\n" +
+                "   printeaza(a)\n" +
+                "   printeaza(s)\n" +
+                "   printeaza(b)\n" +
+                "}\n" +
+                "functia main()" +
+                "{\n" +
+                "   foo2(2, \"Alex\", FALS)\n" +
+                "}";
+
+        Compiler c = new Compiler();
+        JasminBytecode code = c.compileString(codeString,"Test");
+        Assertions.assertNotNull(code);
+
+        List<String> output = runCode(code);
+
+        assertArrayEquals(new String[] {
+                "2","Alex","false"
         }, output.toArray());
 
     }
