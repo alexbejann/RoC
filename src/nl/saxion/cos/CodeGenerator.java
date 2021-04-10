@@ -4,7 +4,6 @@ import nl.saxion.cos.model.DataType;
 import nl.saxion.cos.model.Variable;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
-import org.antlr.v4.runtime.tree.TerminalNodeImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -578,7 +577,8 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitType_value(RoCParser.Type_valueContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
-        if (ctx.IDENTIFIER() != null)
+
+        /*if (ctx.IDENTIFIER() != null)
         {
             //todo check this if can be removed or if it's a good practice
             Variable var = scope.get(ctx);
@@ -593,7 +593,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
                     break;
             }
             return jasminCode;
-        }
+        }*/
 
         switch (dataTypes.get(ctx))
         {

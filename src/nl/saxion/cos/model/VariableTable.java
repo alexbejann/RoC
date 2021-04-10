@@ -10,8 +10,9 @@ public class VariableTable
     private final HashMap<String, Variable> symbols;
     private VariableTable parentScope;
 
-    public VariableTable()
+    public VariableTable(int offset)
     {
+        this.nextIndex = offset;
         this.symbols = new HashMap<>();
     }
 
@@ -53,9 +54,9 @@ public class VariableTable
 
     public VariableTable openScope()
     {
-        VariableTable childScope = new VariableTable();
+        VariableTable childScope = new VariableTable(nextIndex);
         childScope.parentScope = this;
-        childScope.nextIndex = nextIndex;
+        //childScope.nextIndex = nextIndex;
         return childScope;
 
     }

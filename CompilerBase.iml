@@ -8,7 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/testFiles" type="java-test-resource" />
     </content>
-    <orderEntry type="jdk" jdkName="11.0.4" jdkType="JavaSDK" />
+    <orderEntry type="jdk" jdkName="11" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jasmin" level="project" />
     <orderEntry type="module-library" scope="TEST">
@@ -52,5 +52,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="antlr4-runtime-4.9.1" level="project" />
   </component>
 </module>

@@ -107,6 +107,21 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     }
 
     @Override
+    public DataType visitArgument_list(RoCParser.Argument_listContext ctx)
+    {
+        for (int i = 0; i < ctx.type().size(); i++)
+        {
+            DataType type = visit(ctx.type(i));
+            String name = ctx.IDENTIFIER(i).getText();
+            if (type != null && name != null)
+            {
+                variableTable.add(name, type);
+            }
+        }
+        return null;
+    }
+
+    @Override
     public DataType visitType(RoCParser.TypeContext ctx)
     {
         if (ctx.STRING_TYPE() != null)

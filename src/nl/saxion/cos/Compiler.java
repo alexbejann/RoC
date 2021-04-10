@@ -61,7 +61,7 @@ public class Compiler {
 	 */
 	private JasminBytecode compile( CharStream input, String className ) {
 
-		variableTable = new VariableTable();
+		variableTable = new VariableTable(1);
 		// Phase 1/2: Run the lexer and parser
 		dataTypes = new ParseTreeProperty();
 		ParseTree parseTree = runLexerAndParser(input);
