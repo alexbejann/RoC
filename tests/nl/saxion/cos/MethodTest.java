@@ -328,6 +328,64 @@ public class MethodTest extends TestBase
      * Test method call
      */
     @Test
+    public void returnStringMethod() throws IOException, AssembleException
+    {
+        String codeString = "functia foo2(numar a, sdc s, bool b) returneaza sdc" +
+                "{\n" +
+                "   numar b<-2+a" +
+                "   returneaza s" +
+                "}\n" +
+                "functia main()" +
+                "{\n" +
+                "   automat a<-foo2(2, \"Alex\", FALS)\n" +
+                "   printeaza(a)\n" +
+                "}";
+
+        Compiler c = new Compiler();
+        JasminBytecode code = c.compileString(codeString,"Test");
+        Assertions.assertNotNull(code);
+
+        List<String> output = runCode(code);
+
+        assertArrayEquals(new String[] {
+                "Alex"
+        }, output.toArray());
+
+    }
+
+    /**
+     * Test method call
+     */
+    @Test
+    public void returnBooleanMethod() throws IOException, AssembleException
+    {
+        String codeString = "functia foo2(numar a, sdc s, bool b) returneaza bool" +
+                "{\n" +
+                "   automat b<-ADEVARAT" +
+                "   returneaza b" +
+                "}\n" +
+                "functia main()" +
+                "{\n" +
+                "   automat a<-foo2(2, \"Alex\", FALS)\n" +
+                "   printeaza(a)\n" +
+                "}";
+
+        Compiler c = new Compiler();
+        JasminBytecode code = c.compileString(codeString,"Test");
+        Assertions.assertNotNull(code);
+
+        List<String> output = runCode(code);
+
+        assertArrayEquals(new String[] {
+                "true"
+        }, output.toArray());
+
+    }
+
+    /**
+     * Test method call
+     */
+    @Test
     public void errorNoReturnMethod() throws IOException, AssembleException
     {
         String codeString = "functia foo2(numar a, sdc s, bool b) returneaza numar" +
