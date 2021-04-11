@@ -76,7 +76,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         }
         variableTable = variableTable.getParentScope();
 
-        return variableTable.lookUp(name).getType();
+        return null;
     }
 
     @Override
@@ -230,13 +230,13 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         switch (ctx.type().getText())
         {
             case "numar":
-                if (type != DataType.NUMAR)
+                if (type != DataType.NUMAR && type != DataType.SCANNER)
                     throw new CompilerException("Type mismatch expected numar!");
 
                 variableTable.add(name, DataType.NUMAR);
                 break;
             case "sdc":
-                if (type != DataType.SDC)
+                if (type != DataType.SDC && type != DataType.SCANNER)
                     throw new CompilerException("Type mismatch expected sdc!");
 
                 variableTable.add(name, DataType.SDC);
@@ -247,6 +247,12 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
 
                 System.out.println("bool " + ctx.getText());
                 variableTable.add(name, DataType.BOOL);
+                break;
+            case "scanner":
+                if (type != DataType.SCANNER)
+                    throw new CompilerException("Type mismatch expected scanner!");
+
+                variableTable.add(name, DataType.SCANNER);
                 break;
             case "automat":
                 if (type == DataType.SDC)
@@ -260,6 +266,8 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
                     variableTable.add(name, DataType.BOOL);
                 }
                 break;
+            default:
+                throw new CompilerException("Unrecognized data type: "+ctx.type().getText());
         }
         dataTypes.put(ctx, variableTable.lookUp(name).getType());
         scope.put(ctx, variableTable.lookUp(name));
@@ -315,6 +323,12 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     }
 
     @Override
+    public DataType visitSCANNER(RoCParser.SCANNERContext ctx)
+    {
+        return DataType.SCANNER;
+    }
+
+    @Override
     public DataType visitType_value(RoCParser.Type_valueContext ctx)
     {
         if (ctx.STRING() != null)
@@ -357,6 +371,18 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
             throw new CompilerException("Variable "+name+" not defined");
 
         //todo check if this can be removed
+        scope.put(ctx, var);
+        return var.getType();
+    }
+
+    @Override
+    public DataType visitScannerCall(RoCParser.ScannerCallContext ctx)
+    {
+        String name = ctx.IDENTIFIER().getText();
+        Variable var = variableTable.lookUpLocal(ctx.IDENTIFIER().getText());
+        if (var == null)
+            throw new CompilerException("Variable "+name+" not defined");
+
         scope.put(ctx, var);
         return var.getType();
     }

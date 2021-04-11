@@ -232,6 +232,30 @@ public class RoCBaseListener implements RoCListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSCANNER(RoCParser.SCANNERContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSCANNER(RoCParser.SCANNERContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCallSCANNER(RoCParser.CallSCANNERContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCallSCANNER(RoCParser.CallSCANNERContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBOOLEAN(RoCParser.BOOLEANContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -335,6 +359,18 @@ public class RoCBaseListener implements RoCListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitVariable_declaration(RoCParser.Variable_declarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterScannerCall(RoCParser.ScannerCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitScannerCall(RoCParser.ScannerCallContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

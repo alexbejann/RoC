@@ -14,6 +14,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     private String jumpLabel;
     private String endIfLabel;
     private boolean isLogicalOR = false;
+    private boolean isString = false;
     private int labelCounter = 0;
     private final ParseTreeProperty<DataType> dataTypes;
     private final ParseTreeProperty<Variable> scope;
@@ -515,6 +516,22 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     }
 
     /**
+     * Loads the proper variable from the stack
+     * @param ctx SCANNERContext
+     * @return jasminCode with proper variable load from the stack
+     */
+    @Override
+    public List<String> visitSCANNER(RoCParser.SCANNERContext ctx)
+    {
+        List<String> jasminCode = new ArrayList<>();
+        jasminCode.add("new java/util/Scanner");
+        jasminCode.add("dup");
+        jasminCode.add("getstatic java/lang/System/in Ljava/io/InputStream;");
+        jasminCode.add("invokenonvirtual java/util/Scanner/<init>(Ljava/io/InputStream;)V");
+        return jasminCode;
+    }
+
+    /**
      * Visit printStatement
      * @param ctx of printStatement
      */
@@ -555,7 +572,8 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     {
         List<String> jasminCode = new ArrayList<>();
         Variable var = scope.get(ctx);
-
+        if (var.getType().equals(DataType.SDC))
+            isString = true;
         jasminCode.addAll(visit(ctx.arithmetic_expr()));
         switch (dataTypes.get(ctx))
         {
@@ -563,10 +581,34 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             case BOOL:
                 jasminCode.add("istore " + var.getIndex());
                 break;
+            case SCANNER:
             case SDC:
                 jasminCode.add("astore " + var.getIndex());
                 break;
         }
+        return jasminCode;
+    }
+
+    /**
+     *
+     * @param ctx ScannerCallContext
+     * @return loaded scanner object and invoked method
+     */
+    @Override
+    public List<String> visitScannerCall(RoCParser.ScannerCallContext ctx)
+    {
+        List<String> jasminCode = new ArrayList<>();
+        Variable variable = scope.get(ctx);
+        jasminCode.add("aload "+variable.getIndex());
+        if (isString)
+        {
+            jasminCode.add("invokevirtual java/util/Scanner/nextLine()Ljava/lang/String;");
+        }
+        else
+        {
+            jasminCode.add("invokevirtual java/util/Scanner/nextInt()I");
+        }
+        isString = false;
         return jasminCode;
     }
 

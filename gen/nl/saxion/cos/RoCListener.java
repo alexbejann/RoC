@@ -212,6 +212,30 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitIDENTIFIER(RoCParser.IDENTIFIERContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code SCANNER}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterSCANNER(RoCParser.SCANNERContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SCANNER}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitSCANNER(RoCParser.SCANNERContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code CallSCANNER}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterCallSCANNER(RoCParser.CallSCANNERContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CallSCANNER}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitCallSCANNER(RoCParser.CallSCANNERContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code BOOLEAN}
 	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
 	 * @param ctx the parse tree
@@ -313,6 +337,16 @@ public interface RoCListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVariable_declaration(RoCParser.Variable_declarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RoCParser#scannerCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterScannerCall(RoCParser.ScannerCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RoCParser#scannerCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitScannerCall(RoCParser.ScannerCallContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code AssignmentExpression}
 	 * labeled alternative in {@link RoCParser#varExpression}.

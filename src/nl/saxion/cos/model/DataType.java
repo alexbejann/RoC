@@ -5,7 +5,8 @@ public enum DataType
     BOOL("Z"),
     NUMAR("I"),
     SDC("Ljava/lang/String;"),
-    AUTOMAT("Z");
+    AUTOMAT("Z"),
+    SCANNER("java/util/Scanner");
 
     private final String byteType;
 

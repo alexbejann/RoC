@@ -1,0 +1,8 @@
+functia main()
+{
+   scanner a<-scanner
+   printeaza("Enter an string:")
+   sdc b<-a.urmatorul
+   printeaza("Your string is:")
+   printeaza(b)
+}

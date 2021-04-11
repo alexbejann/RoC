@@ -131,6 +131,20 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIDENTIFIER(RoCParser.IDENTIFIERContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code SCANNER}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSCANNER(RoCParser.SCANNERContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code CallSCANNER}
+	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCallSCANNER(RoCParser.CallSCANNERContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code BOOLEAN}
 	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
 	 * @param ctx the parse tree
@@ -190,6 +204,12 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitVariable_declaration(RoCParser.Variable_declarationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RoCParser#scannerCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitScannerCall(RoCParser.ScannerCallContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code AssignmentExpression}
 	 * labeled alternative in {@link RoCParser#varExpression}.

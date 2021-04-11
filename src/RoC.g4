@@ -51,6 +51,8 @@ arithmetic_expr
               | left=arithmetic_expr op=(PLUS | MINUS)               right=arithmetic_expr  # ADDSUBGRP
               | PAREN_OPEN arithmetic_expr PAREN_CLOSE                                      # PARENGRP
               | functionCall                                                                # MethodCallExpr
+              | scannerCall                                                                 # CallSCANNER
+              | SCANNER                                                                     # SCANNER
               | NUMBER                                                                      # NUMBER
               | STRING                                                                      # STRING
               | BOOLEAN                                                                     # BOOLEAN
@@ -72,6 +74,10 @@ iterationStatement
 
 variable_declaration: type lhs=IDENTIFIER EQUALS_TO arithmetic_expr;
 
+scannerCall
+            : IDENTIFIER DOT SCANNERCALL
+            ;
+
 varExpression
             : IDENTIFIER EQUALS_TO arithmetic_expr # AssignmentExpression
             ;
@@ -90,6 +96,7 @@ type
     | BOOLEAN_TYPE
     | NUMBER_TYPE
     | AUTO_TYPE
+    | SCANNER
     ;
 
 type_value
@@ -124,6 +131,7 @@ NUMBER_TYPE : 'numar' ;
 STRING_TYPE : 'sdc'   ;
 BOOLEAN_TYPE: 'bool'  ;
 AUTO_TYPE   :'automat';
+SCANNER     :'scanner';
 
 While  : 'cat timp'  ;
 If     : 'daca'      ;
@@ -134,7 +142,7 @@ For    : 'pentru'    ;
 Print  : 'printeaza' ;
 Return :'returneaza' ;
 Method :'functia'    ;
-
+SCANNERCALL:'urmatorul';
 
 // Types values
 BOOLEAN: 'ADEVARAT' | 'FALS';
@@ -152,6 +160,7 @@ EQ    : '=' ;
 NOT   : '!' ;
 NOT_EQ: '!=';
 EQUALS: '==';
+INPUT : '<<';
 
 //Assign
 EQUALS_TO: '<-';
