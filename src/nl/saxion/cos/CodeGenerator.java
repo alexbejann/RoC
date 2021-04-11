@@ -407,6 +407,14 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitMULDIVMODOPGRP(RoCParser.MULDIVMODOPGRPContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
+        Optimizer optimizer = new Optimizer();
+        Object calc = optimizer.visitMULDIVMODOPGRP(ctx);
+        if (calc != null)
+        {
+            jasminCode.add("ldc "+calc);
+            return jasminCode;
+        }
+
         jasminCode.addAll(visit(ctx.left));
         jasminCode.addAll(visit(ctx.right));
         if (ctx.MULTIPLY() != null)
@@ -433,6 +441,13 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitADDSUBGRP(RoCParser.ADDSUBGRPContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
+        Optimizer optimizer = new Optimizer();
+        Object calc = optimizer.visitADDSUBGRP(ctx);
+        if (calc != null)
+        {
+            jasminCode.add("ldc "+calc);
+            return jasminCode;
+        }
 
         jasminCode.addAll(visit(ctx.left));
         jasminCode.addAll(visit(ctx.right));
