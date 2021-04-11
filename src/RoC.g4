@@ -4,7 +4,7 @@ program: method_declaration* EOF;
 
 method_declaration
                   : Method methodName=IDENTIFIER PAREN_OPEN argument_list? PAREN_CLOSE (Return returnType=type)?
-                        CURLY_OPEN body=statement_body+ (Return returnValue=type_value)? CURLY_CLOSE
+                        CURLY_OPEN body=block+ (Return returnValue=type_value)? CURLY_CLOSE
                   ;
 
 argument_list
@@ -25,6 +25,9 @@ comparison_expr
                 : left=arithmetic_expr comparator right=arithmetic_expr     # ComparisonExpressionWithOperator
                 | PAREN_OPEN comparison_expr PAREN_CLOSE                    # ComparisonExpressionParens
                 ;
+block
+      : statement_body
+      ;
 
 statement_body
                 : (decisionStatement
@@ -54,17 +57,17 @@ arithmetic_expr
               | IDENTIFIER                                                                  # IDENTIFIER
               ;
 
-decisionStatement: If PAREN_OPEN if_lhs=conditions PAREN_CLOSE CURLY_OPEN if_rhs=statement_body CURLY_CLOSE
-                 (Else_If PAREN_OPEN elseIF_lhs=conditions PAREN_CLOSE CURLY_OPEN elseIF_rhs=statement_body CURLY_CLOSE )*
-                 (Else CURLY_OPEN else_lhs=statement_body CURLY_CLOSE)?
+decisionStatement: If PAREN_OPEN if_lhs=conditions PAREN_CLOSE CURLY_OPEN if_rhs=block CURLY_CLOSE
+                 (Else_If PAREN_OPEN elseIF_lhs=conditions PAREN_CLOSE CURLY_OPEN elseIF_rhs=block CURLY_CLOSE )*
+                 (Else CURLY_OPEN else_lhs=block CURLY_CLOSE)?
                  ;
 
 printStatement: Print PAREN_OPEN (type_value) PAREN_CLOSE ;
 
 iterationStatement
-                  : While conditions Execute CURLY_OPEN statement_body CURLY_CLOSE #WhileLoop
+                  : While conditions Execute CURLY_OPEN block CURLY_CLOSE #WhileLoop
                   | For (NUMBER_TYPE IDENTIFIER EQUALS_TO (left_num=NUMBER | left_id=IDENTIFIER)) COLON conditions COLON (IDENTIFIER EQUALS_TO arithmetic_expr) Execute CURLY_OPEN statement_body CURLY_CLOSE #ForLoop
-                  | Execute CURLY_OPEN statement_body CURLY_CLOSE While conditions #DoWhileLoop
+                  | Execute CURLY_OPEN block CURLY_CLOSE While conditions #DoWhileLoop
                   ;
 
 variable_declaration: type lhs=IDENTIFIER EQUALS_TO arithmetic_expr;

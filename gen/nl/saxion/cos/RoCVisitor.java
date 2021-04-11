@@ -70,6 +70,12 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitComparisonExpressionParens(RoCParser.ComparisonExpressionParensContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link RoCParser#block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlock(RoCParser.BlockContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link RoCParser#statement_body}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

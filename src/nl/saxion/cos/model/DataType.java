@@ -13,4 +13,9 @@ public enum DataType
     {
         this.byteType = byteType;
     }
+
+    public String getByteType()
+    {
+        return byteType;
+    }
 }

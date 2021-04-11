@@ -60,13 +60,20 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         }
         else
         {
-            DataType type = visit(ctx.returnType);
-            variableTable.add(name, type);
+            DataType returnType = visit(ctx.returnType);
+            dataTypes.put(ctx, returnType);
+            variableTable.add(name, returnType);
         }
         scope.put(ctx, variableTable.lookUp(name));
 
-        variableTable = variableTable.openFunctionScope();//todo check the offset thing the index is wrong at this moment
-        visitChildren(ctx);
+        variableTable = variableTable.openMethodScope();
+        visitChildren(ctx.body);
+        if (ctx.returnValue != null)
+        {
+            DataType type = visit(ctx.returnValue);
+            if (!type.equals(dataTypes.get(ctx)))
+                throw new CompilerException("The method should return: "+ctx.returnType.getText()+" type! Not "+type);
+        }
         variableTable = variableTable.getParentScope();
 
         return variableTable.lookUp(name).getType();
@@ -146,7 +153,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     }
 
     @Override
-    public DataType visitStatement_body(RoCParser.Statement_bodyContext ctx)
+    public DataType visitBlock(RoCParser.BlockContext ctx)
     {
         variableTable = variableTable.openScope();
         visitChildren(ctx);

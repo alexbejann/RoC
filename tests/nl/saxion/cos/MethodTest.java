@@ -113,35 +113,6 @@ public class MethodTest extends TestBase
     }
 
     /**
-     * Tests everything from the {@link CodeGenerator#visitComparator(RoCParser.ComparatorContext)}
-     * todo implement the logical operators and uncomment this
-     */
-    /*@Test
-    public void visitLogicalExpressionAndOr() throws IOException, AssembleException
-    {
-        String codeString = "functia main()\n" +
-                "{\n" +
-                "   numar a<-2\n" +
-                "   numar b<-5\n" +
-                "   daca(b > 3 && a=2)\n" +
-                "   {\n" +
-                "       printeaza(\"b>3\")\n" +
-                "   }\n" +
-                "}";
-
-        Compiler c = new Compiler();
-        JasminBytecode code = c.compileString(codeString,"visitLogicalExpressionAndOr");
-        Assertions.assertNotNull(code);
-
-        List<String> output = runCode(code);
-
-        assertArrayEquals(new String[] {
-                "b>3"
-        }, output.toArray());
-
-    }*/
-
-    /**
      * Expected error because trying to access variable from another block
      * For scope testing
      */
@@ -272,7 +243,7 @@ public class MethodTest extends TestBase
      * Test method call
      */
     @Test
-    public void declareMethod() throws IOException, AssembleException
+    public void declareMethodVoid() throws IOException, AssembleException
     {
         String codeString = "functia foo2(numar a, sdc s, bool b)" +
                             "{\n" +
@@ -299,7 +270,7 @@ public class MethodTest extends TestBase
      * Test method call
      */
     @Test
-    public void useParameterDeclaredMethod() throws IOException, AssembleException
+    public void useParameterDeclaredMethodVoid() throws IOException, AssembleException
     {
         String codeString = "functia foo2(numar a, sdc s, bool b)" +
                 "{\n" +
@@ -322,5 +293,114 @@ public class MethodTest extends TestBase
                 "2","Alex","false"
         }, output.toArray());
 
+    }
+
+    /**
+     * Test method call
+     */
+    @Test
+    public void returnIntegerMethod() throws IOException, AssembleException
+    {
+        String codeString = "functia foo2(numar a, sdc s, bool b) returneaza numar" +
+                            "{\n" +
+                            "   numar b<-2+a" +
+                            "   returneaza b" +
+                            "}\n" +
+                            "functia main()" +
+                            "{\n" +
+                            "   numar a<-foo2(2, \"Alex\", FALS)\n" +
+                            "   printeaza(a)\n" +
+                            "}";
+
+        Compiler c = new Compiler();
+        JasminBytecode code = c.compileString(codeString,"Test");
+        Assertions.assertNotNull(code);
+
+        List<String> output = runCode(code);
+
+        assertArrayEquals(new String[] {
+                "4"
+        }, output.toArray());
+
+    }
+
+    /**
+     * Test method call
+     */
+    @Test
+    public void errorNoReturnMethod() throws IOException, AssembleException
+    {
+        String codeString = "functia foo2(numar a, sdc s, bool b) returneaza numar" +
+                            "{\n" +
+                            "   numar b<-2+a" +
+                            "}\n" +
+                            "functia main()" +
+                            "{\n" +
+                            "   numar a<-foo2(2, \"Alex\", FALS)\n" +
+                            "   printeaza(a)\n" +
+                            "}";
+
+        Compiler c = new Compiler();
+        CompilerException exception = assertThrows(CompilerException.class, () -> {
+            c.compileString(codeString,"mismatchType");
+        });
+        String expectedMessage = "The method should return: numar type!";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    /**
+     * Test method call
+     */
+    @Test
+    public void errorReturnDifferentTypeMethod() throws IOException, AssembleException
+    {
+        String codeString = "functia foo2(numar a, sdc s, bool b) returneaza numar" +
+                "{\n" +
+                "   numar b<-2+a" +
+                "   returneaza ADEVARAT" +
+                "}\n" +
+                "functia main()" +
+                "{\n" +
+                "   bool a<-foo2(2, \"Alex\", FALS)\n" +
+                "   printeaza(a)\n" +
+                "}";
+
+        Compiler c = new Compiler();
+        CompilerException exception = assertThrows(CompilerException.class, () -> {
+            c.compileString(codeString,"mismatchType");
+        });
+        String expectedMessage = "The method should return: numar type! Not BOOL";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    /**
+     * Test method call
+     */
+    @Test
+    public void errorNoReturnButReturnsMethod() throws IOException, AssembleException
+    {
+        String codeString = "functia foo2(numar a, sdc s, bool b)" +
+                            "{\n" +
+                            "   numar b<-2+a" +
+                            "   returneaza b" +
+                            "}\n" +
+                            "functia main()" +
+                            "{\n" +
+                            "   numar a<-foo2(2, \"Alex\", FALS)\n" +
+                            "   printeaza(a)\n" +
+                            "}";
+
+        Compiler c = new Compiler();
+        CompilerException exception = assertThrows(CompilerException.class, () -> {
+            c.compileString(codeString,"mismatchType");
+        });
+        String expectedMessage = "You can't return in a void method!";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 }

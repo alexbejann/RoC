@@ -49,6 +49,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     {
         List<String> jasminCode = new ArrayList<>();
         String name = ctx.methodName.getText();
+        DataType returnDataType = dataTypes.get(ctx);
         if (name.equals("main"))
         {
             jasminCode.add(".method public static main([Ljava/lang/String;)V");
@@ -81,13 +82,15 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             methodDeclaration+= name;
             methodDeclaration+= "(";
             methodDeclaration+= argumentList.toString();
+            //check if there is a return type
             if (dataTypes.get(ctx) == null)
             {
                 methodDeclaration+= ")V";//TODO specificy the return type here now it returns oid everytime
             }
             else
             {
-                methodDeclaration += visit(ctx.returnType);
+                methodDeclaration += ")";
+                methodDeclaration += returnDataType.getByteType();
             }
 
             jasminCode.add(methodDeclaration);
@@ -95,7 +98,25 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             jasminCode.add(".limit locals 10");
         }
         jasminCode.addAll(visit(ctx.body));
-        jasminCode.add("return");//todo update this to return the appropiate type e.g. ireturn
+        //check if there is a return type
+        if (returnDataType != null)
+        {
+            jasminCode.addAll(visit(ctx.returnValue));
+
+            //load the return type
+            if (returnDataType.equals(DataType.NUMAR) || returnDataType.equals(DataType.BOOL))
+            {
+                jasminCode.add("ireturn");
+            }
+            else
+            {
+                jasminCode.add("areturn");
+            }
+        }
+        else
+        {
+            jasminCode.add("return");
+        }
         jasminCode.add(".end method");
         return jasminCode;
     }
@@ -631,7 +652,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         System.out.println("ctx "+ctx.getText());
         jasminCode.add(loopJumpLabel+":");
         jasminCode.addAll(visit(ctx.conditions()));
-        jasminCode.addAll(visit(ctx.statement_body()));
+        jasminCode.addAll(visit(ctx.block()));
         jasminCode.add("goto "+loopJumpLabel);
         jasminCode.add(jumpLabel+":");
         return jasminCode;
@@ -651,7 +672,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         jumpLabel ="endLoop"+(labelCounter++);
         jasminCode.add(loopJumpLabel+":");
         jasminCode.addAll(visit(ctx.conditions()));
-        jasminCode.addAll(visit(ctx.statement_body()));
+        jasminCode.addAll(visit(ctx.block()));
         jasminCode.add("goto "+loopJumpLabel);
         jasminCode.add(jumpLabel+":");
         return jasminCode;

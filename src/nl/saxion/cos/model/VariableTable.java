@@ -56,19 +56,14 @@ public class VariableTable
      */
     public void add(String name, DataType type, int index)
     {
-        nextIndex++;
         symbols.put(name, new Variable(name, type, index));
+        nextIndex++;
     }
 
     // openScope(), 'openFunctionScope()' and 'openFunctionScope()' are convenience methods.
-    public VariableTable openFunctionScope()
-    {
-        return createScope(0);
-    }
-
     public VariableTable openMethodScope()
     {
-        return createScope(1);
+        return createScope(0);
     }
 
     public VariableTable openScope()
@@ -97,7 +92,6 @@ public class VariableTable
                 return "I";
             case "sdc":
                 return "Ljava/lang/String;";
-            case "automat":
             case "bool":
                 return "Z";
             default:

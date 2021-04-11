@@ -1,10 +1,10 @@
-functia foo2(numar a, sdc s)
+functia foo2(numar a, sdc s) returneaza numar
 {
-   printeaza(a)
-   printeaza(s)
+   numar b<-a+2
+   returneaza b
 }
 functia main()
 {
-   automat a<-2
-   foo2(a, "Alex")
+   numar a<-foo2(2, "Alex")
+   printeaza(a)
 }
