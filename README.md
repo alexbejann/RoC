@@ -47,7 +47,7 @@ In this example let's assume that a is 12 and b is 50.
 | `<`  |	less than   |	`a < b` is true |
 | `>=` |	greater than or equal to  | 	`a >= b` is true |
 | `<=` |	less than or equal to | `a <= b` is true |
-| `==` |	equal to | 	`a == b` is false |
+| `=`  |	equal to | 	`a = b` is false |
 | `!=` |	not equal |	`a != b` is true |
 
 ### Scope 
