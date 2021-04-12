@@ -62,7 +62,7 @@ Let's say take a scenario where we would like to have a new scope
 | -- | -- | -- |
 | numar | 10, -1, 0.25 | This type can be an integer, float, double or even a long if we compare RoC to other C based languages |
 | sdc | "string" | Contains only strings |
-| automat |  "string", 1, -12, 0.21, FALS/ADEVARAT, [10, "tuple"] | This type can decide what is the best type, and has a feature to hold tuples |
+| automat |  "string", 1, -12, 0.21, FALS/ADEVARAT | This type can decide what is the best type |
 | bool | ADEVARAT/FALS | `ADEVARAT` is true and `FALS` is false but it's translated in Romanian | 
 
 When assigning a value in RoC we do `numbar b <- 10;`, to break down `numar` keyword represents the variable type, `b` is the identifier of the variable and `<-` is the operator which says to assign value `10` to `b`. Therefore the mold for this would look like this `<variable type> <identifier> <- <value to assign>`
