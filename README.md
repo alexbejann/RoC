@@ -1,33 +1,3 @@
-# Todo
-
-- ~~Add fourth variable type~~ 
-- ~~Decide whether to allow separate initialization or declaration~~ `No, we won't allow that. When initializing a value should be assigned with a value!`
-- ~~Add operators and describe how are they gonna work~~ 
-- Do we want this a=b=c -> a=(b=c)? In RoC would be a<-b<-c -> a<-(b<-c). If not, make an assignment a statement and not an expression 
-- ~~Specify block statements~~
-- ~~Specify global and local scope~~ 
-- ~~Should we keep `functia` keyword in our language?~~ `Yes, we will keep the keyword`
-- ~~implement scoping~~
-- ~~implement iteration statements~~
-- ~~implement conditional statements~~
-- ~~implement logical operators~~
-- implement scanner
-- ~~implement assignment `a<-a+123`/~~  
-- implement methods
-
-# TODO grammar:
-
--	~~Probably just a typo, but a very dangerous one: 'functia ' contains a space! this means the space is part of the token.~~
--	~~The rule method declaration can be written more concise by making ' 'returneaza' argument' optional, i.e. '('returneaza' argument)?'. What you have written is not wrong, but duplicate code is not good programming practice.~~
--	The 'statement' rule is clearly work in progress, but well on its way. You have elaborated the if-else statement and the print statement. You have a good idea what the statements should look like given the description, sothe ext step is to make ANTLR rules for them. So the assignment, loops, function calls etc.
--	~~I'm a bit uncertain about the role of 'expression' in the rule 'statement_body'. Does an expression without assignment make a valid line in your grammar, and what are its semantics? Like I said, C-like languages are expression-oriented meaning that an expression can be a statement. You may or may not want to do this. Depends on whether you make an assignment an expression or a statement. The rule 'statement_body' definitely needs rework, depending on what an expression means in your language.~~
--	~~In rule 'variable_declaration' can be written simpler by collapsing the three types in one symbol. Then you have only one rule. You even have a symbol for it: 'argument' (which should be called type). I think I know why you expanded it in three rules, so that you can assign a label to each rule. Understandable, because you haven't had type checking yet. But just use one symbol, and do the type checking in Java code.~~
--	~~In the 'expression' rule, a type is not an expression. Rather, it is part of a variable and function declaration.~~
-- Implement the `auto` keyword with the tuples in the grammar,  nearly done 
-- ~~Fix the expression for Relational operators~~
-- ~~Fix print statement~~
-
-
 # RoC - A Romanian C based language
 
 # Description
