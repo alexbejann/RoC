@@ -1,0 +1,14 @@
+functia main(){
+
+scanner s <- scanner
+printeaza("Enter a number : ")
+
+numar num <- s.urmatorul
+
+daca(num % 2 = 0){
+printeaza("Your number is even")
+} altfel daca{
+printeaza("Your number is odd")
+}
+}
+

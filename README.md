@@ -160,7 +160,8 @@ printeaza(<stuff to print>)
 
 # Program examples 
 
-## 1
+## 1 
+#### Program prints the multiplied number 12 on a constant loop
 ```
 functia main()
 {
@@ -189,7 +190,7 @@ functia main()
 ```
 
 ## 2 
-
+#### Example loop program
 ```
 functia main()
 {
@@ -201,6 +202,73 @@ functia main()
   }
 }
 ```
+
+## 3 
+#### Program to check if a number is even or odd
+```
+functia main(){
+
+scanner s <- scanner
+printeaza("Enter a number : ")
+
+numar num <- s.urmatorul
+
+daca(num % 2 = 0){
+printeaza("Your number is even")
+} altfel daca{
+printeaza("Your number is odd")
+}
+}
+```
+
+## 4 
+#### Program returns the factorial number of a given number
+```
+functia factorial(numar num) returneaza numar{
+numar factorial <- 1;
+numar i <- 1
+cat timp(i <= num) executa
+{
+ factorial <- factorial*i
+ i<- 1+i
+}
+returneaza factorial
+}
+
+functia main(){
+printeaza("Introdu un numar")
+scanner s<- scanner
+numar num <- s.urmatorul
+
+numar test<-factorial(num)
+
+printeaza(num)
+printeaza("factorial is : ")
+printeaza(test)
+}
+```
+
+##5
+#### Prints the number 2 at the power of 5
+```
+functia main()
+{
+ numar num <- 2
+ numar power <- 5
+
+ numar result <- 1
+
+ numar index <- power
+
+ cat timp(index != 0) executa{
+ result <- num * result
+ index <- index -1
+ }
+ printeaza(result)
+}
+
+```
+
 
 # Bug list
 

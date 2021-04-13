@@ -1,0 +1,15 @@
+functia main()
+{
+ numar num <- 2
+ numar power <- 5
+
+ numar result <- 1
+
+ numar index <- power
+
+ cat timp(index != 0) executa{
+ result <- num * result
+ index <- index -1
+ }
+ printeaza(result)
+}
