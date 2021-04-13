@@ -28,7 +28,7 @@ public class Optimizer extends RoCBaseVisitor<Object>
                     return (Integer) left - (Integer) right;
             }
         }
-        return super.visitADDSUBGRP(ctx);
+        return null;
     }
 
     @Override
@@ -54,6 +54,6 @@ public class Optimizer extends RoCBaseVisitor<Object>
                     return (Integer) left % (Integer) right;
             }
         }
-        return super.visitMULDIVMODOPGRP(ctx);
+        return null;
     }
 }
