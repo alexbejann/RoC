@@ -163,29 +163,29 @@ printeaza(<stuff to print>)
 
 ## 1
 ```
+functia getNumber() returneaza numar
+{
+  numar a <-a*2
+  returneaza a 
+}
+
+#RoC This is a random comment
+#RoC I think it's cool 
+
+functia getNumberMultiplied(numar mult) returneaza numar
+{
+  numar mult<-mult*2
+  returneaza mult 
+}
+
 functia main()
 {
-    numar a<-12
-    cat timp(ADEVARAT) executa
-    {
-        printeaza(getNumberMultiplied(a))
-        printeaza(12)
-    }
-
-    functia getNumber() returneaza numar
-    {
-      numar a <-a*2
-      returneaza a 
-    }
-
-    #RoC This is a random comment
-    #RoC I think it's cool 
-
-    functia getNumberMultiplied(numar mult) returneaza numar
-    {
-      numar mult<-mult*2
-      returneaza mult 
-    }
+  numar a<-12
+  cat timp(ADEVARAT) executa
+  {
+      printeaza(getNumberMultiplied(a))
+      printeaza(12)
+  }
 }
 ```
 
