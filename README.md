@@ -18,8 +18,8 @@ This table contains all the translations of the keywords used in RoC from Romani
 | functia | function/method |
 | numar | number/integer |
 | daca | if |
-| altfel daca | else if |
-| daca nu | else |
+| altfel daca | else |
+| daca nu | else if |
 | printeaza | print |
 | returneaza | return |
 | adevarat | true |
@@ -117,11 +117,11 @@ daca (<condition>) {
 
   I <- I<-I+1
 
-} altfel daca (<condition>) { 
+} daca nu (<condition>) { 
 
   I <- 2
 
-} daca nu { 
+} altfel daca { 
 
 I <- 3
 
