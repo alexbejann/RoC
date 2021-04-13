@@ -45,8 +45,16 @@ In this example let's assume that a is 12 and b is 50.
 | `<`  |	less than   |	`a < b` is true |
 | `>=` |	greater than or equal to  | 	`a >= b` is true |
 | `<=` |	less than or equal to | `a <= b` is true |
-| `=`  |	equal to | 	`a = b` is false |
+| `=`  |	equal to, this operator can be used to compare two strings | 	`a = b` is false |
 | `!=` |	not equal |	`a != b` is true |
+
+- Logical operators
+
+| Operator | Description | Example |
+| -- | -- | -- |
+| `||`  | 	Logical OR operator |	`a > b || a >=b` |
+| `&&`  |	less than   |	`a < b && a > 6` |
+
 
 ### Scope 
 The scope in RoC is described by the curly brackets `{  }`.
