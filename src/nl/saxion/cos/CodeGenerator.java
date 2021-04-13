@@ -330,6 +330,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         }
         if (ctx.else_lhs != null)
         {
+            jumpLabel = "L" + (labelCounter++);
             jasminCode.add(jumpLabel+":");
             jasminCode.addAll(visit(ctx.else_lhs));
         }
