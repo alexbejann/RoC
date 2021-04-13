@@ -249,7 +249,7 @@ printeaza(test)
 }
 ```
 
-##5
+## 5
 #### Prints the number 2 at the power of 5
 ```
 functia main()
