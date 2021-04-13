@@ -6,6 +6,7 @@ RoC is a C/C++/Java based programming language that has the goal to help out rom
   - simplified syntax compared to C/C++, but is following the same concepts
 
 The RoC can be immediately spotted by the file extension `<file name>.rc`, as a convention the filenames should have to same name as the class within the file e.g. `MyClass.rc` would contain `MyClass` within the file. Unlike, Java RoC supports only one line comments represented by a hashtag, and the language name `#RoC`.
+In order to run a program in RoC you should have a function main defined in your class.
 ## Keywords dictionary 
 This table contains all the translations of the keywords used in RoC from Romanian to English.
 
