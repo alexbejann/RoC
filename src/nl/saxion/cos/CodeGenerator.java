@@ -324,17 +324,18 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         if(ctx.elseIF_lhs != null)
         {
             jasminCode.add(jumpLabel+":");
-            jumpLabel = "L"+(labelCounter++);
             jasminCode.addAll(visit(ctx.elseIF_lhs));
             jasminCode.addAll(visit(ctx.elseIF_rhs));
             if (ctx.else_lhs != null)
                 jasminCode.add("goto "+endIfLabel);
+            if (ctx.else_lhs == null)
+                jumpLabel = "L"+(labelCounter++);
         }
         if (ctx.else_lhs != null)
         {
-            jumpLabel = "L" + (labelCounter++);
             jasminCode.add(jumpLabel+":");
             jasminCode.addAll(visit(ctx.else_lhs));
+            jumpLabel = "L" + (labelCounter++);
         }
         if (ctx.else_lhs != null || ctx.elseIF_lhs != null)
         {
