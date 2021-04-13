@@ -2,8 +2,11 @@ package nl.saxion.cos;
 
 import nl.saxion.cos.model.DataType;
 import nl.saxion.cos.model.Variable;
+import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
+import org.antlr.v4.runtime.tree.TerminalNode;
+import org.antlr.v4.runtime.tree.TerminalNodeImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -218,10 +221,16 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         List<String> jasminCode = new ArrayList<>();
         for (ParseTree child:ctx.children)
         {
+            if (";".equals(child.getText()))
+            {
+                continue;
+            }
             jasminCode.addAll(visit(child));
         }
         return jasminCode;
     }
+
+
 
     @Override
     public List<String> visitConditions(RoCParser.ConditionsContext ctx)
