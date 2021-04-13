@@ -6,6 +6,7 @@ RoC is a C/C++/Java based programming language that has the goal to help out rom
   - simplified syntax compared to C/C++, but is following the same concepts
 
 The RoC can be immediately spotted by the file extension `<file name>.rc`, as a convention the filenames should have to same name as the class within the file e.g. `MyClass.rc` would contain `MyClass` within the file. Unlike, Java RoC supports only one line comments represented by a hashtag, and the language name `#RoC`.
+In order to run a program in RoC you should have a function main defined in your class.
 ## Keywords dictionary 
 This table contains all the translations of the keywords used in RoC from Romanian to English.
 
@@ -17,8 +18,8 @@ This table contains all the translations of the keywords used in RoC from Romani
 | functia | function/method |
 | numar | number/integer |
 | daca | if |
-| altfel daca | else if |
-| daca nu | else |
+| altfel daca | else |
+| daca nu | else if |
 | printeaza | print |
 | returneaza | return |
 | adevarat | true |
@@ -116,11 +117,11 @@ daca (<condition>) {
 
   I <- I<-I+1
 
-} altfel daca (<condition>) { 
+} daca nu (<condition>) { 
 
   I <- 2
 
-} daca nu { 
+} altfel daca { 
 
 I <- 3
 
@@ -163,29 +164,29 @@ printeaza(<stuff to print>)
 ## 1 
 #### Program prints the multiplied number 12 on a constant loop
 ```
+functia getNumber() returneaza numar
+{
+  numar a <-a*2
+  returneaza a 
+}
+
+#RoC This is a random comment
+#RoC I think it's cool 
+
+functia getNumberMultiplied(numar mult) returneaza numar
+{
+  numar mult<-mult*2
+  returneaza mult 
+}
+
 functia main()
 {
-    numar a<-12
-    cat timp(ADEVARAT) executa
-    {
-        printeaza(getNumberMultiplied(a))
-        printeaza(12)
-    }
-
-    functia getNumber() returneaza numar
-    {
-      numar a <-a*2
-      returneaza a 
-    }
-
-    #RoC This is a random comment
-    #RoC I think it's cool 
-
-    functia getNumberMultiplied(numar mult) returneaza numar
-    {
-      numar mult<-mult*2
-      returneaza mult 
-    }
+  numar a<-12
+  cat timp(ADEVARAT) executa
+  {
+      printeaza(getNumberMultiplied(a))
+      printeaza(12)
+  }
 }
 ```
 
@@ -332,3 +333,4 @@ endif:
 L3:
 ```
 - The issue with the code above is that the last else statement has the `L3` as label instead of `L2`. Which is going to cause a jasError error while compiling the bytecode file.
+- Nesting if statement was the only issue that we have in the in the project because we we not able to figure out how to keep track of the depth. The only solution for in this situation would be a variable to keep track of the depth and substract from the label counter the depth `L(labelcounter - depth)`. 
