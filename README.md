@@ -45,8 +45,16 @@ In this example let's assume that a is 12 and b is 50.
 | `<`  |	less than   |	`a < b` is true |
 | `>=` |	greater than or equal to  | 	`a >= b` is true |
 | `<=` |	less than or equal to | `a <= b` is true |
-| `=`  |	equal to | 	`a = b` is false |
+| `=`  |	equal to, this operator can be used to compare two strings | 	`a = b` is false |
 | `!=` |	not equal |	`a != b` is true |
+
+- Logical operators
+
+| Operator | Description | Example |
+| -- | -- | -- |
+| `||`  | 	Logical OR operator |	`a > b || a >=b` |
+| `&&`  |	less than   |	`a < b && a > 6` |
+
 
 ### Scope 
 The scope in RoC is described by the curly brackets `{  }`.
@@ -85,6 +93,7 @@ executa {
 
 } cat timp <condition>  
 ```
+
 - For loop:
 ```
 numar num <- 0
@@ -95,8 +104,10 @@ numar num<-0
 
 num++
 
-} 
+}
 ```
+- _Note*:_ The foor loop is present into the grammar, but we have decided to not implemente it for now.  
+
 # 3 Conditional Expressions
 
 - If, else if and else statement:
@@ -140,7 +151,9 @@ returneaza a
 } 
 ```
 # 5 Print statement
-RoC has a special method that can be called to print statements in the console
+- RoC has a special method that can be called to print statements in the console.
+- Within the print statement we have decided to not accept expressions, therefore you will be able to print variables and types. 
+
 ```
 printeaza(<stuff to print>)
 ```
@@ -160,7 +173,7 @@ functia main()
 
     functia getNumber() returneaza numar
     {
-        numar a <-a*2
+      numar a <-a*2
       returneaza a 
     }
 
