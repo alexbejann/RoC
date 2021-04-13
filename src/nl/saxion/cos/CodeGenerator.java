@@ -318,6 +318,8 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             jasminCode.addAll(visit(ctx.if_rhs));
             if (ctx.else_lhs != null || ctx.elseIF_lhs != null)
                 jasminCode.add("goto "+endIfLabel);
+            else
+                jasminCode.add(jumpLabel+":");
         }
         if(ctx.elseIF_lhs != null)
         {
@@ -338,8 +340,6 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         {
             jasminCode.add(endIfLabel+":");
         }
-
-        jasminCode.add(jumpLabel+":");
 
         return jasminCode;
     }
