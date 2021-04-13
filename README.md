@@ -52,18 +52,19 @@ In this example let's assume that a is 12 and b is 50.
 The scope in RoC is described by the curly brackets `{  }`.
 - `{` represents the start of a new scope
 - `}` represents the end of a scope 
-Let's say take a scenario where we would like to have a new scope
+- At this moment all the functions in RoC are static therefore when we create a new function the index starts from `0`.
 
 # 1. Variables:
 
 | Types | Value | Description |
 | -- | -- | -- |
-| numar | 10, -1, 0.25 | This type can be an integer, float, double or even a long if we compare RoC to other C based languages |
+| numar | 10, -1, 0.25 | This type can be an integer, double if we compare RoC to other C based languages |
 | sdc | "string" | Contains only strings |
 | automat |  "string", 1, -12, 0.21, FALS/ADEVARAT | This type can decide what is the best type |
 | bool | ADEVARAT/FALS | `ADEVARAT` is true and `FALS` is false but it's translated in Romanian | 
 
-When assigning a value in RoC we do `numar b <- 10;`, to break down `numar` keyword represents the variable type, `b` is the identifier of the variable and `<-` is the operator which says to assign value `10` to `b`. Therefore the mold for this would look like this `<variable type> <identifier> <- <value to assign>`
+When assigning a value in RoC we do `numar b <- 10;`, to break down `numar` keyword represents the variable type, `b` is the identifier of the variable and `<-` is the operator which says to assign value `10` to `b`. Therefore the mold for this would look like this `<variable type> <identifier> <- <value to assign>`. 
+- _Note*:_ When declaring a new variable you have to assign a new value to it! You can't do `numar a` for declaration.
 
 # 2 Loops
 
@@ -167,7 +168,7 @@ functia main()
     functia getNumberMultiplied(numar mult) returneaza numar
     {
       numar mult<-mult*2
-      returneaza numar 
+      returneaza mult 
     }
 }
 ```
