@@ -264,3 +264,4 @@ endif:
 L3:
 ```
 - The issue with the code above is that the last else statement has the `L3` as label instead of `L2`. Which is going to cause a jasError error while compiling the bytecode file.
+- Nesting if statement was the only issue that we have in the in the project because we we not able to figure out how to keep track of the depth. The only solution for in this situation would be a variable to keep track of the depth and substract from the label counter the depth `L(labelcounter - depth)`. 
