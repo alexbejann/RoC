@@ -189,3 +189,65 @@ functia main()
 }
 ```
 
+# Bug list
+
+- Our compiler has a major issue at this point when trying to nest more decission statements that the labels are not properly generated. 
+- Suppose that we have the following code:
+```
+functia main()
+{
+printeaza("Leap Year Calculator")
+scanner s <- scanner;
+printeaza("Enter the year you want to check")
+
+numar year <- s.urmatorul
+bool leap <- FALS
+    daca(year % 4 = 0)
+    {
+        daca(year % 100 = 0)
+        {
+            leap <- FALS
+        }
+        altfel daca
+        {
+            leap <- ADEVARAT
+        }
+    }
+    altfel daca
+    {
+        leap <-FALS
+    }
+}
+```
+- Here is a snippet(only the if statements ) with the bytecode generated:
+```
+; daca(year % 4 = 0)
+iload 1
+ldc 4
+irem
+ldc 0
+if_icmpne L2
+; daca(year % 100 = 0)
+iload 1
+ldc 100
+irem
+ldc 0
+if_icmpne L3
+ldc 0
+istore 2
+goto endif
+; altfel daca
+L3:
+ldc 1
+istore 2
+endif:
+L3:
+goto endif
+; altfel daca
+L3: ; this one should have been L2 
+ldc 0
+istore 2
+endif:
+L3:
+```
+- The issue with the code above is that the last else statement has the `L3` as label instead of `L2`. Which is going to cause a jasError error while compiling the bytecode file.
