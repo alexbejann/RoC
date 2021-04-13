@@ -117,7 +117,9 @@ I <- 3
 ```
 
 # 4 Methods 
-The methods are following the C-like languages concepts. In RoC will be declared using the `functia` keyword followed by an identifier of the method optional will have parameters and the return type of the method. The scope of the method is provided by the curly brackets.  
+The methods are following the C-like languages concepts. In RoC will be declared using the `functia` keyword followed by an identifier of the method optional will have parameters and the return type of the method. The scope of the method is provided by the curly brackets. 
+- _Note*:_ to return `void` you don't have to specify something simply ommit this `returneaza <type>`. And also if you want to return something you have to declare a variable and then return the identifier. You won't be able to do return statements like this `returneaza ADEVARAT`, `returneaza 23+2`, `returneaza "string"`.
+
 ```
 functia foo(<params>) returneaza <type> { 
 
