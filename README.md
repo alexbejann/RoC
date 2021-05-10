@@ -13,7 +13,6 @@ This table contains all the translations of the keywords used in RoC from Romani
 | Romanian | English |
 | -- | -- |
 | cat timp | while |
-| pentru | for |
 | executa | execute |
 | functia | function/method |
 | numar | number/integer |
@@ -95,20 +94,6 @@ executa {
 } cat timp <condition>  
 ```
 
-- For loop:
-```
-numar num <- 0
-
-pentru numar I<-0 : <condition> : I<-I+1 executa { 
-
-numar num<-0
-
-num++
-
-}
-```
-- _Note*:_ The foor loop is present into the grammar, but we have decided to not implemente it for now.  
-
 # 3 Conditional Expressions
 
 - If, else if and else statement:
@@ -130,7 +115,7 @@ I <- 3
 
 # 4 Methods 
 The methods are following the C-like languages concepts. In RoC will be declared using the `functia` keyword followed by an identifier of the method optional will have parameters and the return type of the method. The scope of the method is provided by the curly brackets. 
-- _Note*:_ to return `void` you don't have to specify something simply ommit this `returneaza <type>`. And also if you want to return something you have to declare a variable and then return the identifier. You won't be able to do return statements like this `returneaza ADEVARAT`, `returneaza 23+2`, `returneaza "string"`.
+- _Note*:_ to return `void` you don't have to specify something simply omit this `returneaza <type>`. And also if you want to return something you have to declare a variable and then return the identifier. You won't be able to do return statements like this `returneaza ADEVARAT`, `returneaza 23+2`, `returneaza "string"`.
 
 ```
 functia foo(<params>) returneaza <type> { 

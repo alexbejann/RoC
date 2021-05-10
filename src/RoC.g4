@@ -68,7 +68,6 @@ printStatement: Print PAREN_OPEN (type_value) PAREN_CLOSE ;
 
 iterationStatement
                   : While conditions Execute CURLY_OPEN block CURLY_CLOSE #WhileLoop
-                  | For (NUMBER_TYPE IDENTIFIER EQUALS_TO (left_num=NUMBER | left_id=IDENTIFIER)) COLON conditions COLON (IDENTIFIER EQUALS_TO arithmetic_expr) Execute CURLY_OPEN statement_body CURLY_CLOSE #ForLoop
                   | Execute CURLY_OPEN block CURLY_CLOSE While conditions #DoWhileLoop
                   ;
 
