@@ -35,7 +35,7 @@ statement_body
                 | functionCall
                 | printStatement
                 | varExpression
-                | variable_declaration SEMICOLON?)+
+                | variable_declaration)+
                 ;
 
 functionCall
@@ -111,13 +111,9 @@ PAREN_OPEN :'(';
 PAREN_CLOSE:')';
 CURLY_OPEN :'{';
 CURLY_CLOSE:'}';
-STR_OPEN   :'[';
-STR_CLOSE  :']';
-SEMICOLON  :';';
 COLON      :':';
 DOT        :'.';
 COMMA      :',';
-QUOTES     :'"';
 
 // Arithmetic operators
 PLUS    :'+';
@@ -138,7 +134,6 @@ If     : 'daca'      ;
 Else   :'altfel daca';
 Else_If: 'daca nu'   ;
 Execute: 'executa'   ;
-For    : 'pentru'    ;
 Print  : 'printeaza' ;
 Return :'returneaza' ;
 Method :'functia'    ;
@@ -147,7 +142,7 @@ SCANNERCALL:'urmatorul';
 // Types values
 BOOLEAN: 'ADEVARAT' | 'FALS';
 STRING : '"' ~('\r'|'\n'|'"')* '"';
-NUMBER : '0' | ('- ')? [1-9][0-9]* ('.'[0-9]*)?;
+NUMBER : '0' | ('- ')? [1-9][0-9]*?;
 
 // Relational Operators
 AND   : '&&';
