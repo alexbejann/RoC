@@ -218,10 +218,6 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         List<String> jasminCode = new ArrayList<>();
         for (ParseTree child:ctx.children)
         {
-            if (";".equals(child.getText()))
-            {
-                continue;
-            }
             jasminCode.addAll(visit(child));
         }
         return jasminCode;
