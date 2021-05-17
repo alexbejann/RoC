@@ -305,6 +305,12 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     }
 
     @Override
+    public DataType visitPARENGRP(RoCParser.PARENGRPContext ctx)
+    {
+        return visit(ctx.arithmetic_expr());
+    }
+
+    @Override
     public DataType visitNUMBER(RoCParser.NUMBERContext ctx)
     {
         return DataType.NUMAR;

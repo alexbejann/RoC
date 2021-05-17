@@ -438,6 +438,12 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         return jasminCode;
     }
 
+    @Override
+    public List<String> visitPARENGRP(RoCParser.PARENGRPContext ctx)
+    {
+        return visit(ctx.arithmetic_expr());
+    }
+
     /**
      * Process PLUS and MINUS operations
      * @param ctx of expression
