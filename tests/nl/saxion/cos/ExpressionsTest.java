@@ -34,4 +34,28 @@ public class ExpressionsTest extends TestBase
         }, output.toArray());
 
     }
+
+    /*
+     * Expected same output to be the same
+     */
+    @Test
+    public void expressionParenTest() throws IOException, AssembleException
+    {
+        String codeString = "functia main()\n" +
+                "{\n" +
+                " numar a<-3 + 5 * 6 / (5 * 2) -6" +
+                " printeaza(a)" +
+                "}";
+
+        Compiler c = new Compiler();
+        JasminBytecode code = c.compileString(codeString,"expressionParenTest");
+        Assertions.assertNotNull(code);
+
+        List<String> output = runCode(code);
+
+        assertArrayEquals(new String[] {
+                "0"
+        }, output.toArray());
+
+    }
 }
