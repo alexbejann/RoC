@@ -1,12 +1,13 @@
 package nl.saxion.cos;
 
+import nl.saxion.cos.exceptions.CompilerException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ExpressionsTest extends TestBase
 {
@@ -58,6 +59,30 @@ public class ExpressionsTest extends TestBase
         assertArrayEquals(new String[] {
                 "0"
         }, output.toArray());
+
+    }
+
+    /*
+     * Expected same output to be the same
+     */
+    @Test
+    public void expressionConcatenationTest() throws IOException, AssembleException
+    {
+        String codeString = "functia main()\n" +
+                "{\n" +
+                " sdc a<- \"hello\" +2" +
+                " printeaza(a)" +
+                "}";
+
+        Compiler c = new Compiler();
+
+        CompilerException exception = assertThrows(CompilerException.class, () -> {
+            c.compileString(codeString,"expressionConcatenationTest");
+        });
+        String expectedMessage = "Unsupported operation: \"hello\"+2";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
 
     }
 

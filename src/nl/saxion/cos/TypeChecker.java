@@ -287,7 +287,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     {
         if (!visit(ctx.left).equals(visit(ctx.right)))
         {
-            failed = true;
+            throw new CompilerException("Unsupported operation: "+ctx.getText());
         }
         dataTypes.put(ctx,visit(ctx.left));
         return visit(ctx.left);
