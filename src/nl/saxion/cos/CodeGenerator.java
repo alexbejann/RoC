@@ -233,6 +233,12 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     }
 
     @Override
+    public List<String> visitLogicalExpressionInParen(RoCParser.LogicalExpressionInParenContext ctx)
+    {
+        return new ArrayList<>(visit(ctx.logical_expr()));
+    }
+
+    @Override
     public List<String> visitComparisonExpression(RoCParser.ComparisonExpressionContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
@@ -565,7 +571,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
 
         jasminCode.add("getstatic java/lang/System/out Ljava/io/PrintStream;");
 
-        jasminCode.addAll(visit(ctx.type_value()));
+        jasminCode.addAll(visit(ctx.arithmetic_expr()));
 
         switch (dataTypes.get(ctx))
         {

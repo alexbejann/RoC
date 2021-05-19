@@ -60,7 +60,7 @@ decisionStatement: If PAREN_OPEN if_lhs=conditions PAREN_CLOSE CURLY_OPEN if_rhs
                  (Else CURLY_OPEN else_lhs=block CURLY_CLOSE)?
                  ;
 
-printStatement: Print PAREN_OPEN (type_value) PAREN_CLOSE ;
+printStatement: Print PAREN_OPEN (arithmetic_expr) PAREN_CLOSE ;
 
 iterationStatement
                   : While conditions Execute CURLY_OPEN block CURLY_CLOSE #WhileLoop

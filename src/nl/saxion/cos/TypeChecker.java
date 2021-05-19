@@ -277,7 +277,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitPrintStatement(RoCParser.PrintStatementContext ctx)
     {
-        DataType type = visit(ctx.type_value());
+        DataType type = visit(ctx.arithmetic_expr());
         dataTypes.put(ctx, type);
         return type;
     }

@@ -56,7 +56,6 @@ public class Optimizer extends RoCBaseVisitor<Object>
                     return (Integer) left % (Integer) right;
             }
         }
-        // this code shouldn't be reached
-        throw new CompilerException("Unreachable line of code reached!");
+        return null;
     }
 }
