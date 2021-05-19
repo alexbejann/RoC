@@ -169,12 +169,6 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     }
 
     @Override
-    public DataType visitComparisonExpression(RoCParser.ComparisonExpressionContext ctx)
-    {
-        return visitChildren(ctx);
-    }
-
-    @Override
     public DataType visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx)
     {
         DataType leftHS = visit(ctx.left);

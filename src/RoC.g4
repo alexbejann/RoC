@@ -18,13 +18,9 @@ conditions
 logical_expr
             : PAREN_OPEN logical_expr PAREN_CLOSE                   # LogicalExpressionInParen
             | left=logical_expr (AND | OR) right=logical_expr       # LogicalExpressionAndOr
-            | comparison_expr                                       # ComparisonExpression
+            | left=arithmetic_expr comparator right=arithmetic_expr # ComparisonExpressionWithOperator
             ;
 
-comparison_expr
-                : PAREN_OPEN comparison_expr PAREN_CLOSE                    # ComparisonExpressionParens
-                | left=arithmetic_expr comparator right=arithmetic_expr     # ComparisonExpressionWithOperator
-                ;
 block
       : (decisionStatement
       | iterationStatement

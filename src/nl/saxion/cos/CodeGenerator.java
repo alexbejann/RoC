@@ -238,23 +238,6 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         return new ArrayList<>(visit(ctx.logical_expr()));
     }
 
-    @Override
-    public List<String> visitComparisonExpression(RoCParser.ComparisonExpressionContext ctx)
-    {
-        List<String> jasminCode = new ArrayList<>();
-        for (ParseTree child:ctx.children)
-        {
-            jasminCode.addAll(visit(child));
-        }
-        return jasminCode;
-    }
-
-    @Override
-    public List<String> visitComparisonExpressionParens(RoCParser.ComparisonExpressionParensContext ctx)
-    {
-        return new ArrayList<>(visit(ctx.comparison_expr()));
-    }
-
     /**
      * The method is processing the if statements with operators
      * The method is also responsible of the equals function when 2 strings
