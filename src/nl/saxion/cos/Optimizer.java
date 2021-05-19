@@ -1,5 +1,7 @@
 package nl.saxion.cos;
 
+import nl.saxion.cos.exceptions.CompilerException;
+
 public class Optimizer extends RoCBaseVisitor<Object>
 {
 
@@ -54,6 +56,7 @@ public class Optimizer extends RoCBaseVisitor<Object>
                     return (Integer) left % (Integer) right;
             }
         }
-        return null;
+        // this code shouldn't be reached
+        throw new CompilerException("Unreachable line of code reached!");
     }
 }
