@@ -1,4 +1,4 @@
-// Generated from C:/Programe_si_chestii/Olanda/Saxion/Year 2/Compilers_OS/31/src\RoC.g4 by ANTLR 4.9.1
+// Generated from C:/Programe_si_chestii/Olanda/Saxion/Year_2/Compilers_OS/retake/31/src\RoC.g4 by ANTLR 4.9.1
 package nl.saxion.cos;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -193,13 +193,6 @@ public class RoCBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ro
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitWhileLoop(RoCParser.WhileLoopContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitForLoop(RoCParser.ForLoopContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

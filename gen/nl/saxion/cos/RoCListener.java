@@ -1,4 +1,4 @@
-// Generated from C:/Programe_si_chestii/Olanda/Saxion/Year 2/Compilers_OS/31/src\RoC.g4 by ANTLR 4.9.1
+// Generated from C:/Programe_si_chestii/Olanda/Saxion/Year_2/Compilers_OS/retake/31/src\RoC.g4 by ANTLR 4.9.1
 package nl.saxion.cos;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -303,18 +303,6 @@ public interface RoCListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitWhileLoop(RoCParser.WhileLoopContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ForLoop}
-	 * labeled alternative in {@link RoCParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterForLoop(RoCParser.ForLoopContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ForLoop}
-	 * labeled alternative in {@link RoCParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitForLoop(RoCParser.ForLoopContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code DoWhileLoop}
 	 * labeled alternative in {@link RoCParser#iterationStatement}.

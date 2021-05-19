@@ -141,7 +141,7 @@ SCANNERCALL:'urmatorul';
 // Types values
 BOOLEAN: 'ADEVARAT' | 'FALS';
 STRING : '"' ~('\r'|'\n'|'"')* '"';
-NUMBER : '0' | ('- ')? [1-9][0-9]*?;
+NUMBER : '0' | [1-9][0-9]*;// Only Positive numbers
 
 // Relational Operators
 AND   : '&&';

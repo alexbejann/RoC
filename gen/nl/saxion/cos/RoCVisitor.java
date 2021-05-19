@@ -1,4 +1,4 @@
-// Generated from C:/Programe_si_chestii/Olanda/Saxion/Year 2/Compilers_OS/31/src\RoC.g4 by ANTLR 4.9.1
+// Generated from C:/Programe_si_chestii/Olanda/Saxion/Year_2/Compilers_OS/retake/31/src\RoC.g4 by ANTLR 4.9.1
 package nl.saxion.cos;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -184,13 +184,6 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitWhileLoop(RoCParser.WhileLoopContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ForLoop}
-	 * labeled alternative in {@link RoCParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitForLoop(RoCParser.ForLoopContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code DoWhileLoop}
 	 * labeled alternative in {@link RoCParser#iterationStatement}.
