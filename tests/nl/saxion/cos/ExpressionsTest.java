@@ -20,7 +20,9 @@ public class ExpressionsTest extends TestBase
         String codeString = "functia main()\n" +
                             "{\n" +
                             " numar a<-(1+1)*2 " +
+                            " numar b<- 1 + 2 - 2 * (7-2) " +
                             " printeaza(a)" +
+                            " printeaza(b)" +
                             "}";
 
         Compiler c = new Compiler();
@@ -30,7 +32,7 @@ public class ExpressionsTest extends TestBase
         List<String> output = runCode(code);
 
         assertArrayEquals(new String[] {
-                "4"
+                "4", "-7"
         }, output.toArray());
 
     }
@@ -58,4 +60,6 @@ public class ExpressionsTest extends TestBase
         }, output.toArray());
 
     }
+
+
 }

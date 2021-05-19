@@ -16,14 +16,14 @@ conditions
           ;
 
 logical_expr
-            : left=logical_expr (AND | OR) right=logical_expr       # LogicalExpressionAndOr
+            : PAREN_OPEN logical_expr PAREN_CLOSE                   # LogicalExpressionInParen
+            | left=logical_expr (AND | OR) right=logical_expr       # LogicalExpressionAndOr
             | comparison_expr                                       # ComparisonExpression
-            | PAREN_OPEN logical_expr PAREN_CLOSE                   # LogicalExpressionInParen
             ;
 
 comparison_expr
-                : left=arithmetic_expr comparator right=arithmetic_expr     # ComparisonExpressionWithOperator
-                | PAREN_OPEN comparison_expr PAREN_CLOSE                    # ComparisonExpressionParens
+                : PAREN_OPEN comparison_expr PAREN_CLOSE                    # ComparisonExpressionParens
+                | left=arithmetic_expr comparator right=arithmetic_expr     # ComparisonExpressionWithOperator
                 ;
 block
       : (decisionStatement
@@ -43,9 +43,9 @@ functionArgumentList
                     ;
 
 arithmetic_expr
-              : left=arithmetic_expr op=(MULTIPLY | DIVIDE | MODULO) right=arithmetic_expr  # MULDIVMODOPGRP
+              : PAREN_OPEN arithmetic_expr PAREN_CLOSE                                      # PARENGRP
+              | left=arithmetic_expr op=(MULTIPLY | DIVIDE | MODULO) right=arithmetic_expr  # MULDIVMODOPGRP
               | left=arithmetic_expr op=(PLUS | MINUS)               right=arithmetic_expr  # ADDSUBGRP
-              | PAREN_OPEN arithmetic_expr PAREN_CLOSE                                      # PARENGRP
               | functionCall                                                                # MethodCallExpr
               | scannerCall                                                                 # CallSCANNER
               | SCANNER                                                                     # SCANNER
