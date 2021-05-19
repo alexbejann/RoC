@@ -27,17 +27,16 @@ public class RoCParser extends Parser {
 	public static final int
 		RULE_program = 0, RULE_method_declaration = 1, RULE_argument_list = 2, 
 		RULE_conditions = 3, RULE_logical_expr = 4, RULE_comparison_expr = 5, 
-		RULE_block = 6, RULE_statement_body = 7, RULE_functionCall = 8, RULE_functionArgumentList = 9, 
-		RULE_arithmetic_expr = 10, RULE_decisionStatement = 11, RULE_printStatement = 12, 
-		RULE_iterationStatement = 13, RULE_variable_declaration = 14, RULE_scannerCall = 15, 
-		RULE_varExpression = 16, RULE_comparator = 17, RULE_type = 18, RULE_type_value = 19;
+		RULE_block = 6, RULE_functionCall = 7, RULE_functionArgumentList = 8, 
+		RULE_arithmetic_expr = 9, RULE_decisionStatement = 10, RULE_printStatement = 11, 
+		RULE_iterationStatement = 12, RULE_variable_declaration = 13, RULE_scannerCall = 14, 
+		RULE_varExpression = 15, RULE_comparator = 16, RULE_type = 17, RULE_type_value = 18;
 	private static String[] makeRuleNames() {
 		return new String[] {
 			"program", "method_declaration", "argument_list", "conditions", "logical_expr", 
-			"comparison_expr", "block", "statement_body", "functionCall", "functionArgumentList", 
-			"arithmetic_expr", "decisionStatement", "printStatement", "iterationStatement", 
-			"variable_declaration", "scannerCall", "varExpression", "comparator", 
-			"type", "type_value"
+			"comparison_expr", "block", "functionCall", "functionArgumentList", "arithmetic_expr", 
+			"decisionStatement", "printStatement", "iterationStatement", "variable_declaration", 
+			"scannerCall", "varExpression", "comparator", "type", "type_value"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -149,21 +148,21 @@ public class RoCParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(43);
+			setState(41);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==Method) {
 				{
 				{
-				setState(40);
+				setState(38);
 				method_declaration();
 				}
 				}
-				setState(45);
+				setState(43);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(46);
+			setState(44);
 			match(EOF);
 			}
 		}
@@ -234,65 +233,65 @@ public class RoCParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(48);
+			setState(46);
 			match(Method);
-			setState(49);
+			setState(47);
 			((Method_declarationContext)_localctx).methodName = match(IDENTIFIER);
-			setState(50);
+			setState(48);
 			match(PAREN_OPEN);
-			setState(52);
+			setState(50);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NUMBER_TYPE) | (1L << STRING_TYPE) | (1L << BOOLEAN_TYPE) | (1L << AUTO_TYPE) | (1L << SCANNER))) != 0)) {
 				{
-				setState(51);
+				setState(49);
 				argument_list();
 				}
 			}
 
-			setState(54);
+			setState(52);
 			match(PAREN_CLOSE);
-			setState(57);
+			setState(55);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==Return) {
 				{
-				setState(55);
+				setState(53);
 				match(Return);
-				setState(56);
+				setState(54);
 				((Method_declarationContext)_localctx).returnType = type();
 				}
 			}
 
-			setState(59);
+			setState(57);
 			match(CURLY_OPEN);
-			setState(61); 
+			setState(59); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(60);
+				setState(58);
 				((Method_declarationContext)_localctx).body = block();
 				}
 				}
-				setState(63); 
+				setState(61); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NUMBER_TYPE) | (1L << STRING_TYPE) | (1L << BOOLEAN_TYPE) | (1L << AUTO_TYPE) | (1L << SCANNER) | (1L << While) | (1L << If) | (1L << Execute) | (1L << Print) | (1L << IDENTIFIER))) != 0) );
-			setState(67);
+			setState(65);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==Return) {
 				{
-				setState(65);
+				setState(63);
 				match(Return);
-				setState(66);
+				setState(64);
 				((Method_declarationContext)_localctx).returnValue = type_value();
 				}
 			}
 
-			setState(69);
+			setState(67);
 			match(CURLY_CLOSE);
 			}
 		}
@@ -349,25 +348,25 @@ public class RoCParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			{
-			setState(71);
+			setState(69);
 			type();
-			setState(72);
+			setState(70);
 			match(IDENTIFIER);
-			setState(79);
+			setState(77);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				setState(73);
+				setState(71);
 				match(COMMA);
-				setState(74);
+				setState(72);
 				type();
-				setState(75);
+				setState(73);
 				match(IDENTIFIER);
 				}
 				}
-				setState(81);
+				setState(79);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -414,7 +413,7 @@ public class RoCParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(82);
+			setState(80);
 			logical_expr(0);
 			}
 		}
@@ -523,7 +522,7 @@ public class RoCParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(90);
+			setState(88);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 			case 1:
@@ -532,7 +531,7 @@ public class RoCParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(85);
+				setState(83);
 				comparison_expr();
 				}
 				break;
@@ -541,17 +540,17 @@ public class RoCParser extends Parser {
 				_localctx = new LogicalExpressionInParenContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(86);
+				setState(84);
 				match(PAREN_OPEN);
-				setState(87);
+				setState(85);
 				logical_expr(0);
-				setState(88);
+				setState(86);
 				match(PAREN_CLOSE);
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(97);
+			setState(95);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -563,9 +562,9 @@ public class RoCParser extends Parser {
 					_localctx = new LogicalExpressionAndOrContext(new Logical_exprContext(_parentctx, _parentState));
 					((LogicalExpressionAndOrContext)_localctx).left = _prevctx;
 					pushNewRecursionContext(_localctx, _startState, RULE_logical_expr);
-					setState(92);
+					setState(90);
 					if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-					setState(93);
+					setState(91);
 					_la = _input.LA(1);
 					if ( !(_la==AND || _la==OR) ) {
 					_errHandler.recoverInline(this);
@@ -575,12 +574,12 @@ public class RoCParser extends Parser {
 						_errHandler.reportMatch(this);
 						consume();
 					}
-					setState(94);
+					setState(92);
 					((LogicalExpressionAndOrContext)_localctx).right = logical_expr(4);
 					}
 					} 
 				}
-				setState(99);
+				setState(97);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			}
@@ -661,18 +660,18 @@ public class RoCParser extends Parser {
 		Comparison_exprContext _localctx = new Comparison_exprContext(_ctx, getState());
 		enterRule(_localctx, 10, RULE_comparison_expr);
 		try {
-			setState(108);
+			setState(106);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 			case 1:
 				_localctx = new ComparisonExpressionWithOperatorContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(100);
+				setState(98);
 				((ComparisonExpressionWithOperatorContext)_localctx).left = arithmetic_expr(0);
-				setState(101);
+				setState(99);
 				comparator();
-				setState(102);
+				setState(100);
 				((ComparisonExpressionWithOperatorContext)_localctx).right = arithmetic_expr(0);
 				}
 				break;
@@ -680,11 +679,11 @@ public class RoCParser extends Parser {
 				_localctx = new ComparisonExpressionParensContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(104);
+				setState(102);
 				match(PAREN_OPEN);
-				setState(105);
+				setState(103);
 				comparison_expr();
-				setState(106);
+				setState(104);
 				match(PAREN_CLOSE);
 				}
 				break;
@@ -702,50 +701,6 @@ public class RoCParser extends Parser {
 	}
 
 	public static class BlockContext extends ParserRuleContext {
-		public Statement_bodyContext statement_body() {
-			return getRuleContext(Statement_bodyContext.class,0);
-		}
-		public BlockContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_block; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof RoCListener ) ((RoCListener)listener).enterBlock(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof RoCListener ) ((RoCListener)listener).exitBlock(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof RoCVisitor ) return ((RoCVisitor<? extends T>)visitor).visitBlock(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final BlockContext block() throws RecognitionException {
-		BlockContext _localctx = new BlockContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_block);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(110);
-			statement_body();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class Statement_bodyContext extends ParserRuleContext {
 		public List<DecisionStatementContext> decisionStatement() {
 			return getRuleContexts(DecisionStatementContext.class);
 		}
@@ -782,75 +737,75 @@ public class RoCParser extends Parser {
 		public Variable_declarationContext variable_declaration(int i) {
 			return getRuleContext(Variable_declarationContext.class,i);
 		}
-		public Statement_bodyContext(ParserRuleContext parent, int invokingState) {
+		public BlockContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_statement_body; }
+		@Override public int getRuleIndex() { return RULE_block; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof RoCListener ) ((RoCListener)listener).enterStatement_body(this);
+			if ( listener instanceof RoCListener ) ((RoCListener)listener).enterBlock(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof RoCListener ) ((RoCListener)listener).exitStatement_body(this);
+			if ( listener instanceof RoCListener ) ((RoCListener)listener).exitBlock(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof RoCVisitor ) return ((RoCVisitor<? extends T>)visitor).visitStatement_body(this);
+			if ( visitor instanceof RoCVisitor ) return ((RoCVisitor<? extends T>)visitor).visitBlock(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final Statement_bodyContext statement_body() throws RecognitionException {
-		Statement_bodyContext _localctx = new Statement_bodyContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_statement_body);
+	public final BlockContext block() throws RecognitionException {
+		BlockContext _localctx = new BlockContext(_ctx, getState());
+		enterRule(_localctx, 12, RULE_block);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(118); 
+			setState(114); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
 				switch (_alt) {
 				case 1:
 					{
-					setState(118);
+					setState(114);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 					case 1:
 						{
-						setState(112);
+						setState(108);
 						decisionStatement();
 						}
 						break;
 					case 2:
 						{
-						setState(113);
+						setState(109);
 						iterationStatement();
 						}
 						break;
 					case 3:
 						{
-						setState(114);
+						setState(110);
 						functionCall();
 						}
 						break;
 					case 4:
 						{
-						setState(115);
+						setState(111);
 						printStatement();
 						}
 						break;
 					case 5:
 						{
-						setState(116);
+						setState(112);
 						varExpression();
 						}
 						break;
 					case 6:
 						{
-						setState(117);
+						setState(113);
 						variable_declaration();
 						}
 						break;
@@ -860,7 +815,7 @@ public class RoCParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(120); 
+				setState(116); 
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
@@ -913,27 +868,27 @@ public class RoCParser extends Parser {
 
 	public final FunctionCallContext functionCall() throws RecognitionException {
 		FunctionCallContext _localctx = new FunctionCallContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_functionCall);
+		enterRule(_localctx, 14, RULE_functionCall);
 		int _la;
 		try {
 			_localctx = new MethodCallContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(122);
+			setState(118);
 			match(IDENTIFIER);
-			setState(123);
+			setState(119);
 			match(PAREN_OPEN);
-			setState(125);
+			setState(121);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BOOLEAN) | (1L << STRING) | (1L << NUMBER) | (1L << IDENTIFIER))) != 0)) {
 				{
-				setState(124);
+				setState(120);
 				functionArgumentList();
 				}
 			}
 
-			setState(127);
+			setState(123);
 			match(PAREN_CLOSE);
 			}
 		}
@@ -988,28 +943,28 @@ public class RoCParser extends Parser {
 
 	public final FunctionArgumentListContext functionArgumentList() throws RecognitionException {
 		FunctionArgumentListContext _localctx = new FunctionArgumentListContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_functionArgumentList);
+		enterRule(_localctx, 16, RULE_functionArgumentList);
 		int _la;
 		try {
 			_localctx = new MethodCallArgumentListContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
 			{
-			setState(129);
+			setState(125);
 			type_value();
-			setState(134);
+			setState(130);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				setState(130);
+				setState(126);
 				match(COMMA);
-				setState(131);
+				setState(127);
 				type_value();
 				}
 				}
-				setState(136);
+				setState(132);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -1247,14 +1202,14 @@ public class RoCParser extends Parser {
 		int _parentState = getState();
 		Arithmetic_exprContext _localctx = new Arithmetic_exprContext(_ctx, _parentState);
 		Arithmetic_exprContext _prevctx = _localctx;
-		int _startState = 20;
-		enterRecursionRule(_localctx, 20, RULE_arithmetic_expr, _p);
+		int _startState = 18;
+		enterRecursionRule(_localctx, 18, RULE_arithmetic_expr, _p);
 		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(149);
+			setState(145);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,13,_ctx) ) {
 			case 1:
@@ -1263,11 +1218,11 @@ public class RoCParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(138);
+				setState(134);
 				match(PAREN_OPEN);
-				setState(139);
+				setState(135);
 				arithmetic_expr(0);
-				setState(140);
+				setState(136);
 				match(PAREN_CLOSE);
 				}
 				break;
@@ -1276,7 +1231,7 @@ public class RoCParser extends Parser {
 				_localctx = new MethodCallExprContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(142);
+				setState(138);
 				functionCall();
 				}
 				break;
@@ -1285,7 +1240,7 @@ public class RoCParser extends Parser {
 				_localctx = new CallSCANNERContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(143);
+				setState(139);
 				scannerCall();
 				}
 				break;
@@ -1294,7 +1249,7 @@ public class RoCParser extends Parser {
 				_localctx = new SCANNERContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(144);
+				setState(140);
 				match(SCANNER);
 				}
 				break;
@@ -1303,7 +1258,7 @@ public class RoCParser extends Parser {
 				_localctx = new NUMBERContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(145);
+				setState(141);
 				match(NUMBER);
 				}
 				break;
@@ -1312,7 +1267,7 @@ public class RoCParser extends Parser {
 				_localctx = new STRINGContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(146);
+				setState(142);
 				match(STRING);
 				}
 				break;
@@ -1321,7 +1276,7 @@ public class RoCParser extends Parser {
 				_localctx = new BOOLEANContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(147);
+				setState(143);
 				match(BOOLEAN);
 				}
 				break;
@@ -1330,13 +1285,13 @@ public class RoCParser extends Parser {
 				_localctx = new IDENTIFIERContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(148);
+				setState(144);
 				match(IDENTIFIER);
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(159);
+			setState(155);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -1344,7 +1299,7 @@ public class RoCParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(157);
+					setState(153);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,14,_ctx) ) {
 					case 1:
@@ -1352,9 +1307,9 @@ public class RoCParser extends Parser {
 						_localctx = new MULDIVMODOPGRPContext(new Arithmetic_exprContext(_parentctx, _parentState));
 						((MULDIVMODOPGRPContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_arithmetic_expr);
-						setState(151);
+						setState(147);
 						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
-						setState(152);
+						setState(148);
 						((MULDIVMODOPGRPContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << MULTIPLY) | (1L << DIVIDE) | (1L << MODULO))) != 0)) ) {
@@ -1365,7 +1320,7 @@ public class RoCParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(153);
+						setState(149);
 						((MULDIVMODOPGRPContext)_localctx).right = arithmetic_expr(11);
 						}
 						break;
@@ -1374,9 +1329,9 @@ public class RoCParser extends Parser {
 						_localctx = new ADDSUBGRPContext(new Arithmetic_exprContext(_parentctx, _parentState));
 						((ADDSUBGRPContext)_localctx).left = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_arithmetic_expr);
-						setState(154);
+						setState(150);
 						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
-						setState(155);
+						setState(151);
 						((ADDSUBGRPContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==PLUS || _la==MINUS) ) {
@@ -1387,14 +1342,14 @@ public class RoCParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(156);
+						setState(152);
 						((ADDSUBGRPContext)_localctx).right = arithmetic_expr(10);
 						}
 						break;
 					}
 					} 
 				}
-				setState(161);
+				setState(157);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
 			}
@@ -1472,63 +1427,63 @@ public class RoCParser extends Parser {
 
 	public final DecisionStatementContext decisionStatement() throws RecognitionException {
 		DecisionStatementContext _localctx = new DecisionStatementContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_decisionStatement);
+		enterRule(_localctx, 20, RULE_decisionStatement);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(162);
+			setState(158);
 			match(If);
-			setState(163);
+			setState(159);
 			match(PAREN_OPEN);
-			setState(164);
+			setState(160);
 			((DecisionStatementContext)_localctx).if_lhs = conditions();
-			setState(165);
+			setState(161);
 			match(PAREN_CLOSE);
-			setState(166);
+			setState(162);
 			match(CURLY_OPEN);
-			setState(167);
+			setState(163);
 			((DecisionStatementContext)_localctx).if_rhs = block();
-			setState(168);
+			setState(164);
 			match(CURLY_CLOSE);
-			setState(179);
+			setState(175);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==Else_If) {
 				{
 				{
-				setState(169);
+				setState(165);
 				match(Else_If);
-				setState(170);
+				setState(166);
 				match(PAREN_OPEN);
-				setState(171);
+				setState(167);
 				((DecisionStatementContext)_localctx).elseIF_lhs = conditions();
-				setState(172);
+				setState(168);
 				match(PAREN_CLOSE);
-				setState(173);
+				setState(169);
 				match(CURLY_OPEN);
-				setState(174);
+				setState(170);
 				((DecisionStatementContext)_localctx).elseIF_rhs = block();
-				setState(175);
+				setState(171);
 				match(CURLY_CLOSE);
 				}
 				}
-				setState(181);
+				setState(177);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(187);
+			setState(183);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==Else) {
 				{
-				setState(182);
+				setState(178);
 				match(Else);
-				setState(183);
+				setState(179);
 				match(CURLY_OPEN);
-				setState(184);
+				setState(180);
 				((DecisionStatementContext)_localctx).else_lhs = block();
-				setState(185);
+				setState(181);
 				match(CURLY_CLOSE);
 				}
 			}
@@ -1574,19 +1529,19 @@ public class RoCParser extends Parser {
 
 	public final PrintStatementContext printStatement() throws RecognitionException {
 		PrintStatementContext _localctx = new PrintStatementContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_printStatement);
+		enterRule(_localctx, 22, RULE_printStatement);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(189);
+			setState(185);
 			match(Print);
-			setState(190);
+			setState(186);
 			match(PAREN_OPEN);
 			{
-			setState(191);
+			setState(187);
 			type_value();
 			}
-			setState(192);
+			setState(188);
 			match(PAREN_CLOSE);
 			}
 		}
@@ -1667,26 +1622,26 @@ public class RoCParser extends Parser {
 
 	public final IterationStatementContext iterationStatement() throws RecognitionException {
 		IterationStatementContext _localctx = new IterationStatementContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_iterationStatement);
+		enterRule(_localctx, 24, RULE_iterationStatement);
 		try {
-			setState(208);
+			setState(204);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case While:
 				_localctx = new WhileLoopContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(194);
+				setState(190);
 				match(While);
-				setState(195);
+				setState(191);
 				conditions();
-				setState(196);
+				setState(192);
 				match(Execute);
-				setState(197);
+				setState(193);
 				match(CURLY_OPEN);
-				setState(198);
+				setState(194);
 				block();
-				setState(199);
+				setState(195);
 				match(CURLY_CLOSE);
 				}
 				break;
@@ -1694,17 +1649,17 @@ public class RoCParser extends Parser {
 				_localctx = new DoWhileLoopContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(201);
+				setState(197);
 				match(Execute);
-				setState(202);
+				setState(198);
 				match(CURLY_OPEN);
-				setState(203);
+				setState(199);
 				block();
-				setState(204);
+				setState(200);
 				match(CURLY_CLOSE);
-				setState(205);
+				setState(201);
 				match(While);
-				setState(206);
+				setState(202);
 				conditions();
 				}
 				break;
@@ -1754,17 +1709,17 @@ public class RoCParser extends Parser {
 
 	public final Variable_declarationContext variable_declaration() throws RecognitionException {
 		Variable_declarationContext _localctx = new Variable_declarationContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_variable_declaration);
+		enterRule(_localctx, 26, RULE_variable_declaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(210);
+			setState(206);
 			type();
-			setState(211);
+			setState(207);
 			((Variable_declarationContext)_localctx).lhs = match(IDENTIFIER);
-			setState(212);
+			setState(208);
 			match(EQUALS_TO);
-			setState(213);
+			setState(209);
 			arithmetic_expr(0);
 			}
 		}
@@ -1804,15 +1759,15 @@ public class RoCParser extends Parser {
 
 	public final ScannerCallContext scannerCall() throws RecognitionException {
 		ScannerCallContext _localctx = new ScannerCallContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_scannerCall);
+		enterRule(_localctx, 28, RULE_scannerCall);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(215);
+			setState(211);
 			match(IDENTIFIER);
-			setState(216);
+			setState(212);
 			match(DOT);
-			setState(217);
+			setState(213);
 			match(SCANNERCALL);
 			}
 		}
@@ -1862,16 +1817,16 @@ public class RoCParser extends Parser {
 
 	public final VarExpressionContext varExpression() throws RecognitionException {
 		VarExpressionContext _localctx = new VarExpressionContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_varExpression);
+		enterRule(_localctx, 30, RULE_varExpression);
 		try {
 			_localctx = new AssignmentExpressionContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(219);
+			setState(215);
 			match(IDENTIFIER);
-			setState(220);
+			setState(216);
 			match(EQUALS_TO);
-			setState(221);
+			setState(217);
 			arithmetic_expr(0);
 			}
 		}
@@ -1914,12 +1869,12 @@ public class RoCParser extends Parser {
 
 	public final ComparatorContext comparator() throws RecognitionException {
 		ComparatorContext _localctx = new ComparatorContext(_ctx, getState());
-		enterRule(_localctx, 34, RULE_comparator);
+		enterRule(_localctx, 32, RULE_comparator);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(223);
+			setState(219);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << GT) | (1L << GE) | (1L << LT) | (1L << LE) | (1L << EQ) | (1L << NOT_EQ))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -1969,12 +1924,12 @@ public class RoCParser extends Parser {
 
 	public final TypeContext type() throws RecognitionException {
 		TypeContext _localctx = new TypeContext(_ctx, getState());
-		enterRule(_localctx, 36, RULE_type);
+		enterRule(_localctx, 34, RULE_type);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(225);
+			setState(221);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NUMBER_TYPE) | (1L << STRING_TYPE) | (1L << BOOLEAN_TYPE) | (1L << AUTO_TYPE) | (1L << SCANNER))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -2023,12 +1978,12 @@ public class RoCParser extends Parser {
 
 	public final Type_valueContext type_value() throws RecognitionException {
 		Type_valueContext _localctx = new Type_valueContext(_ctx, getState());
-		enterRule(_localctx, 38, RULE_type_value);
+		enterRule(_localctx, 36, RULE_type_value);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(227);
+			setState(223);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BOOLEAN) | (1L << STRING) | (1L << NUMBER) | (1L << IDENTIFIER))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -2055,7 +2010,7 @@ public class RoCParser extends Parser {
 		switch (ruleIndex) {
 		case 4:
 			return logical_expr_sempred((Logical_exprContext)_localctx, predIndex);
-		case 10:
+		case 9:
 			return arithmetic_expr_sempred((Arithmetic_exprContext)_localctx, predIndex);
 		}
 		return true;
@@ -2078,78 +2033,77 @@ public class RoCParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3.\u00e8\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3.\u00e4\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
-		"\4\23\t\23\4\24\t\24\4\25\t\25\3\2\7\2,\n\2\f\2\16\2/\13\2\3\2\3\2\3\3"+
-		"\3\3\3\3\3\3\5\3\67\n\3\3\3\3\3\3\3\5\3<\n\3\3\3\3\3\6\3@\n\3\r\3\16\3"+
-		"A\3\3\3\3\5\3F\n\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\7\4P\n\4\f\4\16\4S"+
-		"\13\4\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\5\6]\n\6\3\6\3\6\3\6\7\6b\n\6\f"+
-		"\6\16\6e\13\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7o\n\7\3\b\3\b\3\t\3\t"+
-		"\3\t\3\t\3\t\3\t\6\ty\n\t\r\t\16\tz\3\n\3\n\3\n\5\n\u0080\n\n\3\n\3\n"+
-		"\3\13\3\13\3\13\7\13\u0087\n\13\f\13\16\13\u008a\13\13\3\f\3\f\3\f\3\f"+
-		"\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\5\f\u0098\n\f\3\f\3\f\3\f\3\f\3\f\3\f"+
-		"\7\f\u00a0\n\f\f\f\16\f\u00a3\13\f\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r"+
-		"\3\r\3\r\3\r\3\r\3\r\3\r\7\r\u00b4\n\r\f\r\16\r\u00b7\13\r\3\r\3\r\3\r"+
-		"\3\r\3\r\5\r\u00be\n\r\3\16\3\16\3\16\3\16\3\16\3\17\3\17\3\17\3\17\3"+
-		"\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\5\17\u00d3\n\17\3\20"+
-		"\3\20\3\20\3\20\3\20\3\21\3\21\3\21\3\21\3\22\3\22\3\22\3\22\3\23\3\23"+
-		"\3\24\3\24\3\25\3\25\3\25\2\4\n\26\26\2\4\6\b\n\f\16\20\22\24\26\30\32"+
-		"\34\36 \"$&(\2\b\3\2 !\3\2\f\16\3\2\n\13\4\2\"&((\3\2\17\23\4\2\35\37"+
-		"--\2\u00f0\2-\3\2\2\2\4\62\3\2\2\2\6I\3\2\2\2\bT\3\2\2\2\n\\\3\2\2\2\f"+
-		"n\3\2\2\2\16p\3\2\2\2\20x\3\2\2\2\22|\3\2\2\2\24\u0083\3\2\2\2\26\u0097"+
-		"\3\2\2\2\30\u00a4\3\2\2\2\32\u00bf\3\2\2\2\34\u00d2\3\2\2\2\36\u00d4\3"+
-		"\2\2\2 \u00d9\3\2\2\2\"\u00dd\3\2\2\2$\u00e1\3\2\2\2&\u00e3\3\2\2\2(\u00e5"+
-		"\3\2\2\2*,\5\4\3\2+*\3\2\2\2,/\3\2\2\2-+\3\2\2\2-.\3\2\2\2.\60\3\2\2\2"+
-		"/-\3\2\2\2\60\61\7\2\2\3\61\3\3\2\2\2\62\63\7\33\2\2\63\64\7-\2\2\64\66"+
-		"\7\3\2\2\65\67\5\6\4\2\66\65\3\2\2\2\66\67\3\2\2\2\678\3\2\2\28;\7\4\2"+
-		"\29:\7\32\2\2:<\5&\24\2;9\3\2\2\2;<\3\2\2\2<=\3\2\2\2=?\7\5\2\2>@\5\16"+
-		"\b\2?>\3\2\2\2@A\3\2\2\2A?\3\2\2\2AB\3\2\2\2BE\3\2\2\2CD\7\32\2\2DF\5"+
-		"(\25\2EC\3\2\2\2EF\3\2\2\2FG\3\2\2\2GH\7\6\2\2H\5\3\2\2\2IJ\5&\24\2JQ"+
-		"\7-\2\2KL\7\t\2\2LM\5&\24\2MN\7-\2\2NP\3\2\2\2OK\3\2\2\2PS\3\2\2\2QO\3"+
-		"\2\2\2QR\3\2\2\2R\7\3\2\2\2SQ\3\2\2\2TU\5\n\6\2U\t\3\2\2\2VW\b\6\1\2W"+
-		"]\5\f\7\2XY\7\3\2\2YZ\5\n\6\2Z[\7\4\2\2[]\3\2\2\2\\V\3\2\2\2\\X\3\2\2"+
-		"\2]c\3\2\2\2^_\f\5\2\2_`\t\2\2\2`b\5\n\6\6a^\3\2\2\2be\3\2\2\2ca\3\2\2"+
-		"\2cd\3\2\2\2d\13\3\2\2\2ec\3\2\2\2fg\5\26\f\2gh\5$\23\2hi\5\26\f\2io\3"+
-		"\2\2\2jk\7\3\2\2kl\5\f\7\2lm\7\4\2\2mo\3\2\2\2nf\3\2\2\2nj\3\2\2\2o\r"+
-		"\3\2\2\2pq\5\20\t\2q\17\3\2\2\2ry\5\30\r\2sy\5\34\17\2ty\5\22\n\2uy\5"+
-		"\32\16\2vy\5\"\22\2wy\5\36\20\2xr\3\2\2\2xs\3\2\2\2xt\3\2\2\2xu\3\2\2"+
-		"\2xv\3\2\2\2xw\3\2\2\2yz\3\2\2\2zx\3\2\2\2z{\3\2\2\2{\21\3\2\2\2|}\7-"+
-		"\2\2}\177\7\3\2\2~\u0080\5\24\13\2\177~\3\2\2\2\177\u0080\3\2\2\2\u0080"+
-		"\u0081\3\2\2\2\u0081\u0082\7\4\2\2\u0082\23\3\2\2\2\u0083\u0088\5(\25"+
-		"\2\u0084\u0085\7\t\2\2\u0085\u0087\5(\25\2\u0086\u0084\3\2\2\2\u0087\u008a"+
-		"\3\2\2\2\u0088\u0086\3\2\2\2\u0088\u0089\3\2\2\2\u0089\25\3\2\2\2\u008a"+
-		"\u0088\3\2\2\2\u008b\u008c\b\f\1\2\u008c\u008d\7\3\2\2\u008d\u008e\5\26"+
-		"\f\2\u008e\u008f\7\4\2\2\u008f\u0098\3\2\2\2\u0090\u0098\5\22\n\2\u0091"+
-		"\u0098\5 \21\2\u0092\u0098\7\23\2\2\u0093\u0098\7\37\2\2\u0094\u0098\7"+
-		"\36\2\2\u0095\u0098\7\35\2\2\u0096\u0098\7-\2\2\u0097\u008b\3\2\2\2\u0097"+
-		"\u0090\3\2\2\2\u0097\u0091\3\2\2\2\u0097\u0092\3\2\2\2\u0097\u0093\3\2"+
-		"\2\2\u0097\u0094\3\2\2\2\u0097\u0095\3\2\2\2\u0097\u0096\3\2\2\2\u0098"+
-		"\u00a1\3\2\2\2\u0099\u009a\f\f\2\2\u009a\u009b\t\3\2\2\u009b\u00a0\5\26"+
-		"\f\r\u009c\u009d\f\13\2\2\u009d\u009e\t\4\2\2\u009e\u00a0\5\26\f\f\u009f"+
-		"\u0099\3\2\2\2\u009f\u009c\3\2\2\2\u00a0\u00a3\3\2\2\2\u00a1\u009f\3\2"+
-		"\2\2\u00a1\u00a2\3\2\2\2\u00a2\27\3\2\2\2\u00a3\u00a1\3\2\2\2\u00a4\u00a5"+
-		"\7\25\2\2\u00a5\u00a6\7\3\2\2\u00a6\u00a7\5\b\5\2\u00a7\u00a8\7\4\2\2"+
-		"\u00a8\u00a9\7\5\2\2\u00a9\u00aa\5\16\b\2\u00aa\u00b5\7\6\2\2\u00ab\u00ac"+
-		"\7\27\2\2\u00ac\u00ad\7\3\2\2\u00ad\u00ae\5\b\5\2\u00ae\u00af\7\4\2\2"+
-		"\u00af\u00b0\7\5\2\2\u00b0\u00b1\5\16\b\2\u00b1\u00b2\7\6\2\2\u00b2\u00b4"+
-		"\3\2\2\2\u00b3\u00ab\3\2\2\2\u00b4\u00b7\3\2\2\2\u00b5\u00b3\3\2\2\2\u00b5"+
-		"\u00b6\3\2\2\2\u00b6\u00bd\3\2\2\2\u00b7\u00b5\3\2\2\2\u00b8\u00b9\7\26"+
-		"\2\2\u00b9\u00ba\7\5\2\2\u00ba\u00bb\5\16\b\2\u00bb\u00bc\7\6\2\2\u00bc"+
-		"\u00be\3\2\2\2\u00bd\u00b8\3\2\2\2\u00bd\u00be\3\2\2\2\u00be\31\3\2\2"+
-		"\2\u00bf\u00c0\7\31\2\2\u00c0\u00c1\7\3\2\2\u00c1\u00c2\5(\25\2\u00c2"+
-		"\u00c3\7\4\2\2\u00c3\33\3\2\2\2\u00c4\u00c5\7\24\2\2\u00c5\u00c6\5\b\5"+
-		"\2\u00c6\u00c7\7\30\2\2\u00c7\u00c8\7\5\2\2\u00c8\u00c9\5\16\b\2\u00c9"+
-		"\u00ca\7\6\2\2\u00ca\u00d3\3\2\2\2\u00cb\u00cc\7\30\2\2\u00cc\u00cd\7"+
-		"\5\2\2\u00cd\u00ce\5\16\b\2\u00ce\u00cf\7\6\2\2\u00cf\u00d0\7\24\2\2\u00d0"+
-		"\u00d1\5\b\5\2\u00d1\u00d3\3\2\2\2\u00d2\u00c4\3\2\2\2\u00d2\u00cb\3\2"+
-		"\2\2\u00d3\35\3\2\2\2\u00d4\u00d5\5&\24\2\u00d5\u00d6\7-\2\2\u00d6\u00d7"+
-		"\7+\2\2\u00d7\u00d8\5\26\f\2\u00d8\37\3\2\2\2\u00d9\u00da\7-\2\2\u00da"+
-		"\u00db\7\b\2\2\u00db\u00dc\7\34\2\2\u00dc!\3\2\2\2\u00dd\u00de\7-\2\2"+
-		"\u00de\u00df\7+\2\2\u00df\u00e0\5\26\f\2\u00e0#\3\2\2\2\u00e1\u00e2\t"+
-		"\5\2\2\u00e2%\3\2\2\2\u00e3\u00e4\t\6\2\2\u00e4\'\3\2\2\2\u00e5\u00e6"+
-		"\t\7\2\2\u00e6)\3\2\2\2\25-\66;AEQ\\cnxz\177\u0088\u0097\u009f\u00a1\u00b5"+
-		"\u00bd\u00d2";
+		"\4\23\t\23\4\24\t\24\3\2\7\2*\n\2\f\2\16\2-\13\2\3\2\3\2\3\3\3\3\3\3\3"+
+		"\3\5\3\65\n\3\3\3\3\3\3\3\5\3:\n\3\3\3\3\3\6\3>\n\3\r\3\16\3?\3\3\3\3"+
+		"\5\3D\n\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\7\4N\n\4\f\4\16\4Q\13\4\3\5"+
+		"\3\5\3\6\3\6\3\6\3\6\3\6\3\6\5\6[\n\6\3\6\3\6\3\6\7\6`\n\6\f\6\16\6c\13"+
+		"\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7m\n\7\3\b\3\b\3\b\3\b\3\b\3\b\6"+
+		"\bu\n\b\r\b\16\bv\3\t\3\t\3\t\5\t|\n\t\3\t\3\t\3\n\3\n\3\n\7\n\u0083\n"+
+		"\n\f\n\16\n\u0086\13\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3"+
+		"\13\3\13\3\13\5\13\u0094\n\13\3\13\3\13\3\13\3\13\3\13\3\13\7\13\u009c"+
+		"\n\13\f\13\16\13\u009f\13\13\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3"+
+		"\f\3\f\3\f\3\f\3\f\7\f\u00b0\n\f\f\f\16\f\u00b3\13\f\3\f\3\f\3\f\3\f\3"+
+		"\f\5\f\u00ba\n\f\3\r\3\r\3\r\3\r\3\r\3\16\3\16\3\16\3\16\3\16\3\16\3\16"+
+		"\3\16\3\16\3\16\3\16\3\16\3\16\3\16\5\16\u00cf\n\16\3\17\3\17\3\17\3\17"+
+		"\3\17\3\20\3\20\3\20\3\20\3\21\3\21\3\21\3\21\3\22\3\22\3\23\3\23\3\24"+
+		"\3\24\3\24\2\4\n\24\25\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&\2\b"+
+		"\3\2 !\3\2\f\16\3\2\n\13\4\2\"&((\3\2\17\23\4\2\35\37--\2\u00ed\2+\3\2"+
+		"\2\2\4\60\3\2\2\2\6G\3\2\2\2\bR\3\2\2\2\nZ\3\2\2\2\fl\3\2\2\2\16t\3\2"+
+		"\2\2\20x\3\2\2\2\22\177\3\2\2\2\24\u0093\3\2\2\2\26\u00a0\3\2\2\2\30\u00bb"+
+		"\3\2\2\2\32\u00ce\3\2\2\2\34\u00d0\3\2\2\2\36\u00d5\3\2\2\2 \u00d9\3\2"+
+		"\2\2\"\u00dd\3\2\2\2$\u00df\3\2\2\2&\u00e1\3\2\2\2(*\5\4\3\2)(\3\2\2\2"+
+		"*-\3\2\2\2+)\3\2\2\2+,\3\2\2\2,.\3\2\2\2-+\3\2\2\2./\7\2\2\3/\3\3\2\2"+
+		"\2\60\61\7\33\2\2\61\62\7-\2\2\62\64\7\3\2\2\63\65\5\6\4\2\64\63\3\2\2"+
+		"\2\64\65\3\2\2\2\65\66\3\2\2\2\669\7\4\2\2\678\7\32\2\28:\5$\23\29\67"+
+		"\3\2\2\29:\3\2\2\2:;\3\2\2\2;=\7\5\2\2<>\5\16\b\2=<\3\2\2\2>?\3\2\2\2"+
+		"?=\3\2\2\2?@\3\2\2\2@C\3\2\2\2AB\7\32\2\2BD\5&\24\2CA\3\2\2\2CD\3\2\2"+
+		"\2DE\3\2\2\2EF\7\6\2\2F\5\3\2\2\2GH\5$\23\2HO\7-\2\2IJ\7\t\2\2JK\5$\23"+
+		"\2KL\7-\2\2LN\3\2\2\2MI\3\2\2\2NQ\3\2\2\2OM\3\2\2\2OP\3\2\2\2P\7\3\2\2"+
+		"\2QO\3\2\2\2RS\5\n\6\2S\t\3\2\2\2TU\b\6\1\2U[\5\f\7\2VW\7\3\2\2WX\5\n"+
+		"\6\2XY\7\4\2\2Y[\3\2\2\2ZT\3\2\2\2ZV\3\2\2\2[a\3\2\2\2\\]\f\5\2\2]^\t"+
+		"\2\2\2^`\5\n\6\6_\\\3\2\2\2`c\3\2\2\2a_\3\2\2\2ab\3\2\2\2b\13\3\2\2\2"+
+		"ca\3\2\2\2de\5\24\13\2ef\5\"\22\2fg\5\24\13\2gm\3\2\2\2hi\7\3\2\2ij\5"+
+		"\f\7\2jk\7\4\2\2km\3\2\2\2ld\3\2\2\2lh\3\2\2\2m\r\3\2\2\2nu\5\26\f\2o"+
+		"u\5\32\16\2pu\5\20\t\2qu\5\30\r\2ru\5 \21\2su\5\34\17\2tn\3\2\2\2to\3"+
+		"\2\2\2tp\3\2\2\2tq\3\2\2\2tr\3\2\2\2ts\3\2\2\2uv\3\2\2\2vt\3\2\2\2vw\3"+
+		"\2\2\2w\17\3\2\2\2xy\7-\2\2y{\7\3\2\2z|\5\22\n\2{z\3\2\2\2{|\3\2\2\2|"+
+		"}\3\2\2\2}~\7\4\2\2~\21\3\2\2\2\177\u0084\5&\24\2\u0080\u0081\7\t\2\2"+
+		"\u0081\u0083\5&\24\2\u0082\u0080\3\2\2\2\u0083\u0086\3\2\2\2\u0084\u0082"+
+		"\3\2\2\2\u0084\u0085\3\2\2\2\u0085\23\3\2\2\2\u0086\u0084\3\2\2\2\u0087"+
+		"\u0088\b\13\1\2\u0088\u0089\7\3\2\2\u0089\u008a\5\24\13\2\u008a\u008b"+
+		"\7\4\2\2\u008b\u0094\3\2\2\2\u008c\u0094\5\20\t\2\u008d\u0094\5\36\20"+
+		"\2\u008e\u0094\7\23\2\2\u008f\u0094\7\37\2\2\u0090\u0094\7\36\2\2\u0091"+
+		"\u0094\7\35\2\2\u0092\u0094\7-\2\2\u0093\u0087\3\2\2\2\u0093\u008c\3\2"+
+		"\2\2\u0093\u008d\3\2\2\2\u0093\u008e\3\2\2\2\u0093\u008f\3\2\2\2\u0093"+
+		"\u0090\3\2\2\2\u0093\u0091\3\2\2\2\u0093\u0092\3\2\2\2\u0094\u009d\3\2"+
+		"\2\2\u0095\u0096\f\f\2\2\u0096\u0097\t\3\2\2\u0097\u009c\5\24\13\r\u0098"+
+		"\u0099\f\13\2\2\u0099\u009a\t\4\2\2\u009a\u009c\5\24\13\f\u009b\u0095"+
+		"\3\2\2\2\u009b\u0098\3\2\2\2\u009c\u009f\3\2\2\2\u009d\u009b\3\2\2\2\u009d"+
+		"\u009e\3\2\2\2\u009e\25\3\2\2\2\u009f\u009d\3\2\2\2\u00a0\u00a1\7\25\2"+
+		"\2\u00a1\u00a2\7\3\2\2\u00a2\u00a3\5\b\5\2\u00a3\u00a4\7\4\2\2\u00a4\u00a5"+
+		"\7\5\2\2\u00a5\u00a6\5\16\b\2\u00a6\u00b1\7\6\2\2\u00a7\u00a8\7\27\2\2"+
+		"\u00a8\u00a9\7\3\2\2\u00a9\u00aa\5\b\5\2\u00aa\u00ab\7\4\2\2\u00ab\u00ac"+
+		"\7\5\2\2\u00ac\u00ad\5\16\b\2\u00ad\u00ae\7\6\2\2\u00ae\u00b0\3\2\2\2"+
+		"\u00af\u00a7\3\2\2\2\u00b0\u00b3\3\2\2\2\u00b1\u00af\3\2\2\2\u00b1\u00b2"+
+		"\3\2\2\2\u00b2\u00b9\3\2\2\2\u00b3\u00b1\3\2\2\2\u00b4\u00b5\7\26\2\2"+
+		"\u00b5\u00b6\7\5\2\2\u00b6\u00b7\5\16\b\2\u00b7\u00b8\7\6\2\2\u00b8\u00ba"+
+		"\3\2\2\2\u00b9\u00b4\3\2\2\2\u00b9\u00ba\3\2\2\2\u00ba\27\3\2\2\2\u00bb"+
+		"\u00bc\7\31\2\2\u00bc\u00bd\7\3\2\2\u00bd\u00be\5&\24\2\u00be\u00bf\7"+
+		"\4\2\2\u00bf\31\3\2\2\2\u00c0\u00c1\7\24\2\2\u00c1\u00c2\5\b\5\2\u00c2"+
+		"\u00c3\7\30\2\2\u00c3\u00c4\7\5\2\2\u00c4\u00c5\5\16\b\2\u00c5\u00c6\7"+
+		"\6\2\2\u00c6\u00cf\3\2\2\2\u00c7\u00c8\7\30\2\2\u00c8\u00c9\7\5\2\2\u00c9"+
+		"\u00ca\5\16\b\2\u00ca\u00cb\7\6\2\2\u00cb\u00cc\7\24\2\2\u00cc\u00cd\5"+
+		"\b\5\2\u00cd\u00cf\3\2\2\2\u00ce\u00c0\3\2\2\2\u00ce\u00c7\3\2\2\2\u00cf"+
+		"\33\3\2\2\2\u00d0\u00d1\5$\23\2\u00d1\u00d2\7-\2\2\u00d2\u00d3\7+\2\2"+
+		"\u00d3\u00d4\5\24\13\2\u00d4\35\3\2\2\2\u00d5\u00d6\7-\2\2\u00d6\u00d7"+
+		"\7\b\2\2\u00d7\u00d8\7\34\2\2\u00d8\37\3\2\2\2\u00d9\u00da\7-\2\2\u00da"+
+		"\u00db\7+\2\2\u00db\u00dc\5\24\13\2\u00dc!\3\2\2\2\u00dd\u00de\t\5\2\2"+
+		"\u00de#\3\2\2\2\u00df\u00e0\t\6\2\2\u00e0%\3\2\2\2\u00e1\u00e2\t\7\2\2"+
+		"\u00e2\'\3\2\2\2\25+\649?COZaltv{\u0084\u0093\u009b\u009d\u00b1\u00b9"+
+		"\u00ce";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

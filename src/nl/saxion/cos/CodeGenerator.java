@@ -213,7 +213,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     }
 
     @Override
-    public List<String> visitStatement_body(RoCParser.Statement_bodyContext ctx)
+    public List<String> visitBlock(RoCParser.BlockContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
         for (ParseTree child:ctx.children)

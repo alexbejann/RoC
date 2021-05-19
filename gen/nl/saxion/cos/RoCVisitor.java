@@ -76,12 +76,6 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBlock(RoCParser.BlockContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link RoCParser#statement_body}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStatement_body(RoCParser.Statement_bodyContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code MethodCall}
 	 * labeled alternative in {@link RoCParser#functionCall}.
 	 * @param ctx the parse tree

@@ -118,16 +118,6 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitBlock(RoCParser.BlockContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link RoCParser#statement_body}.
-	 * @param ctx the parse tree
-	 */
-	void enterStatement_body(RoCParser.Statement_bodyContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RoCParser#statement_body}.
-	 * @param ctx the parse tree
-	 */
-	void exitStatement_body(RoCParser.Statement_bodyContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code MethodCall}
 	 * labeled alternative in {@link RoCParser#functionCall}.
 	 * @param ctx the parse tree

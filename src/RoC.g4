@@ -26,17 +26,13 @@ comparison_expr
                 | PAREN_OPEN comparison_expr PAREN_CLOSE                    # ComparisonExpressionParens
                 ;
 block
-      : statement_body
+      : (decisionStatement
+      | iterationStatement
+      | functionCall
+      | printStatement
+      | varExpression
+      | variable_declaration)+
       ;
-
-statement_body
-                : (decisionStatement
-                | iterationStatement
-                | functionCall
-                | printStatement
-                | varExpression
-                | variable_declaration)+
-                ;
 
 functionCall
             : IDENTIFIER PAREN_OPEN functionArgumentList? PAREN_CLOSE #MethodCall
