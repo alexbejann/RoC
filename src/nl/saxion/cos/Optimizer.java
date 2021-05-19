@@ -30,6 +30,7 @@ public class Optimizer extends RoCBaseVisitor<Object>
                     return (Integer) left - (Integer) right;
             }
         }
+        //This line should never be reached
         return null;
     }
 
@@ -56,6 +57,19 @@ public class Optimizer extends RoCBaseVisitor<Object>
                     return (Integer) left % (Integer) right;
             }
         }
+        //This line should never be reached
         return null;
+    }
+
+    /**
+     * This method is needed to avoid returning null from a parenthesis operation,
+     * because it should visit the node
+     * @param ctx RoCParser.PARENGRPContext
+     * @return result of the expression
+     */
+    @Override
+    public Object visitPARENGRP(RoCParser.PARENGRPContext ctx)
+    {
+        return visit(ctx.arithmetic_expr());
     }
 }
