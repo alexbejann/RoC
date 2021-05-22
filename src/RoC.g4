@@ -4,7 +4,7 @@ program: method_declaration* EOF;
 
 method_declaration
                   : Method methodName=IDENTIFIER PAREN_OPEN argument_list? PAREN_CLOSE (Return returnType=type)?
-                        CURLY_OPEN body=block+ (Return returnValue=type_value)? CURLY_CLOSE
+                        CURLY_OPEN body=block* (Return returnValue=arithmetic_expr)? CURLY_CLOSE
                   ;
 
 argument_list
@@ -35,7 +35,7 @@ functionCall
             ;
 
 functionArgumentList
-                    :(type_value(COMMA type_value)*) #MethodCallArgumentList
+                    :(arithmetic_expr(COMMA arithmetic_expr)*) #MethodCallArgumentList
                     ;
 
 arithmetic_expr
@@ -89,13 +89,6 @@ type
     | AUTO_TYPE
     | SCANNER
     ;
-
-type_value
-        : BOOLEAN
-        | STRING
-        | NUMBER
-        | IDENTIFIER
-        ;
 
 // Single character
 PAREN_OPEN :'(';

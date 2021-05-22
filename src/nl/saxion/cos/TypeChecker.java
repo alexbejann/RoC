@@ -67,7 +67,8 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         scope.put(ctx, variableTable.lookUp(name));
 
         variableTable = variableTable.openMethodScope();
-        visitChildren(ctx.body);
+        if (ctx.body != null)
+            visitChildren(ctx.body);
         if (ctx.returnValue != null)
         {
             DataType type = visit(ctx.returnValue);
@@ -307,18 +308,21 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitNUMBER(RoCParser.NUMBERContext ctx)
     {
+        dataTypes.put(ctx, DataType.NUMAR);//Needed for argument list context
         return DataType.NUMAR;
     }
 
     @Override
     public DataType visitBOOLEAN(RoCParser.BOOLEANContext ctx)
     {
+        dataTypes.put(ctx, DataType.BOOL);//Needed for argument list context
         return DataType.BOOL;
     }
 
     @Override
     public DataType visitSTRING(RoCParser.STRINGContext ctx)
     {
+        dataTypes.put(ctx, DataType.SDC);//Needed for argument list context
         return DataType.SDC;
     }
 
@@ -326,40 +330,6 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     public DataType visitSCANNER(RoCParser.SCANNERContext ctx)
     {
         return DataType.SCANNER;
-    }
-
-    @Override
-    public DataType visitType_value(RoCParser.Type_valueContext ctx)
-    {
-        if (ctx.STRING() != null)
-        {
-            dataTypes.put(ctx,DataType.SDC);
-            return DataType.SDC;
-        }
-        else if (ctx.BOOLEAN() != null)
-        {
-            dataTypes.put(ctx,DataType.BOOL);
-            return DataType.BOOL;
-        }
-        else if (ctx.NUMBER() != null)
-        {
-            dataTypes.put(ctx,DataType.NUMAR);
-            return DataType.NUMAR;
-        }
-        else if (ctx.IDENTIFIER() != null)
-        {
-            String name = ctx.IDENTIFIER().getText();
-            Variable var = variableTable.lookUp(name);
-            if (var == null)
-                throw new CompilerException("Variable "+name+" not defined");
-
-            dataTypes.put(ctx, variableTable.lookUp(name).getType());
-            //todo check if this can be removed
-            scope.put(ctx, var);
-            return var.getType();
-        }
-
-        throw new CompilerException("Unrecognized data type");
     }
 
     @Override

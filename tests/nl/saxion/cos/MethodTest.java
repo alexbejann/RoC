@@ -461,4 +461,91 @@ public class MethodTest extends TestBase
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
+
+
+    /**
+     * Test method call
+     */
+    @Test
+    public void expressionCallMethod() throws IOException, AssembleException
+    {
+        String codeString = "functia foo2(numar a) returneaza numar" +
+                "{\n" +
+                "   numar b<-2+a" +
+                "   returneaza b" +
+                "}\n" +
+                "functia main()" +
+                "{\n" +
+                "   automat a<-foo2(2*3+1)\n" +
+                "   printeaza(a)\n" +
+                "}";
+
+        Compiler c = new Compiler();
+        JasminBytecode code = c.compileString(codeString,"Test");
+        Assertions.assertNotNull(code);
+
+        List<String> output = runCode(code);
+
+        assertArrayEquals(new String[] {
+                "9"
+        }, output.toArray());
+
+    }
+
+    /**
+     * Test method call
+     */
+    @Test
+    public void expressionCallWithMultipleArgumentsMethod() throws IOException, AssembleException
+    {
+        String codeString = "functia foo2(numar a, sdc s, bool b) returneaza numar" +
+                "{\n" +
+                "   numar b<-2+a" +
+                "   returneaza b" +
+                "}\n" +
+                "functia main()" +
+                "{\n" +
+                "   automat a<-foo2(2*3, \"Alex\", FALS)\n" +
+                "   printeaza(a)\n" +
+                "}";
+
+        Compiler c = new Compiler();
+        JasminBytecode code = c.compileString(codeString,"Test");
+        Assertions.assertNotNull(code);
+
+        List<String> output = runCode(code);
+
+        assertArrayEquals(new String[] {
+                "8"
+        }, output.toArray());
+
+    }
+
+    /**
+     * Test method call
+     */
+    @Test
+    public void returnExpressionResultMethod() throws IOException, AssembleException
+    {
+        String codeString = "functia foo2(numar a, sdc s, bool b) returneaza numar" +
+                "{\n" +
+                "   returneaza 2+a" +
+                "}\n" +
+                "functia main()" +
+                "{\n" +
+                "   automat a<-foo2(2*3, \"Alex\", FALS)\n" +
+                "   printeaza(a)\n" +
+                "}";
+
+        Compiler c = new Compiler();
+        JasminBytecode code = c.compileString(codeString,"Test");
+        Assertions.assertNotNull(code);
+
+        List<String> output = runCode(code);
+
+        assertArrayEquals(new String[] {
+                "8"
+        }, output.toArray());
+
+    }
 }

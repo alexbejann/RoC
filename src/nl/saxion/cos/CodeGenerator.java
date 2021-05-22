@@ -98,7 +98,8 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             jasminCode.add(".limit stack 10");
             jasminCode.add(".limit locals 10");
         }
-        jasminCode.addAll(visit(ctx.body));
+        if (ctx.body != null)
+            jasminCode.addAll(visit(ctx.body));
         //check if there is a return type
         if (returnDataType != null)
         {
@@ -205,7 +206,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     {
         List<String> jasminCode = new ArrayList<>();
         //todo implement the arguments for this
-        for (ParseTree c: ctx.type_value())
+        for (ParseTree c: ctx.arithmetic_expr())
         {
             jasminCode.addAll(visit(c));
         }
@@ -640,55 +641,6 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         List<String> jasminCode = new ArrayList<>(visit(ctx.arithmetic_expr()));
         jasminCode.add("istore "+var.getIndex());
 
-        return jasminCode;
-    }
-
-    /**
-     * Adds the variable from the stack and print parameter
-     * @param ctx Type_valueContext
-     * @return jasminCode with proper variable loaded from the stack and PrintStream parameter
-     */
-    @Override
-    public List<String> visitType_value(RoCParser.Type_valueContext ctx)
-    {
-        List<String> jasminCode = new ArrayList<>();
-
-        if (ctx.IDENTIFIER() != null)
-        {
-            //todo check this if can be removed or if it's a good practice
-            Variable var = scope.get(ctx);
-            switch (var.getType())
-            {
-                case NUMAR:
-                case BOOL:
-                    jasminCode.add("iload "+var.getIndex());
-                    break;
-                case SDC:
-                    jasminCode.add("aload "+var.getIndex());
-                    break;
-            }
-            return jasminCode;
-        }
-
-        switch (dataTypes.get(ctx))
-        {
-            case SDC:
-                jasminCode.add("ldc " + ctx.STRING().getText());
-                break;
-            case BOOL:
-                if (ctx.BOOLEAN().getText().equals("ADEVARAT"))
-                {
-                    jasminCode.add("ldc 1");
-                }
-                else
-                {
-                    jasminCode.add("ldc 0");
-                }
-                break;
-            case NUMAR:
-                jasminCode.add("ldc " + ctx.NUMBER().getText());
-                break;
-        }
         return jasminCode;
     }
 
