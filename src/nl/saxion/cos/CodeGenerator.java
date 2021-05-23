@@ -587,7 +587,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         Variable var = scope.get(ctx);
         if (var.getType().equals(DataType.SDC))
             isString = true;
-        jasminCode.addAll(visit(ctx.arithmetic_expr()));
+        jasminCode.addAll(visit(ctx.rhs));
         switch (dataTypes.get(ctx))
         {
             case NUMAR:

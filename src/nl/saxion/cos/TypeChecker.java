@@ -217,7 +217,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     public DataType visitVariable_declaration(RoCParser.Variable_declarationContext ctx)
     {
         //visit the rhs and the lhs and
-        DataType type = visit(ctx.arithmetic_expr());
+        DataType type = visit(ctx.rhs);
         String name = ctx.lhs.getText();
         if (variableTable.lookUpLocal(name) != null)
             throw new CompilerException("Variable "+name+" already defined!");

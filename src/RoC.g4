@@ -63,7 +63,7 @@ iterationStatement
                   | Execute CURLY_OPEN block CURLY_CLOSE While conditions #DoWhileLoop
                   ;
 
-variable_declaration: type lhs=IDENTIFIER EQUALS_TO arithmetic_expr;
+variable_declaration: type lhs=IDENTIFIER EQUALS_TO rhs=arithmetic_expr;
 
 scannerCall
             : IDENTIFIER DOT SCANNERCALL
