@@ -243,12 +243,6 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
                 System.out.println("bool " + ctx.getText());
                 variableTable.add(name, DataType.BOOL);
                 break;
-            case "scanner":
-                if (type != DataType.SCANNER)
-                    throw new CompilerException("Type mismatch expected scanner!");
-
-                variableTable.add(name, DataType.SCANNER);
-                break;
             case "automat":
                 if (type == DataType.SDC)
                 {
@@ -327,12 +321,6 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     }
 
     @Override
-    public DataType visitSCANNER(RoCParser.SCANNERContext ctx)
-    {
-        return DataType.SCANNER;
-    }
-
-    @Override
     public DataType visitIDENTIFIER(RoCParser.IDENTIFIERContext ctx)
     {
         String name = ctx.IDENTIFIER().getText();
@@ -348,12 +336,6 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitScannerCall(RoCParser.ScannerCallContext ctx)
     {
-        String name = ctx.IDENTIFIER().getText();
-        Variable var = variableTable.lookUpLocal(ctx.IDENTIFIER().getText());
-        if (var == null)
-            throw new CompilerException("Variable "+name+" not defined");
-
-        scope.put(ctx, var);
-        return var.getType();
+        return DataType.SCANNER;
     }
 }

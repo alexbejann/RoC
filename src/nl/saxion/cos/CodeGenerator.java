@@ -529,22 +529,6 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     }
 
     /**
-     * Loads the proper variable from the stack
-     * @param ctx SCANNERContext
-     * @return jasminCode with proper variable load from the stack
-     */
-    @Override
-    public List<String> visitSCANNER(RoCParser.SCANNERContext ctx)
-    {
-        List<String> jasminCode = new ArrayList<>();
-        jasminCode.add("new java/util/Scanner");
-        jasminCode.add("dup");
-        jasminCode.add("getstatic java/lang/System/in Ljava/io/InputStream;");
-        jasminCode.add("invokenonvirtual java/util/Scanner/<init>(Ljava/io/InputStream;)V");
-        return jasminCode;
-    }
-
-    /**
      * Visit printStatement
      * @param ctx of printStatement
      */
@@ -594,7 +578,6 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             case BOOL:
                 jasminCode.add("istore " + var.getIndex());
                 break;
-            case SCANNER:
             case SDC:
                 jasminCode.add("astore " + var.getIndex());
                 break;
@@ -611,14 +594,24 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitScannerCall(RoCParser.ScannerCallContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
-        Variable variable = scope.get(ctx);
-        jasminCode.add("aload "+variable.getIndex());
+        // This represent the Scanner object
+        // in normal java code this would look like this
+        // (new Scanner(System.in)).nextInt() for Integer
+        // or
+        //(new Scanner(System.in)).nextLine() for String
+        jasminCode.add("new java/util/Scanner");
+        jasminCode.add("dup");
+        jasminCode.add("getstatic java/lang/System/in Ljava/io/InputStream;");
+        jasminCode.add("invokenonvirtual java/util/Scanner/<init>(Ljava/io/InputStream;)V");
+        // end Scanner Object instantiation
         if (isString)
         {
+            // (new Scanner(System.in)).nextLine()
             jasminCode.add("invokevirtual java/util/Scanner/nextLine()Ljava/lang/String;");
         }
         else
         {
+            //(new Scanner(System.in)).nextInt();
             jasminCode.add("invokevirtual java/util/Scanner/nextInt()I");
         }
         isString = false;

@@ -43,8 +43,7 @@ arithmetic_expr
               | left=arithmetic_expr op=(MULTIPLY | DIVIDE | MODULO) right=arithmetic_expr  # MULDIVMODOPGRP
               | left=arithmetic_expr op=(PLUS | MINUS)               right=arithmetic_expr  # ADDSUBGRP
               | functionCall                                                                # MethodCallExpr
-              | scannerCall                                                                 # CallSCANNER
-              | SCANNER                                                                     # SCANNER
+              | SCANNERCALL                                                                 # scannerCall
               | NUMBER                                                                      # NUMBER
               | STRING                                                                      # STRING
               | BOOLEAN                                                                     # BOOLEAN
@@ -64,10 +63,6 @@ iterationStatement
                   ;
 
 variable_declaration: type lhs=IDENTIFIER EQUALS_TO rhs=arithmetic_expr;
-
-scannerCall
-            : IDENTIFIER DOT SCANNERCALL
-            ;
 
 varExpression
             : IDENTIFIER EQUALS_TO arithmetic_expr # AssignmentExpression
