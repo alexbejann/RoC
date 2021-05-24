@@ -89,27 +89,25 @@ public class ExpressionsTest extends TestBase
     /*
      * Expected same output to be the same
      */
-//    @Test
-//    public void expressionBooleanTest() throws IOException, AssembleException
-//    {
-//        String codeString = "functia main()\n" +
-//                "{\n" +
-//                " numar b<-2" +
-//                " bool a<- b+2 > 1" +
-//                " printeaza(a)" +
-//                "}";
-//
-//
-//        Compiler c = new Compiler();
-//        JasminBytecode code = c.compileString(codeString,"expressionBooleanTest");
-//        Assertions.assertNotNull(code);
-//
-//        List<String> output = runCode(code);
-//
-//        assertArrayEquals(new String[] {
-//                "true"
-//        }, output.toArray());
-//    }
+    @Test
+    public void expressionBooleanTest() throws IOException, AssembleException
+    {
+        String codeString = "functia main()\n" +
+                "{\n" +
+                " bool a<- 1 > 2 || 4 < 5" +
+                " printeaza(a)" +
+                "}";
+
+        Compiler c = new Compiler();
+        JasminBytecode code = c.compileString(codeString,"expressionBooleanTest");
+        Assertions.assertNotNull(code);
+
+        List<String> output = runCode(code);
+
+        assertArrayEquals(new String[] {
+                "true"
+        }, output.toArray());
+    }
 
 
 }

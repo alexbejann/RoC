@@ -19,8 +19,8 @@ expr
     : PAREN_OPEN expr PAREN_CLOSE                                               # PARENGRP
     | left=expr op=(MULTIPLY | DIVIDE | MODULO) right=expr                      # MULDIVMODOPGRP
     | left=expr op=(PLUS | MINUS)               right=expr                      # ADDSUBGRP
-    | left=expr comparator right=expr                                           # ComparisonExpressionWithOperator
-    | left=expr (AND | OR) right=expr                                           # LogicalExpressionAndOr
+    | left=expr op=comparator right=expr                                        # ComparisonExpressionWithOperator
+    | left=expr op=(AND | OR) right=expr                                        # LogicalExpressionAndOr
     | functionCall                                                              # MethodCallExpr
     | SCANNERCALL                                                               # scannerCall
     | NUMBER                                                                    # NUMBER

@@ -235,8 +235,11 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
                 variableTable.add(name, DataType.SDC);
                 break;
             case "bool":
-                if (type != DataType.BOOL)
-                    throw new CompilerException("Type mismatch expected bool!");
+                if (!(ctx.rhs instanceof RoCParser.ComparisonExpressionWithOperatorContext) && !(ctx.rhs instanceof RoCParser.LogicalExpressionAndOrContext))
+                {
+                    if (type != DataType.BOOL )
+                        throw new CompilerException("Type mismatch expected bool!");
+                }
 
                 System.out.println("bool " + ctx.getText());
                 variableTable.add(name, DataType.BOOL);

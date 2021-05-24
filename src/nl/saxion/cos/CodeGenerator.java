@@ -244,6 +244,16 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
+        // This optimizer should handle cases like this: 3 > 2 or 100+2 > 12*2
+        // where constants are involved
+        Optimizer optimizer = new Optimizer();
+        Object calc = optimizer.visitComparisonExpressionWithOperator(ctx);
+        if (calc != null)
+        {
+            jasminCode.add("ldc "+calc);
+            return jasminCode;
+        }
+        //end optimizer
         jasminCode.addAll(visit(ctx.left));
         jasminCode.addAll(visit(ctx.right));
         if (dataTypes.get(ctx) != null)
@@ -272,6 +282,13 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
+        Optimizer optimizer = new Optimizer();
+        Object calc = optimizer.visitLogicalExpressionAndOr(ctx);
+        if (calc != null)
+        {
+            jasminCode.add("ldc "+calc);
+            return jasminCode;
+        }
         String tempLabel = jumpLabel;
         boolean isLogicalOrTemp = ctx.OR() != null;
         isLogicalOR = isLogicalOrTemp;
