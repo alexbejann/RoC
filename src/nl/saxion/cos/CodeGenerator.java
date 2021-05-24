@@ -206,7 +206,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     {
         List<String> jasminCode = new ArrayList<>();
         //todo implement the arguments for this
-        for (ParseTree c: ctx.arithmetic_expr())
+        for (ParseTree c: ctx.expr())
         {
             jasminCode.addAll(visit(c));
         }
@@ -230,13 +230,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         //generated random label
         jumpLabel = "L"+ (labelCounter++);
         endIfLabel = "endif";
-        return new ArrayList<>(visit(ctx.logical_expr()));
-    }
-
-    @Override
-    public List<String> visitLogicalExpressionInParen(RoCParser.LogicalExpressionInParenContext ctx)
-    {
-        return new ArrayList<>(visit(ctx.logical_expr()));
+        return new ArrayList<>(visit(ctx.expr()));
     }
 
     /**
@@ -427,7 +421,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     @Override
     public List<String> visitPARENGRP(RoCParser.PARENGRPContext ctx)
     {
-        return visit(ctx.arithmetic_expr());
+        return visit(ctx.expr());
     }
 
     /**
@@ -539,7 +533,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
 
         jasminCode.add("getstatic java/lang/System/out Ljava/io/PrintStream;");
 
-        jasminCode.addAll(visit(ctx.arithmetic_expr()));
+        jasminCode.addAll(visit(ctx.expr()));
 
         switch (dataTypes.get(ctx))
         {
@@ -631,7 +625,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     {
         Variable var = scope.get(ctx);
 
-        List<String> jasminCode = new ArrayList<>(visit(ctx.arithmetic_expr()));
+        List<String> jasminCode = new ArrayList<>(visit(ctx.expr()));
         jasminCode.add("istore "+var.getIndex());
 
         return jasminCode;

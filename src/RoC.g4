@@ -4,7 +4,7 @@ program: method_declaration* EOF;
 
 method_declaration
                   : Method methodName=IDENTIFIER PAREN_OPEN argument_list? PAREN_CLOSE (Return returnType=type)?
-                        CURLY_OPEN body=block* (Return returnValue=arithmetic_expr)? CURLY_CLOSE
+                        CURLY_OPEN body=block* (Return returnValue=expr)? CURLY_CLOSE
                   ;
 
 argument_list
@@ -12,14 +12,22 @@ argument_list
             ;
 
 conditions
-          : logical_expr
+          : expr
           ;
 
-logical_expr
-            : PAREN_OPEN logical_expr PAREN_CLOSE                   # LogicalExpressionInParen
-            | left=logical_expr (AND | OR) right=logical_expr       # LogicalExpressionAndOr
-            | left=arithmetic_expr comparator right=arithmetic_expr # ComparisonExpressionWithOperator
-            ;
+expr
+    : PAREN_OPEN expr PAREN_CLOSE                                               # PARENGRP
+    | left=expr op=(MULTIPLY | DIVIDE | MODULO) right=expr                      # MULDIVMODOPGRP
+    | left=expr op=(PLUS | MINUS)               right=expr                      # ADDSUBGRP
+    | left=expr comparator right=expr                                           # ComparisonExpressionWithOperator
+    | left=expr (AND | OR) right=expr                                           # LogicalExpressionAndOr
+    | functionCall                                                              # MethodCallExpr
+    | SCANNERCALL                                                               # scannerCall
+    | NUMBER                                                                    # NUMBER
+    | STRING                                                                    # STRING
+    | BOOLEAN                                                                   # BOOLEAN
+    | IDENTIFIER                                                                # IDENTIFIER
+    ;
 
 block
       : (decisionStatement
@@ -35,37 +43,25 @@ functionCall
             ;
 
 functionArgumentList
-                    :(arithmetic_expr(COMMA arithmetic_expr)*) #MethodCallArgumentList
+                    :(expr(COMMA expr)*) #MethodCallArgumentList
                     ;
-
-arithmetic_expr
-              : PAREN_OPEN arithmetic_expr PAREN_CLOSE                                      # PARENGRP
-              | left=arithmetic_expr op=(MULTIPLY | DIVIDE | MODULO) right=arithmetic_expr  # MULDIVMODOPGRP
-              | left=arithmetic_expr op=(PLUS | MINUS)               right=arithmetic_expr  # ADDSUBGRP
-              | functionCall                                                                # MethodCallExpr
-              | SCANNERCALL                                                                 # scannerCall
-              | NUMBER                                                                      # NUMBER
-              | STRING                                                                      # STRING
-              | BOOLEAN                                                                     # BOOLEAN
-              | IDENTIFIER                                                                  # IDENTIFIER
-              ;
 
 decisionStatement: If PAREN_OPEN if_lhs=conditions PAREN_CLOSE CURLY_OPEN if_rhs=block CURLY_CLOSE
                  (Else_If PAREN_OPEN elseIF_lhs=conditions PAREN_CLOSE CURLY_OPEN elseIF_rhs=block CURLY_CLOSE )*
                  (Else CURLY_OPEN else_lhs=block CURLY_CLOSE)?
                  ;
 
-printStatement: Print PAREN_OPEN (arithmetic_expr) PAREN_CLOSE ;
+printStatement: Print PAREN_OPEN (expr) PAREN_CLOSE ;
 
 iterationStatement
                   : While conditions Execute CURLY_OPEN block CURLY_CLOSE #WhileLoop
                   | Execute CURLY_OPEN block CURLY_CLOSE While conditions #DoWhileLoop
                   ;
 
-variable_declaration: type lhs=IDENTIFIER EQUALS_TO rhs=arithmetic_expr;
+variable_declaration: type lhs=IDENTIFIER EQUALS_TO rhs=expr;
 
 varExpression
-            : IDENTIFIER EQUALS_TO arithmetic_expr # AssignmentExpression
+            : IDENTIFIER EQUALS_TO expr # AssignmentExpression
             ;
 
 comparator

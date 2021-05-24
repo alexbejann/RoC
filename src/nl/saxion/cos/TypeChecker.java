@@ -165,7 +165,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitConditions(RoCParser.ConditionsContext ctx)
     {
-        visit(ctx.logical_expr());
+        visit(ctx.expr());
         return null;
     }
 
@@ -183,27 +183,25 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         }
         visit(ctx.comparator());
 
-        return null;
+        return leftHS;
     }
 
     @Override
     public DataType visitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx)
     {
-        visitChildren(ctx);
-        return null;
+        return visitChildren(ctx);
     }
 
     @Override
     public DataType visitDecisionStatement(RoCParser.DecisionStatementContext ctx)
     {
-        visitChildren(ctx);
-        return null;
+        return visitChildren(ctx);
     }
 
     @Override
     public DataType visitAssignmentExpression(RoCParser.AssignmentExpressionContext ctx)
     {
-        visit(ctx.arithmetic_expr());
+        visit(ctx.expr());
         String name = ctx.IDENTIFIER().getText();
         Variable var = variableTable.lookUp(name);
         if (var == null)
@@ -266,7 +264,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitPrintStatement(RoCParser.PrintStatementContext ctx)
     {
-        DataType type = visit(ctx.arithmetic_expr());
+        DataType type = visit(ctx.expr());
         dataTypes.put(ctx, type);
         return type;
     }
@@ -296,7 +294,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitPARENGRP(RoCParser.PARENGRPContext ctx)
     {
-        return visit(ctx.arithmetic_expr());
+        return visit(ctx.expr());
     }
 
     @Override

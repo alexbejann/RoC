@@ -70,6 +70,6 @@ public class Optimizer extends RoCBaseVisitor<Object>
     @Override
     public Object visitPARENGRP(RoCParser.PARENGRPContext ctx)
     {
-        return visit(ctx.arithmetic_expr());
+        return visit(ctx.expr());
     }
 }
