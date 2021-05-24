@@ -1,0 +1,22 @@
+.bytecode 49.0
+.class public logicalOr
+.super java/lang/Object
+
+.method public static main([Ljava/lang/String;)V
+.limit stack 99
+.limit locals 99
+ldc 7
+istore 0
+iload 0
+ldc 10
+if_icmpgt L2
+iload 0
+ldc 7
+if_icmpne L3
+L2:
+getstatic java/lang/System/out Ljava/io/PrintStream;
+iload 0
+invokevirtual java/io/PrintStream/println(I)V
+L3:
+return
+.end method

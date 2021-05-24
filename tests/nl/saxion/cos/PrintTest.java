@@ -14,7 +14,7 @@ public class PrintTest extends TestBase
      * Test while loop
      */
     @Test
-    public void whileLoop() throws IOException, AssembleException
+    public void printExpressionLoop() throws IOException, AssembleException
     {
         String codeString = "functia main()\n" +
                 "{\n" +
