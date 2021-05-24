@@ -6,7 +6,7 @@
         <PerGrammarGenerationSettings>
           <option name="fileName" value="$PROJECT_DIR$/src/RoC.g4" />
           <option name="autoGen" value="true" />
-          <option name="outputDir" value="C:\Programe_si_chestii\Olanda\Saxion\Year 2\Compilers_OS\31\gen\" />
+          <option name="outputDir" value="C:\Programe_si_chestii\Olanda\Saxion\Year_2\Compilers_OS\retake\31\gen" />
           <option name="libDir" value="" />
           <option name="encoding" value="" />
           <option name="pkg" value="nl.saxion.cos" />

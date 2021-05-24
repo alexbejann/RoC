@@ -282,6 +282,8 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
+        // This optimizer is meant to handle easy operations without IDENTIFIERs
+        // such as 1+23 > 2 || 32 < 233 && 2+2 > 1
         Optimizer optimizer = new Optimizer();
         Object calc = optimizer.visitLogicalExpressionAndOr(ctx);
         if (calc != null)
@@ -289,6 +291,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             jasminCode.add("ldc "+calc);
             return jasminCode;
         }
+        // end optimizer
         String tempLabel = jumpLabel;
         boolean isLogicalOrTemp = ctx.OR() != null;
         isLogicalOR = isLogicalOrTemp;
