@@ -11,8 +11,7 @@ returneaza factorial
 
 functia main(){
 printeaza("Introdu un numar")
-scanner s<- scanner
-numar num <- s.urmatorul
+numar num <- urmatorul
 
 numar test<-factorial(num)
 

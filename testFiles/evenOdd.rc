@@ -1,9 +1,8 @@
 functia main(){
 
-scanner s <- scanner
 printeaza("Enter a number : ")
 
-numar num <- s.urmatorul
+numar num <- urmatorul
 
 daca(num % 2 = 0){
 printeaza("Your number is even")
