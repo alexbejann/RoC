@@ -6,7 +6,9 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CodeGenerator extends RoCBaseVisitor<List<String>>
 {
@@ -254,6 +256,14 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             return jasminCode;
         }
         //end optimizer
+
+        //generate label
+        if (ctx.parent instanceof RoCParser.Variable_declarationContext || jumpLabel == null)
+        {
+            jumpLabel = "L"+ (labelCounter++);
+        }
+
+        String localTempLabel = jumpLabel;
         jasminCode.addAll(visit(ctx.left));
         jasminCode.addAll(visit(ctx.right));
         if (dataTypes.get(ctx) != null)
@@ -269,6 +279,26 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         {
             jasminCode.addAll(visit(ctx.comparator()));
         }
+
+        // This handles the boolean expression
+        // e.g. bool a<- a*2 > 1
+        if (ctx.parent instanceof RoCParser.Variable_declarationContext)
+        {
+            // for true value
+            jasminCode.add("ldc 1");
+            // increase counter for goto label
+            jumpLabel = "L" +(labelCounter++);
+            //create the goto with the new label
+            String goToLabel = "goto " + jumpLabel;
+            jasminCode.add(goToLabel);
+            // use the local temporary label in case for a false value
+            jasminCode.add(localTempLabel+":");
+            // for false value
+            jasminCode.add("ldc 0");
+            // add the next label for storing the variable
+            jasminCode.add(jumpLabel+":");
+        }
+
         return jasminCode;
     }
 
@@ -303,6 +333,26 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         jasminCode.addAll(visit(ctx.right));
         if (isLogicalOrTemp)
             jasminCode.add(tempLabel+":");
+
+        // This handles the boolean expression
+        // e.g. bool a<- a*2 > 1 || c > 200, bool a<- a*2 > 1 && c > 200
+        if (ctx.parent instanceof RoCParser.Variable_declarationContext)
+        {
+            // this part is to store if the expression is true
+            jasminCode.add("ldc 1");
+            // get a temp copy of the current jump label for later usage
+            String localTempLabel = jumpLabel;
+            // increase the jump label
+            jumpLabel = "L" +(labelCounter++);
+            // create and append the goto label with the new jump label
+            String goToLabel = "goto " + jumpLabel;
+            jasminCode.add(goToLabel);
+            // use the local temporary label to store the false values of the expression
+            jasminCode.add(localTempLabel+":");
+            jasminCode.add("ldc 0");
+            // append the new jump label to point where the istore of the boolean would come
+            jasminCode.add(jumpLabel+":");
+        }
         return jasminCode;
     }
 

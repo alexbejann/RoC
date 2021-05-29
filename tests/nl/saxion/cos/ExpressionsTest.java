@@ -109,5 +109,69 @@ public class ExpressionsTest extends TestBase
         }, output.toArray());
     }
 
+    @Test
+    public void expressionBooleanIDENTIFIERTest() throws IOException, AssembleException
+    {
+        String codeString = "functia main()\n" +
+                "{\n" +
+                " numar b<- 3" +
+                " bool a<- b > 2" +
+                " printeaza(a)" +
+                "}";
+
+        Compiler c = new Compiler();
+        JasminBytecode code = c.compileString(codeString,"expressionBooleanTest");
+        Assertions.assertNotNull(code);
+
+        List<String> output = runCode(code);
+
+        assertArrayEquals(new String[] {
+                "true"
+        }, output.toArray());
+    }
+
+    @Test
+    public void expressionBooleanIDENTIFIERWithAndTest() throws IOException, AssembleException
+    {
+        String codeString = "functia main()\n" +
+                "{\n" +
+                " numar b<- 3" +
+                " bool a<- b > 2 && b*2 = 6" +
+                " printeaza(a)" +
+                "}";
+
+        Compiler c = new Compiler();
+        JasminBytecode code = c.compileString(codeString,"expressionBooleanTest");
+        Assertions.assertNotNull(code);
+
+        List<String> output = runCode(code);
+
+        assertArrayEquals(new String[] {
+                "true"
+        }, output.toArray());
+    }
+
+    @Test
+    public void expressionBooleanIDENTIFIERWithORTest() throws IOException, AssembleException
+    {
+        String codeString = "functia main()\n" +
+                "{\n" +
+                " numar b<- 3" +
+                " numar c<- 200" +
+                " bool a<- 4+b < b - 100 || c = 200" +
+                " printeaza(a)" +
+                "}";
+
+        Compiler c = new Compiler();
+        JasminBytecode code = c.compileString(codeString,"expressionBooleanTest");
+        Assertions.assertNotNull(code);
+
+        List<String> output = runCode(code);
+
+        assertArrayEquals(new String[] {
+                "true"
+        }, output.toArray());
+    }
+
 
 }
