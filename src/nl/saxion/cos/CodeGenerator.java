@@ -226,15 +226,6 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         return jasminCode;
     }
 
-    @Override
-    public List<String> visitConditions(RoCParser.ConditionsContext ctx)
-    {
-        //generated random label
-        jumpLabel = "L"+ (labelCounter++);
-        endIfLabel = "endif";
-        return new ArrayList<>(visit(ctx.expr()));
-    }
-
     /**
      * The method is processing the if statements with operators
      * The method is also responsible of the equals function when 2 strings
@@ -360,26 +351,50 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitDecisionStatement(RoCParser.DecisionStatementContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
-        //todo add endif label counter for nested if statements
+        if (jumpLabel == null || (ctx.parent.parent instanceof RoCParser.DecisionStatementContext && ctx.else_lhs != null))
+        {
+            jumpLabel = "L"+ (labelCounter++);
+        }
+        String tempLocalLabel = jumpLabel;
 
         if (ctx.if_lhs != null)
         {
             jasminCode.addAll(visit(ctx.if_lhs));
             jasminCode.addAll(visit(ctx.if_rhs));
-            if (ctx.else_lhs != null)
-                jasminCode.add("goto "+endIfLabel);
-            else
-                jasminCode.add(jumpLabel+":");
+            // needed for nested ones
+            if (ctx.else_lhs != null && ctx.parent.parent instanceof RoCParser.DecisionStatementContext)
+            {
+                jumpLabel = "L"+ (labelCounter++);
+                jasminCode.add("goto "+jumpLabel);
+            }
         }
         if (ctx.else_lhs != null)
+        {
+            // Check if the last item in the list is the goto from the if statement
+            // if there is no goto, increase the jump label and add it.
+            if (!jasminCode.get(jasminCode.size()-1).startsWith("goto"))
+            {
+                jumpLabel = "L"+ (labelCounter++);
+                jasminCode.add("goto "+jumpLabel);
+            }
+            // add the temporary label
+            jasminCode.add(tempLocalLabel+":");
+            jasminCode.addAll(visit(ctx.else_lhs));
+            if (ctx.parent.parent instanceof RoCParser.DecisionStatementContext)
+            {
+                jasminCode.add("goto "+jumpLabel);
+                //jumpLabel = "L" + (labelCounter++);
+            }
+        }
+        if (ctx.else_lhs != null && !(ctx.parent.parent instanceof RoCParser.DecisionStatementContext))
         {
             jasminCode.add(jumpLabel+":");
-            jasminCode.addAll(visit(ctx.else_lhs));
-            jumpLabel = "L" + (labelCounter++);
+            //jumpLabel = "L" + (labelCounter++);
         }
-        if (ctx.else_lhs != null)
+        else if (ctx.else_lhs == null && !(ctx.parent.parent instanceof RoCParser.DecisionStatementContext))
         {
-            jasminCode.add(endIfLabel+":");
+            jasminCode.add(jumpLabel+":");
+            jumpLabel = "L" + (labelCounter++);
         }
 
         return jasminCode;
@@ -704,7 +719,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         jumpLabel ="endLoop"+(labelCounter++);
         System.out.println("ctx "+ctx.getText());
         jasminCode.add(loopJumpLabel+":");
-        jasminCode.addAll(visit(ctx.conditions()));
+        jasminCode.addAll(visit(ctx.expr()));
         jasminCode.addAll(visit(ctx.block()));
         jasminCode.add("goto "+loopJumpLabel);
         jasminCode.add(jumpLabel+":");
@@ -724,7 +739,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         String loopJumpLabel = "Loop"+(labelCounter++);
         jumpLabel ="endLoop"+(labelCounter++);
         jasminCode.add(loopJumpLabel+":");
-        jasminCode.addAll(visit(ctx.conditions()));
+        jasminCode.addAll(visit(ctx.expr()));
         jasminCode.addAll(visit(ctx.block()));
         jasminCode.add("goto "+loopJumpLabel);
         jasminCode.add(jumpLabel+":");

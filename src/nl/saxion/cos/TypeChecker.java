@@ -163,13 +163,6 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     }
 
     @Override
-    public DataType visitConditions(RoCParser.ConditionsContext ctx)
-    {
-        visit(ctx.expr());
-        return null;
-    }
-
-    @Override
     public DataType visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx)
     {
         DataType leftHS = visit(ctx.left);

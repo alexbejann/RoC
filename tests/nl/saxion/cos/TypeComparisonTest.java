@@ -64,6 +64,32 @@ public class TypeComparisonTest extends TestBase
     }
 
     /**
+     * Integer test
+     */
+    @Test
+    public void integerComparisonWithCalculation() throws IOException, AssembleException
+    {
+        String codeString = "functia main()\n" +
+                "{\n" +
+                "   automat a<-12" +
+                "   daca(a + 2 = 14)" +
+                "   {\n" +
+                "       printeaza(a+2)\n" +
+                "   }\n" +
+                "}";
+
+        Compiler c = new Compiler();
+        JasminBytecode code = c.compileString(codeString,"integer");
+        Assertions.assertNotNull(code);
+
+        List<String> output = runCode(code);
+
+        assertArrayEquals(new String[] {
+                "14"
+        }, output.toArray());
+    }
+
+    /**
      * Mismatch test
      */
     @Test

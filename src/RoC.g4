@@ -11,10 +11,6 @@ argument_list
             : (type IDENTIFIER (COMMA type  IDENTIFIER)*)
             ;
 
-conditions
-          : expr
-          ;
-
 expr
     : PAREN_OPEN expr PAREN_CLOSE                                               # PARENGRP
     | left=expr op=(MULTIPLY | DIVIDE | MODULO) right=expr                      # MULDIVMODOPGRP
@@ -46,15 +42,15 @@ functionArgumentList
                     :(expr(COMMA expr)*) #MethodCallArgumentList
                     ;
 
-decisionStatement: If PAREN_OPEN if_lhs=conditions PAREN_CLOSE CURLY_OPEN if_rhs=block CURLY_CLOSE
+decisionStatement: If PAREN_OPEN if_lhs=expr PAREN_CLOSE CURLY_OPEN if_rhs=block CURLY_CLOSE
                  (Else CURLY_OPEN else_lhs=block CURLY_CLOSE)?
                  ;
 
 printStatement: Print PAREN_OPEN (expr) PAREN_CLOSE ;
 
 iterationStatement
-                  : While conditions Execute CURLY_OPEN block CURLY_CLOSE #WhileLoop
-                  | Execute CURLY_OPEN block CURLY_CLOSE While conditions #DoWhileLoop
+                  : While expr Execute CURLY_OPEN block CURLY_CLOSE #WhileLoop
+                  | Execute CURLY_OPEN block CURLY_CLOSE While expr #DoWhileLoop
                   ;
 
 variable_declaration: type lhs=IDENTIFIER EQUALS_TO rhs=expr;
@@ -106,7 +102,6 @@ SCANNER     :'scanner';
 While  : 'cat timp'  ;
 If     : 'daca'      ;
 Else   :'altfel daca';
-Else_If: 'daca nu'   ;
 Execute: 'executa'   ;
 Print  : 'printeaza' ;
 Return :'returneaza' ;
@@ -129,7 +124,6 @@ EQ    : '=' ;
 NOT   : '!' ;
 NOT_EQ: '!=';
 EQUALS: '==';
-INPUT : '<<';
 
 //Assign
 EQUALS_TO: '<-';
