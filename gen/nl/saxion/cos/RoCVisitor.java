@@ -35,40 +35,82 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitConditions(RoCParser.ConditionsContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ComparisonExpression}
-	 * labeled alternative in {@link RoCParser#logical_expr}.
+	 * Visit a parse tree produced by the {@code ADDSUBGRP}
+	 * labeled alternative in {@link RoCParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitComparisonExpression(RoCParser.ComparisonExpressionContext ctx);
+	T visitADDSUBGRP(RoCParser.ADDSUBGRPContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code LogicalExpressionInParen}
-	 * labeled alternative in {@link RoCParser#logical_expr}.
+	 * Visit a parse tree produced by the {@code NUMBER}
+	 * labeled alternative in {@link RoCParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLogicalExpressionInParen(RoCParser.LogicalExpressionInParenContext ctx);
+	T visitNUMBER(RoCParser.NUMBERContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code LogicalExpressionAndOr}
-	 * labeled alternative in {@link RoCParser#logical_expr}.
+	 * Visit a parse tree produced by the {@code scannerCall}
+	 * labeled alternative in {@link RoCParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx);
+	T visitScannerCall(RoCParser.ScannerCallContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code STRING}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSTRING(RoCParser.STRINGContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ComparisonExpressionWithOperator}
-	 * labeled alternative in {@link RoCParser#comparison_expr}.
+	 * labeled alternative in {@link RoCParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ComparisonExpressionParens}
-	 * labeled alternative in {@link RoCParser#comparison_expr}.
+	 * Visit a parse tree produced by the {@code LogicalExpressionAndOr}
+	 * labeled alternative in {@link RoCParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitComparisonExpressionParens(RoCParser.ComparisonExpressionParensContext ctx);
+	T visitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code PARENGRP}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPARENGRP(RoCParser.PARENGRPContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IDENTIFIER}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIDENTIFIER(RoCParser.IDENTIFIERContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BOOLEAN}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBOOLEAN(RoCParser.BOOLEANContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code MethodCallExpr}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethodCallExpr(RoCParser.MethodCallExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code MULDIVMODOPGRP}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMULDIVMODOPGRP(RoCParser.MULDIVMODOPGRPContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link RoCParser#block}.
 	 * @param ctx the parse tree
@@ -89,76 +131,6 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitMethodCallArgumentList(RoCParser.MethodCallArgumentListContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ADDSUBGRP}
-	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitADDSUBGRP(RoCParser.ADDSUBGRPContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code NUMBER}
-	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNUMBER(RoCParser.NUMBERContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code STRING}
-	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSTRING(RoCParser.STRINGContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code PARENGRP}
-	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPARENGRP(RoCParser.PARENGRPContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code IDENTIFIER}
-	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIDENTIFIER(RoCParser.IDENTIFIERContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code SCANNER}
-	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSCANNER(RoCParser.SCANNERContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code CallSCANNER}
-	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCallSCANNER(RoCParser.CallSCANNERContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code BOOLEAN}
-	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBOOLEAN(RoCParser.BOOLEANContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code MethodCallExpr}
-	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMethodCallExpr(RoCParser.MethodCallExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code MULDIVMODOPGRP}
-	 * labeled alternative in {@link RoCParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMULDIVMODOPGRP(RoCParser.MULDIVMODOPGRPContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link RoCParser#decisionStatement}.
 	 * @param ctx the parse tree
@@ -192,12 +164,6 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariable_declaration(RoCParser.Variable_declarationContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link RoCParser#scannerCall}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitScannerCall(RoCParser.ScannerCallContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code AssignmentExpression}
 	 * labeled alternative in {@link RoCParser#varExpression}.
 	 * @param ctx the parse tree
@@ -216,10 +182,4 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitType(RoCParser.TypeContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link RoCParser#type_value}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitType_value(RoCParser.Type_valueContext ctx);
 }

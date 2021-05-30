@@ -216,10 +216,6 @@ public class MethodTest extends TestBase
                 "   {\n" +
                 "       printeaza(b)\n" +
                 "   }\n" +
-                "   daca nu(b = 10)\n" +
-                "   {\n" +
-                "       printeaza(b)\n" +
-                "   }\n" +
                 "   altfel daca\n" +
                 "   {\n" +
                 "       numar c<-2\n" +
@@ -234,7 +230,7 @@ public class MethodTest extends TestBase
         List<String> output = runCode(code);
 
         assertArrayEquals(new String[] {
-                "10"
+                "2"
         }, output.toArray());
 
     }

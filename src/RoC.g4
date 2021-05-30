@@ -47,7 +47,6 @@ functionArgumentList
                     ;
 
 decisionStatement: If PAREN_OPEN if_lhs=conditions PAREN_CLOSE CURLY_OPEN if_rhs=block CURLY_CLOSE
-                 (Else_If PAREN_OPEN elseIF_lhs=conditions PAREN_CLOSE CURLY_OPEN elseIF_rhs=block CURLY_CLOSE )*
                  (Else CURLY_OPEN else_lhs=block CURLY_CLOSE)?
                  ;
 

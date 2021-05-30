@@ -366,20 +366,10 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         {
             jasminCode.addAll(visit(ctx.if_lhs));
             jasminCode.addAll(visit(ctx.if_rhs));
-            if (ctx.else_lhs != null || ctx.elseIF_lhs != null)
+            if (ctx.else_lhs != null)
                 jasminCode.add("goto "+endIfLabel);
             else
                 jasminCode.add(jumpLabel+":");
-        }
-        if(ctx.elseIF_lhs != null)
-        {
-            jasminCode.add(jumpLabel+":");
-            jasminCode.addAll(visit(ctx.elseIF_lhs));
-            jasminCode.addAll(visit(ctx.elseIF_rhs));
-            if (ctx.else_lhs != null)
-                jasminCode.add("goto "+endIfLabel);
-            if (ctx.else_lhs == null)
-                jumpLabel = "L"+(labelCounter++);
         }
         if (ctx.else_lhs != null)
         {
@@ -387,7 +377,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             jasminCode.addAll(visit(ctx.else_lhs));
             jumpLabel = "L" + (labelCounter++);
         }
-        if (ctx.else_lhs != null || ctx.elseIF_lhs != null)
+        if (ctx.else_lhs != null)
         {
             jasminCode.add(endIfLabel+":");
         }
