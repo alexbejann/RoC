@@ -52,18 +52,6 @@ public class RoCBaseListener implements RoCListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterConditions(RoCParser.ConditionsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitConditions(RoCParser.ConditionsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterADDSUBGRP(RoCParser.ADDSUBGRPContext ctx) { }
 	/**
 	 * {@inheritDoc}

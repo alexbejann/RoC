@@ -38,13 +38,6 @@ public class RoCBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ro
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitConditions(RoCParser.ConditionsContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitADDSUBGRP(RoCParser.ADDSUBGRPContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

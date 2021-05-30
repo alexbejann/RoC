@@ -29,12 +29,6 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArgument_list(RoCParser.Argument_listContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link RoCParser#conditions}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitConditions(RoCParser.ConditionsContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code ADDSUBGRP}
 	 * labeled alternative in {@link RoCParser#expr}.
 	 * @param ctx the parse tree

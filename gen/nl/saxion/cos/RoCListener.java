@@ -38,16 +38,6 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitArgument_list(RoCParser.Argument_listContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link RoCParser#conditions}.
-	 * @param ctx the parse tree
-	 */
-	void enterConditions(RoCParser.ConditionsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RoCParser#conditions}.
-	 * @param ctx the parse tree
-	 */
-	void exitConditions(RoCParser.ConditionsContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code ADDSUBGRP}
 	 * labeled alternative in {@link RoCParser#expr}.
 	 * @param ctx the parse tree
