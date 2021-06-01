@@ -22,6 +22,7 @@ This table contains all the translations of the keywords used in RoC from Romani
 | printeaza | print |
 | returneaza | return |
 | adevarat | true |
+| scurt | short |
 | fals | false |
 
 ## Operators
