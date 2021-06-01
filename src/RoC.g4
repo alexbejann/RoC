@@ -18,16 +18,17 @@ argument_list
             ;
 // The operators follows the JAVA presendence table that we've found on https://introcs.cs.princeton.edu/java/11precedence/
 expr
-    : PAREN_OPEN expr PAREN_CLOSE                                               # PARENGRP
-    | left=expr op=(MULTIPLY | DIVIDE | MODULO) right=expr                      # MULDIVMODOPGRP
-    | left=expr op=(PLUS | MINUS)               right=expr                      # ADDSUBGRP
-    | left=expr op=comparator                   right=expr                      # ComparisonExpressionWithOperator
+    : PAREN_OPEN expr PAREN_CLOSE                                               # PARENGRP                          //  Level 16
+    | left=expr op=(MULTIPLY | DIVIDE | MODULO) right=expr                      # MULDIVMODOPGRP                    //  Level 12
+    | left=expr op=(PLUS | MINUS)               right=expr                      # ADDSUBGRP                         //  Level 11
+    | left=expr op=relationalComparators        right=expr                      # RelationalComparisonExpression    //  Level 9
+    | left=expr op=equalityOperators            right=expr                      # EqualityComparisonExpression      //  Level 8
     | left=expr op=AND                          right=expr                      # LogicalExpressionAnd              //  Level 4
     | left=expr op=OR                           right=expr                      # LogicalExpressionOr               //  Level 3
     | functionCall                                                              # MethodCallExpr
     | SCANNERCALL                                                               # scannerCall
-    | NUMBER                                                                    # NUMBER
     | SHORT                                                                     # SHORT
+    | NUMBER                                                                    # NUMBER
     | STRING                                                                    # STRING
     | BOOLEAN                                                                   # BOOLEAN
     | IDENTIFIER                                                                # IDENTIFIER
@@ -67,14 +68,18 @@ varExpression
             : IDENTIFIER EQUALS_TO expr # AssignmentExpression
             ;
 
-comparator
-        : GT
-        | GE
-        | LT
-        | LE
-        | EQ
-        | NOT_EQ
-        ;
+// Relational Comparators <, >, <=
+relationalComparators
+                        : GT
+                        | GE
+                        | LT
+                        | LE
+                        ;
+// Equality comparators !=, =
+equalityOperators
+                    : EQ
+                    | NOT_EQ
+                    ;
 
 type
     : STRING_TYPE

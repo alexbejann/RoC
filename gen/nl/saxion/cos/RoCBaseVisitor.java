@@ -66,7 +66,21 @@ public class RoCBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ro
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitRelationalComparisonExpression(RoCParser.RelationalComparisonExpressionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitBOOLEAN(RoCParser.BOOLEANContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitEqualityComparisonExpression(RoCParser.EqualityComparisonExpressionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -81,13 +95,6 @@ public class RoCBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ro
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitSTRING(RoCParser.STRINGContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -192,7 +199,14 @@ public class RoCBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ro
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitComparator(RoCParser.ComparatorContext ctx) { return visitChildren(ctx); }
+	@Override public T visitRelationalComparators(RoCParser.RelationalComparatorsContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitEqualityOperators(RoCParser.EqualityOperatorsContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

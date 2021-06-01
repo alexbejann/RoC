@@ -172,7 +172,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     }
 
     @Override
-    public DataType visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx)
+    public DataType visitRelationalComparisonExpression(RoCParser.RelationalComparisonExpressionContext ctx)
     {
         DataType leftHS = visit(ctx.left);
         DataType rightHS = visit(ctx.right);
@@ -183,7 +183,24 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         {
             dataTypes.put(ctx, DataType.SDC);
         }
-        visit(ctx.comparator());
+        visit(ctx.op);
+
+        return leftHS;
+    }
+
+    @Override
+    public DataType visitEqualityComparisonExpression(RoCParser.EqualityComparisonExpressionContext ctx)
+    {
+        DataType leftHS = visit(ctx.left);
+        DataType rightHS = visit(ctx.right);
+        if (leftHS != rightHS && !(rightHS == DataType.SCURT || leftHS == DataType.SCURT) )
+            throw new CompilerException("You can't compare "+leftHS+" with "+rightHS);
+
+        if (leftHS == DataType.SDC && rightHS == DataType.SDC)
+        {
+            dataTypes.put(ctx, DataType.SDC);
+        }
+        visit(ctx.op);
 
         return leftHS;
     }
@@ -249,7 +266,8 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
                 variableTable.add(name, DataType.SDC);
                 break;
             case "bool":
-                if (!(ctx.rhs instanceof RoCParser.ComparisonExpressionWithOperatorContext) &&
+                if (!(ctx.rhs instanceof RoCParser.EqualityComparisonExpressionContext) &&
+                        !(ctx.rhs instanceof RoCParser.RelationalComparisonExpressionContext) &&
                         !(ctx.rhs instanceof RoCParser.LogicalExpressionAndContext) &&
                         !(ctx.rhs instanceof RoCParser.LogicalExpressionOrContext))
                 {

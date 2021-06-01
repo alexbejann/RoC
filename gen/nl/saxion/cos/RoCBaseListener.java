@@ -100,6 +100,18 @@ public class RoCBaseListener implements RoCListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterRelationalComparisonExpression(RoCParser.RelationalComparisonExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRelationalComparisonExpression(RoCParser.RelationalComparisonExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBOOLEAN(RoCParser.BOOLEANContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -107,6 +119,18 @@ public class RoCBaseListener implements RoCListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBOOLEAN(RoCParser.BOOLEANContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEqualityComparisonExpression(RoCParser.EqualityComparisonExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEqualityComparisonExpression(RoCParser.EqualityComparisonExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -131,18 +155,6 @@ public class RoCBaseListener implements RoCListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSTRING(RoCParser.STRINGContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -316,13 +328,25 @@ public class RoCBaseListener implements RoCListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComparator(RoCParser.ComparatorContext ctx) { }
+	@Override public void enterRelationalComparators(RoCParser.RelationalComparatorsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComparator(RoCParser.ComparatorContext ctx) { }
+	@Override public void exitRelationalComparators(RoCParser.RelationalComparatorsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEqualityOperators(RoCParser.EqualityOperatorsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEqualityOperators(RoCParser.EqualityOperatorsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

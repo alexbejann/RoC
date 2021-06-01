@@ -234,13 +234,13 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
      * @return jasminCode
      */
     @Override
-    public List<String> visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx)
+    public List<String> visitRelationalComparisonExpression(RoCParser.RelationalComparisonExpressionContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
         // This optimizer should handle cases like this: 3 > 2 or 100+2 > 12*2
         // where constants are involved
         Optimizer optimizer = new Optimizer();
-        Object calc = optimizer.visitComparisonExpressionWithOperator(ctx);
+        Object calc = optimizer.visitRelationalComparisonExpression(ctx);
         if (calc != null)
         {
             jasminCode.add("ldc "+calc);
@@ -261,14 +261,87 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         {
             // call equals method
             jasminCode.add("invokevirtual java/lang/String/equals(Ljava/lang/Object;)Z");
-            if(ctx.comparator().getText().equals("="))
+            if(ctx.op.getText().equals("="))
                 jasminCode.add("ifeq "+jumpLabel);
-            else if (ctx.comparator().getText().equals("!="))
+            else if (ctx.op.getText().equals("!="))
                 jasminCode.add("ifne "+jumpLabel);
         }
         else
         {
-            jasminCode.addAll(visit(ctx.comparator()));
+            jasminCode.addAll(visit(ctx.op));
+        }
+
+        // This handles the boolean expression
+        // e.g. bool a<- a*2 > 1
+        if (ctx.parent instanceof RoCParser.Variable_declarationContext)
+        {
+            jasminCode.addAll(comparatorsBooleanExprHandler(jasminCode, localTempLabel));
+        }
+
+        return jasminCode;
+    }
+
+    private List<String> comparatorsBooleanExprHandler(List<String> jasminCode, String localTempLabel)
+    {
+        // for true value
+        jasminCode.add("ldc 1");
+        // increase counter for goto label
+        jumpLabel = "L" + (labelCounter++);
+        //create the goto with the new label
+        String goToLabel = "goto " + jumpLabel;
+        jasminCode.add(goToLabel);
+        // use the local temporary label in case for a false value
+        jasminCode.add(localTempLabel + ":");
+        // for false value
+        jasminCode.add("ldc 0");
+        // add the next label for storing the variable
+        jasminCode.add(jumpLabel + ":");
+        return jasminCode;
+    }
+
+    /**
+     * The method is processing the if statements with operators
+     * The method is also responsible of the equals function when 2 strings
+     * are compared
+     * @param ctx ComparisonExpressionWithOperatorContext
+     * @return jasminCode
+     */
+    @Override
+    public List<String> visitEqualityComparisonExpression(RoCParser.EqualityComparisonExpressionContext ctx)
+    {
+        List<String> jasminCode = new ArrayList<>();
+        // This optimizer should handle cases like this: 3 > 2 or 100+2 > 12*2
+        // where constants are involved
+        Optimizer optimizer = new Optimizer();
+        Object calc = optimizer.visitEqualityComparisonExpression(ctx);
+        if (calc != null)
+        {
+            jasminCode.add("ldc "+calc);
+            return jasminCode;
+        }
+        //end optimizer
+
+        //generate label
+        if (ctx.parent instanceof RoCParser.Variable_declarationContext || jumpLabel == null)
+        {
+            jumpLabel = "L"+ (labelCounter++);
+        }
+
+        String localTempLabel = jumpLabel;
+        jasminCode.addAll(visit(ctx.left));
+        jasminCode.addAll(visit(ctx.right));
+        if (dataTypes.get(ctx) != null)
+        {
+            // call equals method
+            jasminCode.add("invokevirtual java/lang/String/equals(Ljava/lang/Object;)Z");
+            if(ctx.op.getText().equals("="))
+                jasminCode.add("ifeq "+jumpLabel);
+            else if (ctx.op.getText().equals("!="))
+                jasminCode.add("ifne "+jumpLabel);
+        }
+        else
+        {
+            jasminCode.addAll(visit(ctx.op));
         }
 
         // This handles the boolean expression
@@ -276,18 +349,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         if (ctx.parent instanceof RoCParser.Variable_declarationContext)
         {
             // for true value
-            jasminCode.add("ldc 1");
-            // increase counter for goto label
-            jumpLabel = "L" +(labelCounter++);
-            //create the goto with the new label
-            String goToLabel = "goto " + jumpLabel;
-            jasminCode.add(goToLabel);
-            // use the local temporary label in case for a false value
-            jasminCode.add(localTempLabel+":");
-            // for false value
-            jasminCode.add("ldc 0");
-            // add the next label for storing the variable
-            jasminCode.add(jumpLabel+":");
+            jasminCode.addAll(comparatorsBooleanExprHandler(jasminCode, localTempLabel));
         }
 
         return jasminCode;
@@ -322,14 +384,14 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         // e.g. bool a<- a*2 > 1 || c > 200, bool a<- a*2 > 1 && c > 200
         if (ctx.parent instanceof RoCParser.Variable_declarationContext)
         {
-            booleanExpressionHandler(jasminCode);
+            jasminCode.addAll(booleanExpressionHandling(jasminCode));
         }
         return jasminCode;
     }
 
     // This handles the boolean expression
     // e.g. bool a<- a*2 > 1 || c > 200, bool a<- a*2 > 1 && c > 200
-    private void booleanExpressionHandler(List<String> jasminCode)
+    private List<String> booleanExpressionHandling(List<String> jasminCode)
     {
         // this part is to store if the expression is true
         jasminCode.add("ldc 1");
@@ -345,6 +407,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         jasminCode.add("ldc 0");
         // append the new jump label to point where the istore of the boolean would come
         jasminCode.add(jumpLabel+":");
+        return jasminCode;
     }
 
     /**
@@ -383,7 +446,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         // e.g. bool a<- a*2 > 1 || c > 200, bool a<- a*2 > 1 && c > 200
         if (ctx.parent instanceof RoCParser.Variable_declarationContext)
         {
-            booleanExpressionHandler(jasminCode);
+            jasminCode.addAll(booleanExpressionHandling(jasminCode));
         }
         return jasminCode;
     }
@@ -451,7 +514,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
      * @return jasminCode that includes the comparator
      */
     @Override
-    public List<String> visitComparator(RoCParser.ComparatorContext ctx)
+    public List<String> visitRelationalComparators(RoCParser.RelationalComparatorsContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
         if(ctx.GT() != null) // >
@@ -482,7 +545,15 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             else
                 jasminCode.add("if_icmpgt "+ (jumpLabel));
         }
-        else if (ctx.EQ() != null)// =
+        isLogicalOR = false;
+        return jasminCode;
+    }
+
+    @Override
+    public List<String> visitEqualityOperators(RoCParser.EqualityOperatorsContext ctx)
+    {
+        List<String> jasminCode = new ArrayList<>();
+        if (ctx.EQ() != null)// =
         {
             if (isLogicalOR)
                 jasminCode.add("if_icmpeq "+ (jumpLabel));
@@ -496,7 +567,9 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             else
                 jasminCode.add("if_icmpeq "+ (jumpLabel));
         }
+
         isLogicalOR = false;
+
         return jasminCode;
     }
 

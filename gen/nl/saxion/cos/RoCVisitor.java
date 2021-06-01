@@ -57,12 +57,26 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPARENGRP(RoCParser.PARENGRPContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code RelationalComparisonExpression}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRelationalComparisonExpression(RoCParser.RelationalComparisonExpressionContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code BOOLEAN}
 	 * labeled alternative in {@link RoCParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitBOOLEAN(RoCParser.BOOLEANContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code EqualityComparisonExpression}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqualityComparisonExpression(RoCParser.EqualityComparisonExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code SHORT}
 	 * labeled alternative in {@link RoCParser#expr}.
@@ -77,13 +91,6 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitSTRING(RoCParser.STRINGContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ComparisonExpressionWithOperator}
-	 * labeled alternative in {@link RoCParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code LogicalExpressionAnd}
 	 * labeled alternative in {@link RoCParser#expr}.
@@ -179,11 +186,17 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAssignmentExpression(RoCParser.AssignmentExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link RoCParser#comparator}.
+	 * Visit a parse tree produced by {@link RoCParser#relationalComparators}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitComparator(RoCParser.ComparatorContext ctx);
+	T visitRelationalComparators(RoCParser.RelationalComparatorsContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RoCParser#equalityOperators}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqualityOperators(RoCParser.EqualityOperatorsContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link RoCParser#type}.
 	 * @param ctx the parse tree

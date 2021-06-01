@@ -86,6 +86,18 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitPARENGRP(RoCParser.PARENGRPContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code RelationalComparisonExpression}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterRelationalComparisonExpression(RoCParser.RelationalComparisonExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code RelationalComparisonExpression}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitRelationalComparisonExpression(RoCParser.RelationalComparisonExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code BOOLEAN}
 	 * labeled alternative in {@link RoCParser#expr}.
 	 * @param ctx the parse tree
@@ -97,6 +109,18 @@ public interface RoCListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBOOLEAN(RoCParser.BOOLEANContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code EqualityComparisonExpression}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterEqualityComparisonExpression(RoCParser.EqualityComparisonExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code EqualityComparisonExpression}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitEqualityComparisonExpression(RoCParser.EqualityComparisonExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code SHORT}
 	 * labeled alternative in {@link RoCParser#expr}.
@@ -121,18 +145,6 @@ public interface RoCListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSTRING(RoCParser.STRINGContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ComparisonExpressionWithOperator}
-	 * labeled alternative in {@link RoCParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ComparisonExpressionWithOperator}
-	 * labeled alternative in {@link RoCParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code LogicalExpressionAnd}
 	 * labeled alternative in {@link RoCParser#expr}.
@@ -294,15 +306,25 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitAssignmentExpression(RoCParser.AssignmentExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link RoCParser#comparator}.
+	 * Enter a parse tree produced by {@link RoCParser#relationalComparators}.
 	 * @param ctx the parse tree
 	 */
-	void enterComparator(RoCParser.ComparatorContext ctx);
+	void enterRelationalComparators(RoCParser.RelationalComparatorsContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link RoCParser#comparator}.
+	 * Exit a parse tree produced by {@link RoCParser#relationalComparators}.
 	 * @param ctx the parse tree
 	 */
-	void exitComparator(RoCParser.ComparatorContext ctx);
+	void exitRelationalComparators(RoCParser.RelationalComparatorsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RoCParser#equalityOperators}.
+	 * @param ctx the parse tree
+	 */
+	void enterEqualityOperators(RoCParser.EqualityOperatorsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RoCParser#equalityOperators}.
+	 * @param ctx the parse tree
+	 */
+	void exitEqualityOperators(RoCParser.EqualityOperatorsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link RoCParser#type}.
 	 * @param ctx the parse tree

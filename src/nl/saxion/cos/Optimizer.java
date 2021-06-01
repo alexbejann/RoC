@@ -59,7 +59,7 @@ public class Optimizer extends RoCBaseVisitor<Object>
     }
 
     @Override
-    public Object visitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx)
+    public Object visitRelationalComparisonExpression(RoCParser.RelationalComparisonExpressionContext ctx)
     {
         Object left = visit(ctx.left);
         Object right = visit(ctx.right);
@@ -83,6 +83,30 @@ public class Optimizer extends RoCBaseVisitor<Object>
                 case ">=":
                     if (left instanceof Integer)
                         return getBooleanValue((Integer) left >= (Integer) right);
+                    break;
+            }
+        }
+        //This line should never be reached
+        return null;
+    }
+
+    @Override
+    public Object visitEqualityComparisonExpression(RoCParser.EqualityComparisonExpressionContext ctx)
+    {
+        Object left = visit(ctx.left);
+        Object right = visit(ctx.right);
+
+        if (left != null && right != null && ctx.op.getText() != null)
+        {
+            switch (ctx.op.getText())
+            {
+                case "=":
+                    if (left instanceof Integer)
+                        return getBooleanValue((Integer) left > (Integer) right);
+                    break;
+                case "!=":
+                    if (left instanceof Integer)
+                        return getBooleanValue((Integer) left < (Integer) right);
                     break;
             }
         }
