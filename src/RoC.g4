@@ -16,7 +16,7 @@ method_declaration
 argument_list
             : (type IDENTIFIER (COMMA type  IDENTIFIER)*)
             ;
-
+// The operators follows the JAVA presendence table that we've found on https://introcs.cs.princeton.edu/java/11precedence/
 expr
     : PAREN_OPEN expr PAREN_CLOSE                                               # PARENGRP
     | left=expr op=(MULTIPLY | DIVIDE | MODULO) right=expr                      # MULDIVMODOPGRP
