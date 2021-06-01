@@ -99,6 +99,13 @@ public interface RoCVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMethodCallExpr(RoCParser.MethodCallExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code SHORT}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSHORT(RoCParser.SHORTContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code MULDIVMODOPGRP}
 	 * labeled alternative in {@link RoCParser#expr}.
 	 * @param ctx the parse tree

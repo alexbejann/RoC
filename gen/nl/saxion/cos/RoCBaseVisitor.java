@@ -108,6 +108,13 @@ public class RoCBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ro
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitSHORT(RoCParser.SHORTContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitMULDIVMODOPGRP(RoCParser.MULDIVMODOPGRPContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

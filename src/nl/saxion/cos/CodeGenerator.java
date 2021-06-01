@@ -6,9 +6,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CodeGenerator extends RoCBaseVisitor<List<String>>
 {
@@ -135,6 +133,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             case SDC:
                 jasminCode.add("Ljava/lang/String;");
                 break;
+            case SCURT:
             case NUMAR:
                 jasminCode.add("I");
                 break;
@@ -178,6 +177,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
                 case SDC:
                     returnType = "Ljava/lang/String;";
                     break;
+                case SCURT:
                 case NUMAR:
                     returnType = "I";
                     break;
@@ -541,7 +541,15 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitSHORT(RoCParser.SHORTContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
-        jasminCode.add("ldc "+ctx.getText());
+        String number = ctx.getText();
+        // check if number contains $2
+        if (number.contains("$"))
+        {
+            // replace $ with - sign e.g. -2
+            number = number.replace("$","-");
+        }
+        // add bytecode
+        jasminCode.add("ldc "+number);
         return jasminCode;
     }
 
@@ -636,6 +644,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
 
         switch (dataTypes.get(ctx))
         {
+            case SCURT:
             case NUMAR:
                 jasminCode.add("invokevirtual java/io/PrintStream/println(I)V");
                 break;
@@ -667,6 +676,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         jasminCode.addAll(visit(ctx.rhs));
         switch (dataTypes.get(ctx))
         {
+            case SCURT:
             case NUMAR:
             case BOOL:
                 jasminCode.add("istore " + var.getIndex());

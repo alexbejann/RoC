@@ -7,7 +7,7 @@ public enum DataType
     SDC("Ljava/lang/String;"),
     AUTOMAT("Z"),
     SCANNER("java/util/Scanner"),
-    SHORT("I");
+    SCURT("I");
 
     private final String byteType;
 

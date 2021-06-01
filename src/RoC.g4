@@ -120,7 +120,7 @@ SCANNERCALL:'urmatorul';
 // Types values
 BOOLEAN: 'ADEVARAT' | 'FALS';
 STRING : '"' ~('\r'|'\n'|'"')* '"';
-SHORT  :  [0-9]; // Custom data type, which stores only numbers from 0 to 9
+SHORT  :  '$'?[0-9]; // Custom data type, which stores only numbers from 0 to 9 and negative ones
 NUMBER : '0' | '$'? [1-9][0-9]*;// $21 represents -21
 
 // Relational Operators

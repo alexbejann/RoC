@@ -172,6 +172,18 @@ public class RoCBaseListener implements RoCListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSHORT(RoCParser.SHORTContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSHORT(RoCParser.SHORTContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMULDIVMODOPGRP(RoCParser.MULDIVMODOPGRPContext ctx) { }
 	/**
 	 * {@inheritDoc}

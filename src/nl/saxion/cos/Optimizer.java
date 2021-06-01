@@ -6,6 +6,21 @@ public class Optimizer extends RoCBaseVisitor<Object>
 {
 
     @Override
+    public Object visitSHORT(RoCParser.SHORTContext ctx)
+    {
+        String number = ctx.getText();
+        // check if number contains $
+        if (number.contains("$"))
+        {
+            // replace the character with -
+            number = number.replace("$", "-");
+        }
+        // parse and return the integer
+        return Integer.parseInt(number);
+    }
+
+
+    @Override
     public Object visitNUMBER(RoCParser.NUMBERContext ctx)
     {
         String number = ctx.getText();

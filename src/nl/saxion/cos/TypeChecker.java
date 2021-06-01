@@ -71,9 +71,13 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
             visitChildren(ctx.body);
         if (ctx.returnValue != null)
         {
-            DataType type = visit(ctx.returnValue);
-            if (!type.equals(dataTypes.get(ctx)))
-                throw new CompilerException("The method should return: "+ctx.returnType.getText()+" type! Not "+type);
+            DataType type = visit(ctx.returnValue);// SCURT
+            DataType returnType = dataTypes.get(ctx); // NUMAR
+            if (!(returnType == DataType.NUMAR && type == DataType.SCURT))
+            {
+                if (!type.equals(returnType))
+                    throw new CompilerException("The method should return: "+ctx.returnType.getText()+" type! Not "+type);
+            }
         }
         variableTable = variableTable.getParentScope();
 
@@ -141,6 +145,11 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
             dataTypes.put(ctx,DataType.BOOL);
             return DataType.BOOL;
         }
+        else if (ctx.SHORT_TYPE() != null)
+        {
+            dataTypes.put(ctx,DataType.SCURT);
+            return DataType.SCURT;
+        }
         else if (ctx.NUMBER_TYPE() != null)
         {
             dataTypes.put(ctx,DataType.NUMAR);
@@ -167,7 +176,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     {
         DataType leftHS = visit(ctx.left);
         DataType rightHS = visit(ctx.right);
-        if (leftHS != rightHS && !(rightHS == DataType.SHORT))
+        if (leftHS != rightHS && !(rightHS == DataType.SCURT || leftHS == DataType.SCURT) )
             throw new CompilerException("You can't compare "+leftHS+" with "+rightHS);
 
         if (leftHS == DataType.SDC && rightHS == DataType.SDC)
@@ -216,13 +225,13 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         switch (ctx.type().getText())
         {
             case "scurt":
-                if (type != DataType.SHORT)
+                if (type != DataType.SCURT)
                     throw new CompilerException("Type mismatch expected short!");
 
-                variableTable.add(name, DataType.SHORT);
+                variableTable.add(name, DataType.SCURT);
                 break;
             case "numar":
-                if (type != DataType.NUMAR && type != DataType.SCANNER)
+                if (type != DataType.NUMAR && type != DataType.SCANNER && type != DataType.SCURT)
                     throw new CompilerException("Type mismatch expected numar!");
 
                 variableTable.add(name, DataType.NUMAR);
@@ -254,9 +263,9 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
                 {
                     variableTable.add(name, DataType.BOOL);
                 }
-                else if (type == DataType.SHORT)
+                else if (type == DataType.SCURT)
                 {
-                    variableTable.add(name, DataType.SHORT);
+                    variableTable.add(name, DataType.SCURT);
                 }
                 break;
             default:
@@ -280,9 +289,12 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     {
         DataType left = visit(ctx.left);
         DataType right = visit(ctx.right);
-        if (!left.equals(right) && !(right == DataType.SHORT))
+        if (!(left == DataType.NUMAR && right == DataType.SCURT  || left == DataType.SCURT && right == DataType.NUMAR))
         {
-            throw new CompilerException("Unsupported operation: "+ctx.getText());
+            if (!left.equals(right))
+            {
+                throw new CompilerException("Unsupported operation: "+ctx.getText());
+            }
         }
         dataTypes.put(ctx,visit(ctx.left));
         return visit(ctx.left);
@@ -293,9 +305,12 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     {
         DataType left = visit(ctx.left);
         DataType right = visit(ctx.right);
-        if (!left.equals(right) && !(right == DataType.SHORT))
+        if (!(left == DataType.NUMAR && right == DataType.SCURT  || left == DataType.SCURT && right == DataType.NUMAR))
         {
-            throw new CompilerException("Unsupported operation: "+ctx.getText());
+            if (!left.equals(right))
+            {
+                throw new CompilerException("Unsupported operation: "+ctx.getText());
+            }
         }
         dataTypes.put(ctx,visit(ctx.left));
         return visit(ctx.left);
@@ -310,8 +325,8 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitSHORT(RoCParser.SHORTContext ctx)
     {
-        dataTypes.put(ctx, DataType.SHORT);//Needed for argument list context
-        return DataType.SHORT;
+        dataTypes.put(ctx, DataType.SCURT);//Needed for argument list context
+        return DataType.SCURT;
     }
 
     @Override

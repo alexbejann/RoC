@@ -88,6 +88,7 @@ public class VariableTable
     {
         switch (type.toLowerCase(Locale.ROOT))
         {
+            case "scurt":
             case "numar":
                 return "I";
             case "sdc":

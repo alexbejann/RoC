@@ -158,6 +158,18 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitMethodCallExpr(RoCParser.MethodCallExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code SHORT}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterSHORT(RoCParser.SHORTContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SHORT}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitSHORT(RoCParser.SHORTContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code MULDIVMODOPGRP}
 	 * labeled alternative in {@link RoCParser#expr}.
 	 * @param ctx the parse tree
