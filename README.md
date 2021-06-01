@@ -66,8 +66,9 @@ The scope in RoC is described by the curly brackets `{  }`.
 
 | Types | Value | Description |
 | -- | -- | -- |
-| numar | 10, -1, 0.25 | This type can be an integer, double if we compare RoC to other C based languages |
+| numar | 10, -1, 2000 | This type can be an integer if we compare RoC to other C based languages |
 | sdc | "string" | Contains only strings |
+| scurt | 0, 3, 8 | Contains only numbers from 0 to 9 |
 | automat |  "string", 1, -12, 0.21, FALS/ADEVARAT | This type can decide what is the best type |
 | bool | ADEVARAT/FALS | `ADEVARAT` is true and `FALS` is false but it's translated in Romanian | 
 
