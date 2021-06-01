@@ -110,6 +110,46 @@ public class ExpressionsTest extends TestBase
     }
 
     @Test
+    public void assignNumarToSCURTTest() throws IOException, AssembleException
+    {
+        String codeString = "functia main()\n" +
+                "{\n" +
+                " scurt a<- 10" +
+                " printeaza(a)" +
+                "}";
+        Compiler c = new Compiler();
+
+        CompilerException exception = assertThrows(CompilerException.class, () -> {
+            c.compileString(codeString,"expressionConcatenationTest");
+        });
+        String expectedMessage = "Type mismatch expected short! scurt can hold numbers from 0 to 9, negatives as well.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void assignSCURTToNUMARTest() throws IOException, AssembleException
+    {
+        String codeString = "functia main()\n" +
+                "{\n" +
+                " scurt b<- 3" +
+                " numar a<- b + $20" +
+                " printeaza(a)" +
+                "}";
+
+        Compiler c = new Compiler();
+        JasminBytecode code = c.compileString(codeString,"expressionBooleanTest");
+        Assertions.assertNotNull(code);
+
+        List<String> output = runCode(code);
+
+        assertArrayEquals(new String[] {
+                "-17"
+        }, output.toArray());
+    }
+
+    @Test
     public void expressionBooleanIDENTIFIERTest() throws IOException, AssembleException
     {
         String codeString = "functia main()\n" +

@@ -226,7 +226,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         {
             case "scurt":
                 if (type != DataType.SCURT)
-                    throw new CompilerException("Type mismatch expected short!");
+                    throw new CompilerException("Type mismatch expected short! scurt can hold numbers from 0 to 9, negatives as well.");
 
                 variableTable.add(name, DataType.SCURT);
                 break;
