@@ -74,6 +74,42 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitScannerCall(RoCParser.ScannerCallContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code PARENGRP}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterPARENGRP(RoCParser.PARENGRPContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code PARENGRP}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitPARENGRP(RoCParser.PARENGRPContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BOOLEAN}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterBOOLEAN(RoCParser.BOOLEANContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BOOLEAN}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitBOOLEAN(RoCParser.BOOLEANContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SHORT}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterSHORT(RoCParser.SHORTContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SHORT}
+	 * labeled alternative in {@link RoCParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitSHORT(RoCParser.SHORTContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code STRING}
 	 * labeled alternative in {@link RoCParser#expr}.
 	 * @param ctx the parse tree
@@ -98,29 +134,17 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitComparisonExpressionWithOperator(RoCParser.ComparisonExpressionWithOperatorContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code LogicalExpressionAndOr}
+	 * Enter a parse tree produced by the {@code LogicalExpressionAnd}
 	 * labeled alternative in {@link RoCParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx);
+	void enterLogicalExpressionAnd(RoCParser.LogicalExpressionAndContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code LogicalExpressionAndOr}
+	 * Exit a parse tree produced by the {@code LogicalExpressionAnd}
 	 * labeled alternative in {@link RoCParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code PARENGRP}
-	 * labeled alternative in {@link RoCParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterPARENGRP(RoCParser.PARENGRPContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code PARENGRP}
-	 * labeled alternative in {@link RoCParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitPARENGRP(RoCParser.PARENGRPContext ctx);
+	void exitLogicalExpressionAnd(RoCParser.LogicalExpressionAndContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code IDENTIFIER}
 	 * labeled alternative in {@link RoCParser#expr}.
@@ -134,17 +158,17 @@ public interface RoCListener extends ParseTreeListener {
 	 */
 	void exitIDENTIFIER(RoCParser.IDENTIFIERContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code BOOLEAN}
+	 * Enter a parse tree produced by the {@code LogicalExpressionOr}
 	 * labeled alternative in {@link RoCParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterBOOLEAN(RoCParser.BOOLEANContext ctx);
+	void enterLogicalExpressionOr(RoCParser.LogicalExpressionOrContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code BOOLEAN}
+	 * Exit a parse tree produced by the {@code LogicalExpressionOr}
 	 * labeled alternative in {@link RoCParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitBOOLEAN(RoCParser.BOOLEANContext ctx);
+	void exitLogicalExpressionOr(RoCParser.LogicalExpressionOrContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code MethodCallExpr}
 	 * labeled alternative in {@link RoCParser#expr}.
@@ -157,18 +181,6 @@ public interface RoCListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMethodCallExpr(RoCParser.MethodCallExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code SHORT}
-	 * labeled alternative in {@link RoCParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterSHORT(RoCParser.SHORTContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code SHORT}
-	 * labeled alternative in {@link RoCParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitSHORT(RoCParser.SHORTContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code MULDIVMODOPGRP}
 	 * labeled alternative in {@link RoCParser#expr}.

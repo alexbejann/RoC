@@ -300,13 +300,67 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
      * @return jasminCode with the if statement generated
      */
     @Override
-    public List<String> visitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx)
+    public List<String> visitLogicalExpressionAnd(RoCParser.LogicalExpressionAndContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
         // This optimizer is meant to handle easy operations without IDENTIFIERs
         // such as 1+23 > 2 || 32 < 233 && 2+2 > 1
         Optimizer optimizer = new Optimizer();
-        Object calc = optimizer.visitLogicalExpressionAndOr(ctx);
+        Object calc = optimizer.visitLogicalExpressionAnd(ctx);
+        if (calc != null)
+        {
+            jasminCode.add("ldc "+calc);
+            return jasminCode;
+        }
+        // end optimizer
+
+        jasminCode.addAll(visit(ctx.left));
+
+        jasminCode.addAll(visit(ctx.right));
+
+        // This handles the boolean expression
+        // e.g. bool a<- a*2 > 1 || c > 200, bool a<- a*2 > 1 && c > 200
+        if (ctx.parent instanceof RoCParser.Variable_declarationContext)
+        {
+            booleanExpressionHandler(jasminCode);
+        }
+        return jasminCode;
+    }
+
+    // This handles the boolean expression
+    // e.g. bool a<- a*2 > 1 || c > 200, bool a<- a*2 > 1 && c > 200
+    private void booleanExpressionHandler(List<String> jasminCode)
+    {
+        // this part is to store if the expression is true
+        jasminCode.add("ldc 1");
+        // get a temp copy of the current jump label for later usage
+        String localTempLabel = jumpLabel;
+        // increase the jump label
+        jumpLabel = "L" +(labelCounter++);
+        // create and append the goto label with the new jump label
+        String goToLabel = "goto " + jumpLabel;
+        jasminCode.add(goToLabel);
+        // use the local temporary label to store the false values of the expression
+        jasminCode.add(localTempLabel+":");
+        jasminCode.add("ldc 0");
+        // append the new jump label to point where the istore of the boolean would come
+        jasminCode.add(jumpLabel+":");
+    }
+
+    /**
+     * This method handles the process of the if
+     * statements that contains '&&' and/or '||'
+     * @param ctx LogicalExpressionAndOrContext
+     * @return jasminCode with the if statement generated
+     */
+    @Override
+    public List<String> visitLogicalExpressionOr(RoCParser.LogicalExpressionOrContext ctx)
+    {
+        List<String> jasminCode = new ArrayList<>();
+        // This optimizer is meant to handle easy operations without IDENTIFIERs
+        // such as 1+23 > 2 || 32 < 233 && 2+2 > 1
+        Optimizer optimizer = new Optimizer();
+        Object calc = optimizer.visitLogicalExpressionOr(ctx);
         if (calc != null)
         {
             jasminCode.add("ldc "+calc);
@@ -329,20 +383,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         // e.g. bool a<- a*2 > 1 || c > 200, bool a<- a*2 > 1 && c > 200
         if (ctx.parent instanceof RoCParser.Variable_declarationContext)
         {
-            // this part is to store if the expression is true
-            jasminCode.add("ldc 1");
-            // get a temp copy of the current jump label for later usage
-            String localTempLabel = jumpLabel;
-            // increase the jump label
-            jumpLabel = "L" +(labelCounter++);
-            // create and append the goto label with the new jump label
-            String goToLabel = "goto " + jumpLabel;
-            jasminCode.add(goToLabel);
-            // use the local temporary label to store the false values of the expression
-            jasminCode.add(localTempLabel+":");
-            jasminCode.add("ldc 0");
-            // append the new jump label to point where the istore of the boolean would come
-            jasminCode.add(jumpLabel+":");
+            booleanExpressionHandler(jasminCode);
         }
         return jasminCode;
     }

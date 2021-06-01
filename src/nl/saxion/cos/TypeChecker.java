@@ -189,7 +189,13 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     }
 
     @Override
-    public DataType visitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx)
+    public DataType visitLogicalExpressionAnd(RoCParser.LogicalExpressionAndContext ctx)
+    {
+        return visitChildren(ctx);
+    }
+
+    @Override
+    public DataType visitLogicalExpressionOr(RoCParser.LogicalExpressionOrContext ctx)
     {
         return visitChildren(ctx);
     }
@@ -243,7 +249,9 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
                 variableTable.add(name, DataType.SDC);
                 break;
             case "bool":
-                if (!(ctx.rhs instanceof RoCParser.ComparisonExpressionWithOperatorContext) && !(ctx.rhs instanceof RoCParser.LogicalExpressionAndOrContext))
+                if (!(ctx.rhs instanceof RoCParser.ComparisonExpressionWithOperatorContext) &&
+                        !(ctx.rhs instanceof RoCParser.LogicalExpressionAndContext) &&
+                        !(ctx.rhs instanceof RoCParser.LogicalExpressionOrContext))
                 {
                     if (type != DataType.BOOL )
                         throw new CompilerException("Type mismatch expected bool!");

@@ -21,8 +21,9 @@ expr
     : PAREN_OPEN expr PAREN_CLOSE                                               # PARENGRP
     | left=expr op=(MULTIPLY | DIVIDE | MODULO) right=expr                      # MULDIVMODOPGRP
     | left=expr op=(PLUS | MINUS)               right=expr                      # ADDSUBGRP
-    | left=expr op=comparator right=expr                                        # ComparisonExpressionWithOperator
-    | left=expr op=(AND | OR) right=expr                                        # LogicalExpressionAndOr
+    | left=expr op=comparator                   right=expr                      # ComparisonExpressionWithOperator
+    | left=expr op=AND                          right=expr                      # LogicalExpressionAnd              //  Level 4
+    | left=expr op=OR                           right=expr                      # LogicalExpressionOr               //  Level 3
     | functionCall                                                              # MethodCallExpr
     | SCANNERCALL                                                               # scannerCall
     | NUMBER                                                                    # NUMBER
@@ -89,8 +90,6 @@ PAREN_OPEN :'(';
 PAREN_CLOSE:')';
 CURLY_OPEN :'{';
 CURLY_CLOSE:'}';
-COLON      :':';
-DOT        :'.';
 COMMA      :',';
 
 // Arithmetic operators
@@ -101,7 +100,7 @@ DIVIDE  :'/';
 MODULO  :'%';
 
 //Types
-SHORT_TYPE : 'scurt' ;
+SHORT_TYPE  : 'scurt' ;
 NUMBER_TYPE : 'numar' ;
 STRING_TYPE : 'sdc'   ;
 BOOLEAN_TYPE: 'bool'  ;

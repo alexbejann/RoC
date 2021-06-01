@@ -88,6 +88,42 @@ public class RoCBaseListener implements RoCListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPARENGRP(RoCParser.PARENGRPContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPARENGRP(RoCParser.PARENGRPContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBOOLEAN(RoCParser.BOOLEANContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBOOLEAN(RoCParser.BOOLEANContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSHORT(RoCParser.SHORTContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSHORT(RoCParser.SHORTContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterSTRING(RoCParser.STRINGContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -112,25 +148,13 @@ public class RoCBaseListener implements RoCListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx) { }
+	@Override public void enterLogicalExpressionAnd(RoCParser.LogicalExpressionAndContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPARENGRP(RoCParser.PARENGRPContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPARENGRP(RoCParser.PARENGRPContext ctx) { }
+	@Override public void exitLogicalExpressionAnd(RoCParser.LogicalExpressionAndContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -148,13 +172,13 @@ public class RoCBaseListener implements RoCListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBOOLEAN(RoCParser.BOOLEANContext ctx) { }
+	@Override public void enterLogicalExpressionOr(RoCParser.LogicalExpressionOrContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBOOLEAN(RoCParser.BOOLEANContext ctx) { }
+	@Override public void exitLogicalExpressionOr(RoCParser.LogicalExpressionOrContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -167,18 +191,6 @@ public class RoCBaseListener implements RoCListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitMethodCallExpr(RoCParser.MethodCallExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSHORT(RoCParser.SHORTContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSHORT(RoCParser.SHORTContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

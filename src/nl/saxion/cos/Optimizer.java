@@ -1,7 +1,5 @@
 package nl.saxion.cos;
 
-import nl.saxion.cos.exceptions.CompilerException;
-
 public class Optimizer extends RoCBaseVisitor<Object>
 {
 
@@ -35,25 +33,28 @@ public class Optimizer extends RoCBaseVisitor<Object>
     }
 
     @Override
-    public Object visitLogicalExpressionAndOr(RoCParser.LogicalExpressionAndOrContext ctx)
+    public Object visitLogicalExpressionAnd(RoCParser.LogicalExpressionAndContext ctx)
     {
         Object left = visit(ctx.left);
         Object right = visit(ctx.right);
         if (left != null && right != null && ctx.op.getText() != null)
         {
-            switch (ctx.op.getText())
-            {
-                case "&&":
-                    if (left instanceof Integer)
-                        return getBooleanValue((Integer) left,(Integer) right, true);
-                    break;
-                case "||":
-                    if (left instanceof Integer)
-                        return getBooleanValue((Integer) left, (Integer) right, false);
-                    break;
-            }
+            if (left instanceof Integer)
+                return getBooleanValue((Integer) left,(Integer) right, true);
         }
+        return null;
+    }
 
+    @Override
+    public Object visitLogicalExpressionOr(RoCParser.LogicalExpressionOrContext ctx)
+    {
+        Object left = visit(ctx.left);
+        Object right = visit(ctx.right);
+        if (left != null && right != null && ctx.op.getText() != null)
+        {
+            if (left instanceof Integer)
+                return getBooleanValue((Integer) left, (Integer) right, false);
+        }
         return null;
     }
 
