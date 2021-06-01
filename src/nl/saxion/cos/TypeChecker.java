@@ -167,7 +167,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     {
         DataType leftHS = visit(ctx.left);
         DataType rightHS = visit(ctx.right);
-        if (leftHS != rightHS)
+        if (leftHS != rightHS && !(rightHS == DataType.SHORT))
             throw new CompilerException("You can't compare "+leftHS+" with "+rightHS);
 
         if (leftHS == DataType.SDC && rightHS == DataType.SDC)
@@ -215,6 +215,12 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
 
         switch (ctx.type().getText())
         {
+            case "scurt":
+                if (type != DataType.SHORT)
+                    throw new CompilerException("Type mismatch expected short!");
+
+                variableTable.add(name, DataType.SHORT);
+                break;
             case "numar":
                 if (type != DataType.NUMAR && type != DataType.SCANNER)
                     throw new CompilerException("Type mismatch expected numar!");
@@ -248,6 +254,10 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
                 {
                     variableTable.add(name, DataType.BOOL);
                 }
+                else if (type == DataType.SHORT)
+                {
+                    variableTable.add(name, DataType.SHORT);
+                }
                 break;
             default:
                 throw new CompilerException("Unrecognized data type: "+ctx.type().getText());
@@ -268,7 +278,9 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitADDSUBGRP(RoCParser.ADDSUBGRPContext ctx)
     {
-        if (!visit(ctx.left).equals(visit(ctx.right)))
+        DataType left = visit(ctx.left);
+        DataType right = visit(ctx.right);
+        if (!left.equals(right) && !(right == DataType.SHORT))
         {
             throw new CompilerException("Unsupported operation: "+ctx.getText());
         }
@@ -279,7 +291,9 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitMULDIVMODOPGRP(RoCParser.MULDIVMODOPGRPContext ctx)
     {
-        if (!visit(ctx.left).equals(visit(ctx.right)))
+        DataType left = visit(ctx.left);
+        DataType right = visit(ctx.right);
+        if (!left.equals(right) && !(right == DataType.SHORT))
         {
             throw new CompilerException("Unsupported operation: "+ctx.getText());
         }
@@ -291,6 +305,13 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     public DataType visitPARENGRP(RoCParser.PARENGRPContext ctx)
     {
         return visit(ctx.expr());
+    }
+
+    @Override
+    public DataType visitSHORT(RoCParser.SHORTContext ctx)
+    {
+        dataTypes.put(ctx, DataType.SHORT);//Needed for argument list context
+        return DataType.SHORT;
     }
 
     @Override

@@ -1,7 +1,13 @@
 grammar RoC;
+// a RoC program REQUIRES to have a main method e.g.
+//  functia main()
+//  {
+//    <do your thing :D>
+//  }
 
 program: method_declaration* EOF;
-
+// Methods can do the return statement only at the end, this means NO MULTIPLE RETURN STATEMENTS
+// All methods in RoC are static methods so that you can call them in the main method
 method_declaration
                   : Method methodName=IDENTIFIER PAREN_OPEN argument_list? PAREN_CLOSE (Return returnType=type)?
                         CURLY_OPEN body=block* (Return returnValue=expr)? CURLY_CLOSE
@@ -20,6 +26,7 @@ expr
     | functionCall                                                              # MethodCallExpr
     | SCANNERCALL                                                               # scannerCall
     | NUMBER                                                                    # NUMBER
+    | SHORT                                                                     # SHORT
     | STRING                                                                    # STRING
     | BOOLEAN                                                                   # BOOLEAN
     | IDENTIFIER                                                                # IDENTIFIER
@@ -41,13 +48,13 @@ functionCall
 functionArgumentList
                     :(expr(COMMA expr)*) #MethodCallArgumentList
                     ;
-
+// RoC supports only If else statements
 decisionStatement: If PAREN_OPEN if_lhs=expr PAREN_CLOSE CURLY_OPEN if_rhs=block CURLY_CLOSE
                  (Else CURLY_OPEN else_lhs=block CURLY_CLOSE)?
                  ;
 
 printStatement: Print PAREN_OPEN (expr) PAREN_CLOSE ;
-
+// RoC has 2 iteration statements while and do while
 iterationStatement
                   : While expr Execute CURLY_OPEN block CURLY_CLOSE #WhileLoop
                   | Execute CURLY_OPEN block CURLY_CLOSE While expr #DoWhileLoop
@@ -71,6 +78,7 @@ comparator
 type
     : STRING_TYPE
     | BOOLEAN_TYPE
+    | SHORT_TYPE
     | NUMBER_TYPE
     | AUTO_TYPE
     | SCANNER
@@ -93,6 +101,7 @@ DIVIDE  :'/';
 MODULO  :'%';
 
 //Types
+SHORT_TYPE : 'scurt' ;
 NUMBER_TYPE : 'numar' ;
 STRING_TYPE : 'sdc'   ;
 BOOLEAN_TYPE: 'bool'  ;
@@ -111,7 +120,8 @@ SCANNERCALL:'urmatorul';
 // Types values
 BOOLEAN: 'ADEVARAT' | 'FALS';
 STRING : '"' ~('\r'|'\n'|'"')* '"';
-NUMBER : '0' | [1-9][0-9]*;// Only Positive numbers
+SHORT  :  [0-9]; // Custom data type, which stores only numbers from 0 to 9
+NUMBER : '0' | '$'? [1-9][0-9]*;// $21 represents -21
 
 // Relational Operators
 AND   : '&&';

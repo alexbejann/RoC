@@ -6,7 +6,8 @@ public enum DataType
     NUMAR("I"),
     SDC("Ljava/lang/String;"),
     AUTOMAT("Z"),
-    SCANNER("java/util/Scanner");
+    SCANNER("java/util/Scanner"),
+    SHORT("I");
 
     private final String byteType;
 

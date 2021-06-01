@@ -530,6 +530,22 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     }
 
     /**
+     * Adds the short to the jasmin code
+     * e.g. ldc 2
+     * SHORT doesn't support negative numbers
+     * Because we don't like negative numbers :D
+     * @param ctx SHORTContext
+     * @return jasminCode for the short
+     */
+    @Override
+    public List<String> visitSHORT(RoCParser.SHORTContext ctx)
+    {
+        List<String> jasminCode = new ArrayList<>();
+        jasminCode.add("ldc "+ctx.getText());
+        return jasminCode;
+    }
+
+    /**
      * Adds the number to the jasmin code
      * e.g. ldc 2
      * @param ctx NUMBERContext
@@ -539,7 +555,15 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitNUMBER(RoCParser.NUMBERContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
-        jasminCode.add("ldc "+ctx.getText());
+        String number = ctx.getText();
+        // check if number contains $2
+        if (number.contains("$"))
+        {
+            // replace $ with - sign e.g. -2
+            number = number.replace("$","-");
+        }
+        // add bytecode
+        jasminCode.add("ldc "+number);
         return jasminCode;
     }
 
