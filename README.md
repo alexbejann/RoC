@@ -6,77 +6,83 @@ RoC is a C/C++/Java based programming language that has the goal to help out rom
   - simplified syntax compared to C/C++, but is following the same concepts
 
 The RoC can be immediately spotted by the file extension `<file name>.rc`, as a convention the filenames should have to same name as the class within the file e.g. `MyClass.rc` would contain `MyClass` within the file. Unlike, Java RoC supports only one line comments represented by a hashtag, and the language name `#RoC`.
-In order to run a program in RoC you should have a function main defined in your class.
+In order to run a program in RoC you __should have a function main__ defined in your class.
+
 ## Keywords dictionary 
 This table contains all the translations of the keywords used in RoC from Romanian to English.
 
-| Romanian | English |
-| -- | -- |
-| cat timp | while |
-| executa | execute |
-| functia | function/method |
-| numar | number/integer |
-| daca | if |
-| altfel daca | else |
-| daca nu | else if |
-| printeaza | print |
-| returneaza | return |
-| adevarat | true |
-| scurt | short |
-| fals | false |
+| Romanian    | English         |
+| ------------| --------------- |
+| cat timp    | while           |
+| executa     | execute         |
+| functia     | function/method |
+| numar       | number/integer  |
+| daca        | if              |
+| altfel daca | else            |
+| daca nu     | else if         |
+| printeaza   | print           |
+| returneaza  | return          |
+| adevarat    | true            |
+| scurt       | short           |
+| fals        | false           |
 
 ## Operators
 - Arithmetic Operators
 Assume that a is 10 and b is 1
 
-| Operator | Description | Example |
-| -- | -- | -- |
-| `-` (Subtraction) | 	returns the difference of the values |	`a - b` is 9 |
-| `*` (Multiplication) |	returns the product of the values  |	`a * b` is 10 |
-| `/` (Division) |	performs division operation and returns the quotient  | 	`a / b` is 10 |
-| `%` (Modulus)  |	performs division operation and returns the remainder | 	`a % b` is 0 |
+| Operator             | Description                                            | Example         |
+| ---------------------| -------------------------------------------------------|-----------------|
+| `-` (Subtraction)    | 	returns the difference of the values                  |	`a - b` is 9    |
+| `*` (Multiplication) |	returns the product of the values                     |	`a * b` is 10   |
+| `/` (Division)       |	performs division operation and returns the quotient  | 	`a / b` is 10 |
+| `%` (Modulus)        |	performs division operation and returns the remainder | 	`a % b` is 0  |
 
 - Relational Operators
 Define the kind of relationship between two entities and returns a bool value in case of RoC
 In this example let's assume that a is 12 and b is 50. 
 
-| Operator | Description | Example |
-| -- | -- | -- |
-| `>`  | 	greater than |	`a > b` is false |
-| `<`  |	less than   |	`a < b` is true |
-| `>=` |	greater than or equal to  | 	`a >= b` is true |
-| `<=` |	less than or equal to | `a <= b` is true |
-| `=`  |	equal to, this operator can be used to compare two strings | 	`a = b` is false |
-| `!=` |	not equal |	`a != b` is true |
+| Operator | Description                                                 | Example          |
+| ---------|-------------------------------------------------------------|------------------|
+| `>`      | 	greater than                                               | `a > b` is false |
+| `<`      |	less than                                                  | `a < b` is true  |
+| `>=`     |	greater than or equal to                                   | `a >= b` is true |
+| `<=`     |	less than or equal to                                      | `a <= b` is true |
+| `=`      |	equal to, this operator can be used to compare two strings | `a = b` is false |
+| `!=`     |	not equal                                                  | `a != b` is true |
 
 - Logical operators
 
-| Operator | Description | Example |
-| -- | -- | -- |
-| `||`  | 	Logical OR operator |	`a > b || a >=b` |
-| `&&`  |	less than   |	`a < b && a > 6` |
+| Operator | Description          | Example          |
+| ---------| ---------------------|------------------|
+| `||`     | 	Logical OR operator |	`a > b || a >=b` |
+| `&&`     |	less than           |	`a < b && a > 6` |
 
 
 ### Scope 
 The scope in RoC is described by the curly brackets `{  }`.
 - `{` represents the start of a new scope
 - `}` represents the end of a scope 
-- At this moment all the functions in RoC are static therefore when we create a new function the index starts from `0`.
+- At this moment all the functions in RoC are static therefore when we create a new function the index starts from `0`. Also, RoC doesn't supports variable hiding as the JAVA would do. Therefore, functions arguments list have the same scope with local arguments so if you would declare the same variable as the one from parameters it would override it.
 
 # 1. Variables:
 
-| Types | Value | Description |
-| -- | -- | -- |
-| numar | 10, -1, 2000 | This type can be an integer if we compare RoC to other C based languages |
-| sdc | "string" | Contains only strings |
-| scurt | 0, 3, 8 | Contains only numbers from 0 to 9 |
-| automat |  "string", 1, -12, 0.21, FALS/ADEVARAT | This type can decide what is the best type |
-| bool | ADEVARAT/FALS | `ADEVARAT` is true and `FALS` is false but it's translated in Romanian | 
+| Types   | Value                                 | Description                                                              |
+| --------|---------------------------------------|--------------------------------------------------------------------------|
+| numar   | 10, $1, 2000                          | This type can be an integer if we compare RoC to other C based languages |
+| sdc     | "string"                              | Contains only strings                                                    |
+| scurt   | 0, 3, 8                               | Contains only numbers from 0 to 9                                        |
+| automat |  "string", 1, $12, 152, FALS/ADEVARAT | This type can decide what is the best type                               |
+| bool    | ADEVARAT/FALS                         | `ADEVARAT` is true and `FALS` is false but it's translated in Romanian   | 
 
+- In RoC the negative numbers are represented with `$` so if you want to say `-12` you should declare it as `$12`.
+Why? Well, in real life, in my case, the only place where I see negative numbers is when I am checking y back account balance and I thought that I would be nice to represent them in my own programming language with `$`(I would change it when all the keybords would have the EUR sign on them :D). In the `CodeGenerator.java` we handle this just by replacing the `$` with the `-`.
 When assigning a value in RoC we do `numar b <- 10;`, to break down `numar` keyword represents the variable type, `b` is the identifier of the variable and `<-` is the operator which says to assign value `10` to `b`. Therefore the mold for this would look like this `<variable type> <identifier> <- <value to assign>`. 
 - _Note*:_ When declaring a new variable you have to assign a new value to it! You can't do `numar a` for declaration.
 
 # 2 Loops
+
+RoC supports two kind of iteration methods which are: `while` and `do while`. 
+![Iteration statement from Grammar](doc/readme/iterationStatement.png)
 
 - While loop:
 ```
@@ -98,15 +104,11 @@ executa {
 
 # 3 Conditional Expressions
 
-- If, else if and else statement:
+- If else statements:
 ```
 daca (<condition>) { 
 
   I <- I<-I+1
-
-} daca nu (<condition>) { 
-
-  I <- 2
 
 } altfel daca { 
 
@@ -144,6 +146,20 @@ returneaza a
 
 ```
 printeaza(<stuff to print>)
+```
+
+# 6 Scanner 
+- RoC has a special method of taking values as input.
+- You can take as input `numar` and `sdc` data types (`Strings` and `integers`). 
+- __Why not `scurt` is not support for scanner?__ Well, because we won't be able to check if the user have entered a number from 0 to 9. Therefore, we decided to not allow this although there is a possibility for this, assigning the value to a `numar` data type and assign the value from the user to a `scurt` data type.
+- Based on the datatype that is declared(`numar/sdc`) the CodeGenerator will pick the appropiate method from `Scanner` class. 
+- __How does `numar a<- urmatorul` work?__ The end result would look like this in JAVA `int b = (new Scanner(System.in)).nextInt()` or `String b = (new Scanner(System.in)).nextLine()` everytime `urmatorul` keyword is called we will create a new Scanner object but is _not stored_ on the stack. 
+
+Examples:
+```
+numar a<- urmatorul
+
+sdc b<- urmatorul
 ```
 
 # Program examples 
