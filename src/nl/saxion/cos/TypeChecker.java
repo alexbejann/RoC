@@ -101,7 +101,8 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
             {
                 if (!(",".equals(c.getText()) || c instanceof TerminalNodeImpl))
                 {
-                    name += variableTable.getTypeLetter(dataTypes.get(c).toString());
+                    DataType argType= dataTypes.get(c);
+                    name += variableTable.getTypeLetter(argType.toString());
                 }
             }
         }
@@ -385,6 +386,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
             throw new CompilerException("Variable "+name+" not defined");
 
         //todo check if this can be removed
+        dataTypes.put(ctx, var.getType());
         scope.put(ctx, var);
         return var.getType();
     }

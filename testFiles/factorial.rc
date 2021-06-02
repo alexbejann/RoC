@@ -1,5 +1,5 @@
 functia factorial(numar num) returneaza numar{
-numar factorial <- 1;
+numar factorial <- 1
 numar i <- 1
 cat timp(i <= num) executa
 {
