@@ -27,6 +27,15 @@ This table contains all the translations of the keywords used in RoC from Romani
 | fals        | false           |
 
 ## Operators
+
+### Operators presendece
+- RoC is following the operator precedence from [JAVA](https://introcs.cs.princeton.edu/java/11precedence/).
+
+![Expression Grammar](doc/readme/expr.png)
+
+- As we can see in the picture above the highest priority in `expr` rule has the expr with paranthesis
+- The multiplicative operations `* / %` have a higher priority as the additive operations `+ -`
+
 - Arithmetic Operators
 Assume that a is 10 and b is 1
 
@@ -34,8 +43,8 @@ Assume that a is 10 and b is 1
 | ---------------------| -------------------------------------------------------|-----------------|
 | `-` (Subtraction)    | 	returns the difference of the values                  |	`a - b` is 9    |
 | `*` (Multiplication) |	returns the product of the values                     |	`a * b` is 10   |
-| `/` (Division)       |	performs division operation and returns the quotient  | 	`a / b` is 10 |
-| `%` (Modulus)        |	performs division operation and returns the remainder | 	`a % b` is 0  |
+| `/` (Division)       |	performs division operation and returns the quotient  | `a / b` is 10   |
+| `%` (Modulus)        |	performs division operation and returns the remainder | `a % b` is 0    |
 
 - Relational Operators
 Define the kind of relationship between two entities and returns a bool value in case of RoC
