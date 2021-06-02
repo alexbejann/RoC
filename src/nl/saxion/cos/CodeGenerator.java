@@ -257,19 +257,8 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         String localTempLabel = jumpLabel;
         jasminCode.addAll(visit(ctx.left));
         jasminCode.addAll(visit(ctx.right));
-        if (dataTypes.get(ctx) != null)
-        {
-            // call equals method
-            jasminCode.add("invokevirtual java/lang/String/equals(Ljava/lang/Object;)Z");
-            if(ctx.op.getText().equals("="))
-                jasminCode.add("ifeq "+jumpLabel);
-            else if (ctx.op.getText().equals("!="))
-                jasminCode.add("ifne "+jumpLabel);
-        }
-        else
-        {
-            jasminCode.addAll(visit(ctx.op));
-        }
+        // visit operator
+        jasminCode.addAll(visit(ctx.op));
 
         // This handles the boolean expression
         // e.g. bool a<- a*2 > 1
