@@ -28,13 +28,16 @@ This table contains all the translations of the keywords used in RoC from Romani
 
 ## Operators
 
-### Operators presendece
+### Operators precedence
 - RoC is following the operator precedence from [JAVA](https://introcs.cs.princeton.edu/java/11precedence/).
 
 ![Expression Grammar](doc/readme/expr.png)
 
-- As we can see in the picture above the highest priority in `expr` rule has the expr with paranthesis
+- As we can see in the picture above the highest priority in `expr` rule has the expr with parenthesis
 - The multiplicative operations `* / %` have a higher priority as the additive operations `+ -`
+- The relational operators `> < <= >=` have a higher priority as equality operators `= !=`
+- The logical operator AND `&&` has a higher priority compared to logical operator OR `||`
+- Also, as we can see the `SHORT` datatype has a higher priority compared to `NUMBER`
 
 - Arithmetic Operators
 Assume that a is 10 and b is 1
@@ -61,17 +64,19 @@ In this example let's assume that a is 12 and b is 50.
 
 - Logical operators
 
-| Operator | Description          | Example          |
-| ---------| ---------------------|------------------|
-| `||`     | 	Logical OR operator |	`a > b || a >=b` |
-| `&&`     |	less than           |	`a < b && a > 6` |
+| Operator | Description            | Example          |
+| ---------| --------------------   | ---------------- |
+| `||`     |  Logical OR operator   | `a > b || a >=b` |
+| `&&`     |  Logical AND operator  | `a < b && a > 6` |
 
 
 ### Scope 
 The scope in RoC is described by the curly brackets `{  }`.
 - `{` represents the start of a new scope
 - `}` represents the end of a scope 
-- At this moment all the functions in RoC are static therefore when we create a new function the index starts from `0`. Also, RoC doesn't supports variable hiding as the JAVA would do. Therefore, functions arguments list have the same scope with local arguments so if you would declare the same variable as the one from parameters it would override it.
+-The `block` rule from the grammar is going to open a new scope everytime it enters the method within the `TypeChecker.java`.
+- At this moment all the functions in RoC are static therefore when we create a new function the index starts from `0`. 
+Also, the argument list of a function/method has the same scope with the method body/block, and it doesn't support variable hiding.
 
 # 1. Variables:
 
@@ -83,9 +88,10 @@ The scope in RoC is described by the curly brackets `{  }`.
 | automat |  "string", 1, $12, 152, FALS/ADEVARAT | This type can decide what is the best type                               |
 | bool    | ADEVARAT/FALS                         | `ADEVARAT` is true and `FALS` is false but it's translated in Romanian   | 
 
+- RoC does not support __global variables__, supports only local variables within a function/method. 
 - In RoC the negative numbers are represented with `$` so if you want to say `-12` you should declare it as `$12`.
-Why? Well, in real life, in my case, the only place where I see negative numbers is when I am checking y back account balance and I thought that I would be nice to represent them in my own programming language with `$`(I would change it when all the keybords would have the EUR sign on them :D). In the `CodeGenerator.java` we handle this just by replacing the `$` with the `-`.
-When assigning a value in RoC we do `numar b <- 10;`, to break down `numar` keyword represents the variable type, `b` is the identifier of the variable and `<-` is the operator which says to assign value `10` to `b`. Therefore the mold for this would look like this `<variable type> <identifier> <- <value to assign>`. 
+__Why?__ Well, in real life, in my case, the only place where I see negative numbers is when I am checking y back account balance and I thought that I would be nice to represent them in my own programming language with `$`(I would change it when all the keyboards would have the EUR sign on them :D). In the `CodeGenerator.java` we handle this just by replacing the `$` with the `-`.
+When assigning a value in RoC we do `numar b <- 10;`, to break down `numar` keyword represents the variable type, `b` is the identifier of the variable and `<-` is the operator which says to assign value `10` to `b`. Therefore, the mold for this would look like this `<variable type> <identifier> <- <value to assign>`. 
 - _Note*:_ When declaring a new variable you have to assign a new value to it! You can't do `numar a` for declaration.
 
 # 2 Loops
@@ -127,8 +133,10 @@ I <- 3
 ```
 
 # 4 Methods 
-The methods are following the C-like languages concepts. In RoC will be declared using the `functia` keyword followed by an identifier of the method optional will have parameters and the return type of the method. The scope of the method is provided by the curly brackets. 
-- _Note*:_ to return `void` you don't have to specify something simply omit this `returneaza <type>`. And also if you want to return something you have to declare a variable and then return the identifier. You won't be able to do return statements like this `returneaza ADEVARAT`, `returneaza 23+2`, `returneaza "string"`.
+The methods are following the C-like languages concepts. In RoC will be declared using the `functia` keyword followed by an identifier of the method optional will have parameters and the return type of the method. In RoC you are not __allowed to return multiple times__ you can return only at the end of the method as you should in every programming language (in my opinion), this means that you're not allowed to use the `return` in the middle of the method.
+The scope of the method is provided by the curly brackets. 
+- _Note*:_ to return `void` you don't have to specify something simply omit this `returneaza <type>` and also if you want to return something you have to declare a variable and then return the identifier. 
+You are able to return statements like this `returneaza ADEVARAT`, `returneaza 23+2`, `returneaza "string"` or expressions in general. 
 
 ```
 functia foo(<params>) returneaza <type> { 
