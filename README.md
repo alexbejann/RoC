@@ -90,7 +90,9 @@ Also, the argument list of a function/method has the same scope with the method 
 
 - RoC does not support __global variables__, supports only local variables within a function/method. 
 - In RoC the negative numbers are represented with `$` so if you want to say `-12` you should declare it as `$12`.
-__Why?__ Well, in real life, in my case, the only place where I see negative numbers is when I am checking y back account balance and I thought that I would be nice to represent them in my own programming language with `$`(I would change it when all the keyboards would have the EUR sign on them :D). In the `CodeGenerator.java` we handle this just by replacing the `$` with the `-`.
+- `scurt` is a special data type that holds numbers from 0 to 9. There are a few rules for this data type: a `numar` can hold a `scurt`, 
+  you can't make calculations such as `scurt a <- 2 + 12` because then the `scurt` would become a `numar`.
+__Why?__ Well, in real life, in my case, the only place where I see negative numbers is when I am checking y back account balance, and I thought it would be nice to represent them in my own programming language with `$`(I would change it when all the keyboards would have the EUR sign on them :D). In the `CodeGenerator.java` we handle this just by replacing the `$` with the `-`.
 When assigning a value in RoC we do `numar b <- 10;`, to break down `numar` keyword represents the variable type, `b` is the identifier of the variable and `<-` is the operator which says to assign value `10` to `b`. Therefore, the mold for this would look like this `<variable type> <identifier> <- <value to assign>`. 
 - _Note*:_ When declaring a new variable you have to assign a new value to it! You can't do `numar a` for declaration.
 
@@ -117,7 +119,7 @@ executa {
 } cat timp <condition>  
 ```
 
-# 3 Conditional Expressions
+# 3 Conditional statements
 
 - If else statements:
 ```
@@ -169,7 +171,7 @@ printeaza(<stuff to print>)
 - RoC has a special method of taking values as input.
 - You can take as input `numar` and `sdc` data types (`Strings` and `integers`). 
 - __Why not `scurt` is not support for scanner?__ Well, because we won't be able to check if the user have entered a number from 0 to 9. Therefore, we decided to not allow this although there is a possibility for this, assigning the value to a `numar` data type and assign the value from the user to a `scurt` data type.
-- Based on the datatype that is declared(`numar/sdc`) the CodeGenerator will pick the appropiate method from `Scanner` class. 
+- Based on the datatype that is declared(`numar/sdc`) the CodeGenerator will pick the appropriate method from `Scanner` class. 
 - __How does `numar a<- urmatorul` work?__ The end result would look like this in JAVA `int b = (new Scanner(System.in)).nextInt()` or `String b = (new Scanner(System.in)).nextLine()` everytime `urmatorul` keyword is called we will create a new Scanner object but is _not stored_ on the stack. 
 
 Examples:
