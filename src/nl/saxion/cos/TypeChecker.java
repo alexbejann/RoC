@@ -51,7 +51,10 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
             for (ParseTree c :ctx.argument_list().children)
             {
                 if (!(",".equals(c.getText()) || c instanceof TerminalNodeImpl))
-                    name += variableTable.getTypeLetter(c.getChild(0).getText());
+                {
+                    DataType argType = dataTypes.get(c);
+                    name += variableTable.getTypeLetter(argType.toString());
+                }
             }
         }
         if (ctx.returnType == null)
