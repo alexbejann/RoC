@@ -4,6 +4,8 @@ grammar RoC;
 //  {
 //    <do your thing :D>
 //  }
+// NOTE: If you want to define a function that you want to use in the main function you have
+// declare it before the main
 
 program: method_declaration* EOF;
 // Methods can do the return statement only at the end, this means NO MULTIPLE RETURN STATEMENTS
@@ -33,7 +35,7 @@ expr
     | BOOLEAN                                                                   # BOOLEAN
     | IDENTIFIER                                                                # IDENTIFIER
     ;
-
+// The block rule represents the body of a decission statement, iteration statement and function body
 block
       : (decisionStatement
       | iterationStatement
@@ -42,7 +44,7 @@ block
       | varExpression
       | variable_declaration)+
       ;
-
+// This represents the function call foo(), foo(a, a+2, b*2)
 functionCall
             : IDENTIFIER PAREN_OPEN functionArgumentList? PAREN_CLOSE #MethodCall
             ;
