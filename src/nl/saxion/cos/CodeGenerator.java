@@ -183,7 +183,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             }
         }
         // if arguments list is null means, no parameters
-        if (ctx.functionArgumentList() != null)//todo load parameters
+        if (ctx.functionArgumentList() != null)
         {
             //load arguments
             jasminCode.addAll(visit(ctx.functionArgumentList()));
