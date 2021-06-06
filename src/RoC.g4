@@ -51,6 +51,10 @@ functionArgumentList
                     :(expr(COMMA expr)*) #MethodCallArgumentList
                     ;
 // RoC supports only If else statements
+// RoC would have the else if statements like this into the grammar
+// (Else_If PAREN_OPEN elseIF_lhs=expr PAREN_CLOSE CURLY_OPEN elseIF_rhs=block CURLY_CLOSE )*
+// However, it's not implemented due to label issues that I couldn't figure out.
+// and instead of having unwanted behaviour I remvoed them from the grammar
 decisionStatement: If PAREN_OPEN if_lhs=expr PAREN_CLOSE CURLY_OPEN if_rhs=block CURLY_CLOSE
                  (Else CURLY_OPEN else_lhs=block CURLY_CLOSE)?
                  ;
