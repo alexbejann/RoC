@@ -488,6 +488,26 @@ public class MethodTest extends TestBase
 
     }
 
+    @Test
+    public void callNonExistentMethod() throws IOException, AssembleException
+    {
+        String codeString = "functia main()" +
+                            "{\n" +
+                            "   automat a<-foo(2*3+1)\n" +
+                            "   printeaza(a)\n" +
+                            "}";
+
+        Compiler c = new Compiler();
+        CompilerException exception = assertThrows(CompilerException.class, () -> {
+            c.compileString(codeString,"noExistingMethodCall");
+        });
+        String expectedMessage = "Method was not defined, or the parameters don't match!";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+
+    }
+
     /**
      * Test method call
      */

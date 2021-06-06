@@ -86,7 +86,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
             //check if there is a return type
             if (dataTypes.get(ctx) == null)
             {
-                methodDeclaration+= ")V";//TODO specificy the return type here now it returns oid everytime
+                methodDeclaration+= ")V";
             }
             else
             {
@@ -125,8 +125,6 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
 
     @Override
     public List<String> visitType(RoCParser.TypeContext ctx) {
-        //todo replace this to get the right type from the variable table
-        // instead of having this switch implementation
         List<String> jasminCode = new ArrayList<>();
         switch (dataTypes.get(ctx))
         {
@@ -165,8 +163,6 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         List<String> jasminCode = new ArrayList<>();
         String methodName = ctx.IDENTIFIER().getText();
         Variable var = scope.get(ctx);
-        //todo please refine this hardcoded return value void, also the return type should be
-        // after the argumentslist is returned
         String parameters = "()";
         String returnType = "V";
         //check return type
@@ -198,7 +194,7 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
         parameters += returnType;
         String methodInvoke = "invokestatic "+ className +"/"+ methodName;
         methodInvoke += parameters;
-        jasminCode.add(methodInvoke);//todo arguments should be added between the curly brackets and
+        jasminCode.add(methodInvoke);
 
         return jasminCode;
     }
@@ -207,7 +203,6 @@ public class CodeGenerator extends RoCBaseVisitor<List<String>>
     public List<String> visitMethodCallArgumentList(RoCParser.MethodCallArgumentListContext ctx)
     {
         List<String> jasminCode = new ArrayList<>();
-        //todo implement the arguments for this
         for (ParseTree c: ctx.expr())
         {
             jasminCode.addAll(visit(c));

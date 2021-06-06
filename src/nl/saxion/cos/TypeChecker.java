@@ -31,7 +31,6 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitMethod_declaration(RoCParser.Method_declarationContext ctx)
     {
-        //TODO in here open new scope and reset the counter of the VariableTable to 0
         if (ctx.returnType == null && ctx.returnValue != null)
         {
             throw new CompilerException("You can't return in a void method!");
@@ -90,8 +89,6 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitMethodCall(RoCParser.MethodCallContext ctx)
     {
-        //todo check if the method already exists if so,
-        // throw exception
         String identifier = ctx.IDENTIFIER().getText();
 
         String name = identifier.concat("@");
@@ -169,6 +166,7 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
     @Override
     public DataType visitBlock(RoCParser.BlockContext ctx)
     {
+        // Open new scope in a block
         variableTable = variableTable.openScope();
         visitChildren(ctx);
         variableTable = variableTable.getParentScope();
@@ -388,7 +386,6 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
         if (var == null)
             throw new CompilerException("Variable "+name+" not defined");
 
-        //todo check if this can be removed
         dataTypes.put(ctx, var.getType());
         scope.put(ctx, var);
         return var.getType();
