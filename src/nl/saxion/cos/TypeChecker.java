@@ -74,8 +74,8 @@ public class TypeChecker extends RoCBaseVisitor<DataType>
             visitChildren(ctx.body);
         if (ctx.returnValue != null)
         {
-            DataType type = visit(ctx.returnValue);// SCURT
-            DataType returnType = dataTypes.get(ctx); // NUMAR
+            DataType type = visit(ctx.returnValue);
+            DataType returnType = dataTypes.get(ctx);
             if (!(returnType == DataType.NUMAR && type == DataType.SCURT))
             {
                 if (!type.equals(returnType))
