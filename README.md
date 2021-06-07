@@ -225,13 +225,13 @@ functia main()
 ```
 functia main()
 {
-  bool myBooleanValue<-FALS
-  numar i<-1
-  cat timp (myBooleanValue==FALS && i<10) executa
-  {
-    printeaza(i)
-    i<-i+1
-  }
+   numar a<-2*3
+   a<-a+1
+   cat timp(a < 10) executa
+   {
+       a<-a+1
+   }
+   printeaza(a)
 }
 ```
 
