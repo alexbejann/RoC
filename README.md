@@ -91,6 +91,7 @@ Also, the argument list of a function/method has the same scope with the method 
 | automat |  "string", 1, $12, 152, FALS/ADEVARAT | This type can decide what is the best type                               |
 | bool    | ADEVARAT/FALS                         | `ADEVARAT` is true and `FALS` is false but it's translated in Romanian   | 
 
+- RoC special feature is the type interference with `automat`, which means that you can store any variable into `automat`. Also, this "syntactic sugar" is not supported as a function argument.
 - RoC does not support __global variables__, supports only local variables within a function/method. 
 - In RoC the negative numbers are represented with `$` so if you want to say `-12` you should declare it as `$12`.
 - `scurt` is a special data type that holds numbers from 0 to 9. There are a few rules for this data type: a `numar` can hold a `scurt`, 
