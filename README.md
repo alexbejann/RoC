@@ -62,7 +62,7 @@ In this example let's assume that a is 12 and b is 50.
 | `=`      |	equal to, this operator can be used to compare two strings | `a = b` is false |
 | `!=`     |	not equal                                                  | `a != b` is true |
 
-![= and !=](doc/readme/expr.png)
+![= and !=](doc/readme/equals.png)
 - `=` and `!=` operators are using the `equals` method from JAVA when 2 strings are compared to each other.
 
 - Logical operators
