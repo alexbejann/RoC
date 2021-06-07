@@ -267,7 +267,7 @@ returneaza factorial
 }
 
 functia main(){
-printeaza("Introdu un numar")
+printeaza("Put your number:")
 numar num <- urmatorul
 
 numar test<-factorial(num)
