@@ -124,6 +124,7 @@ executa {
 ```
 
 # 3 Conditional statements
+![Conditional statements](doc/readme/decissionStatement.png)
 
 - If else statements:
 ```
@@ -139,6 +140,8 @@ I <- 3
 ```
 
 # 4 Methods 
+![Conditional statements](doc/readme/functions.png)
+
 The methods are following the C-like languages concepts. In RoC will be declared using the `functia` keyword followed by an identifier of the method optional will have parameters and the return type of the method. In RoC you are not __allowed to return multiple times__ you can return only at the end of the method as you should in every programming language (in my opinion), this means that you're not allowed to use the `return` in the middle of the method.
 The scope of the method is provided by the curly brackets. 
 - _Note*:_ to return `void` you don't have to specify something simply omit this `returneaza <type>` and also if you want to return something you have to declare a variable and then return the identifier. 
