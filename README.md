@@ -298,6 +298,8 @@ functia main()
 }
 
 ```
+## Note: There are more than 50 JUnit tests(without including the tests from `testFiles` that have to be compiled to run) to test the language which can be found in the `tests` folder.
+
 # Bug List
 At this moment there is a bug with our special datatype `SCURT` as if you make a 
 calculation the result might be something bigger than `9` which would be the 
