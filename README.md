@@ -226,10 +226,11 @@ functia main()
 functia main()
 {
   bool myBooleanValue<-FALS
-
-  for numar i<-1:myBooleanValue==FALS && i<:i<-i+1 executa
+  numar i<-1
+  cat timp (myBooleanValue==FALS && i<10) executa
   {
     printeaza(i)
+    i<-i+1
   }
 }
 ```
@@ -239,10 +240,9 @@ functia main()
 ```
 functia main(){
 
-scanner s <- scanner
 printeaza("Enter a number : ")
 
-numar num <- s.urmatorul
+numar num <- urmatorul
 
 daca(num % 2 = 0){
 printeaza("Your number is even")
@@ -268,8 +268,7 @@ returneaza factorial
 
 functia main(){
 printeaza("Introdu un numar")
-scanner s<- scanner
-numar num <- s.urmatorul
+numar num <- urmatorul
 
 numar test<-factorial(num)
 
@@ -299,3 +298,8 @@ functia main()
 }
 
 ```
+# Bug List
+At this moment there is a bug with our special datatype `SCURT` as if you make a 
+calculation the result might be something bigger than `9` which would be the 
+limit for our datatype.
+Therefore, if there is something like this `scurt a<-5+5` would have to throw an exception.
