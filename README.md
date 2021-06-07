@@ -184,6 +184,10 @@ numar a<- urmatorul
 
 sdc b<- urmatorul
 ```
+# 7 Optimizer
+- Even though, RoC has already a "special" feature we have decided to implement some optimizers as we thought that it's something nice.
+- The optimizer is added for all additive operations and comparisons, which includes logical `||` and logical `&&`
+![Optimizer implementation](doc/readme/optimizer.png)
 
 # Program examples 
 
